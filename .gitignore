@@ -34,3 +34,9 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+
+.DS_Store
+
+m3/m3-helpers.txt
+
+ukb-24h-mh.Rproj
