@@ -92,14 +92,14 @@ for(i in seq_along(sub_models_resp)) {
     
     model_tmp[, SleepPeriod := sleep_period]
     
-    model_tmp[, From := ifelse(From == "mvpa_comp", "Moderate-to-Vigorous Physical Activity", From)]
-    model_tmp[, From := ifelse(From == "lpa_comp", "Light Physical Activity", From)]
-    model_tmp[, From := ifelse(From == "sb_comp", "Sedentary Behaviour", From)]
+    model_tmp[, From := ifelse(From == "mvpa_comp", "MVPA", From)]
+    model_tmp[, From := ifelse(From == "lpa_comp", "LPA", From)]
+    model_tmp[, From := ifelse(From == "sb_comp", "SB", From)]
     model_tmp[, From := ifelse(From == "sleep_comp", "Sleep", From)]
     
-    model_tmp[, To := ifelse(To == "mvpa_comp", "Moderate-to-Vigorous Physical Activity", To)]
-    model_tmp[, To := ifelse(To == "lpa_comp", "Light Physical Activity", To)]
-    model_tmp[, To := ifelse(To == "sb_comp", "Sedentary Behaviour", To)]
+    model_tmp[, To := ifelse(To == "mvpa_comp", "MVPA", To)]
+    model_tmp[, To := ifelse(To == "lpa_comp", "LPA", To)]
+    model_tmp[, To := ifelse(To == "sb_comp", "SB", To)]
     model_tmp[, To := ifelse(To == "sleep_comp", "Sleep", To)]
     
     model_tmp$sig <- between(0, model_tmp$CI_low, model_tmp$CI_high)
@@ -109,30 +109,34 @@ for(i in seq_along(sub_models_resp)) {
     sub_models_sleepg_type[[j]] <- model_tmp
   }
   sub_models_sleepg_type_i  <- rbindlist(sub_models_sleepg_type)
+  sub_models_sleepg_type_i[, SleepPeriod := factor(SleepPeriod, ordered = TRUE,
+                                                   levels = c("Short Sleepers",
+                                                              "Normal Sleepers",
+                                                              "Long Sleepers"))]
   sub_models_all[[i]] <- sub_models_sleepg_type_i
 }
-names(sub_models_all) <- (sub_models)
+names(sub_models_all) <- (sub_models_resp)
 
 # other plot add ins ----------------
 col <- c(
   `Sleep` = "#5A6367",
-  `Moderate-to-Vigorous Physical Activity` = "#708885",
-  `Light Physical Activity` = "#BEACA2",
-  `Sedentary Behaviour` = "#C99696"
+  `MVPA` = "#708885",
+  `LPA` = "#BEACA2",
+  `SB` = "#C99696"
 )
 
 colf <- c(
   `Sleep` = "#5A6367",
-  `Moderate-to-Vigorous Physical Activity` = "#708885",
-  `Light Physical Activity` = "#BEACA2",
-  `Sedentary Behaviour` = "#C99696"
+  `MVPA` = "#708885",
+  `LPA` = "#BEACA2",
+  `SB` = "#C99696"
 )
 
 names <- c(
   `sleep_comp` = "Sleep",
-  `mvpa_comp` = "Moderate-to-Vigorous Physical Activity",
-  `lpa_comp` = "Light Physical Activity",
-  `sb_comp` = "Sedentary Behaviour"
+  `mvpa_comp` = "MVPA",
+  `lpa_comp` = "LPA",
+  `sb_comp` = "SB"
 )
 names <- c(
   `sleep_comp` = "Sleep",
@@ -146,9 +150,9 @@ labeller <- function(variable, value) {
 alpha <- 2/10
 
 # make a grid to loop plots
-parts          <- c("Sleep", "Moderate-to-Vigorous Physical Activity", "Light Physical Activity", "Sedentary Behaviour")
-part_labels    <- c("Sleep", "Moderate-to-Vigorous Physical Activity", 
-                    "Light Physical Activity", "Sedentary Behaviour")
+parts          <- c("Sleep", "MVPA", "LPA", "SB")
+part_labels    <- c("Sleep", "MVPA", 
+                    "LPA", "SB")
 
 # phq ----------------
 sub_models_phq <- grep("phq", names(sub_models_all), value = T)
@@ -169,7 +173,10 @@ phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
                        geom_text(aes(label = Sig, colour = From),
                                  size = 6, nudge_x = 0.05, nudge_y = 0.1,
                                  show.legend = FALSE) +
-                       facet_wrap(ggplot2::vars(SleepPeriod, From)) +
+                       facet_wrap(ggplot2::vars(SleepPeriod, From, To),
+                                  labeller = label_bquote(cols = atop(.(as.character(SleepPeriod)),
+                                                                      .(To) %<-% phantom(veryveryveryveryveryveryvery) %->% .(From))),
+                                  strip.position = "top") +
                        scale_colour_manual(values = col) +
                        scale_fill_manual(values = colf) +
                        labs(x = paste0("Reallocation of Time between ", rg_phq[i, "part_labels"], " and Other Behaviours"),
@@ -186,11 +193,12 @@ phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
                          panel.grid.major  = element_blank(),
                          panel.grid.minor  = element_blank(),
                          plot.background   = element_rect(fill = "transparent", colour = NA),
-                         # strip.text = element_blank(),
-                         axis.title.x      = element_text(size = 14, face = "bold", hjust = .5),
+                         strip.text        = element_text(size = 13, face = "bold", hjust = .5),
+                         axis.title.x      = element_blank(),
                          axis.title.y      = element_text(size = 14, face = "bold", hjust = .5),
-                         plot.margin = margin(.5, .5, .5, .5, "cm"),
-                         legend.position = "none"
+                         plot.margin       = margin(.5, .5, .5, .5, "cm"),
+                         legend.title      = element_blank(),
+                         legend.position   = "none"
                        )
                    }
 
