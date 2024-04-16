@@ -118,32 +118,31 @@ for(i in seq_along(sub_models_resp)) {
 names(sub_models_all) <- (sub_models_resp)
 
 # other plot add ins ----------------
+extrafont::loadfonts()
+
+# scales::show_col(tvthemes:::brooklyn99_palette$Dark)
+# scales::show_col(tvthemes:::hilda_palette)
+
 col <- c(
   `Sleep` = "#5A6367",
   `MVPA` = "#708885",
-  `LPA` = "#BEACA2",
+  `LPA` = "#9C6755",
   `SB` = "#C99696"
 )
 
 colf <- c(
-  `Sleep` = "#5A6367",
-  `MVPA` = "#708885",
-  `LPA` = "#BEACA2",
-  `SB` = "#C99696"
+  `Sleep` = "#83A192",
+  `MVPA` = "#AFC7BB",
+  `LPA` = "#C6A390",
+  `SB` = "#E3C9C9"
 )
-
-names <- c(
-  `sleep_comp` = "Sleep",
-  `mvpa_comp` = "MVPA",
-  `lpa_comp` = "LPA",
-  `sb_comp` = "SB"
-)
-names <- c(
-  `sleep_comp` = "Sleep",
-  `mvpa_comp` = "MVPA",
-  `lpa_comp` = "LPA",
-  `sb_comp` = "SB"
-)
+labels <- c("Sleep" = bquote(Sleep %<-% phantom() %->% .(rg_phq[i, "parts"])), 
+            "MVPA" = bquote(MVPA %<-% phantom() %->% .(rg_phq[i, "parts"])), 
+            "LPA" = bquote(LPA %<-% phantom() %->% .(rg_phq[i, "parts"])), 
+            "SB" = bquote(SB %<-% phantom() %->% .(rg_phq[i, "parts"])), 
+            
+            )
+  
 labeller <- function(variable, value) {
   return(names[value])
 }
@@ -185,7 +184,8 @@ phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
                                           breaks = c(-20, 0, 20)) +
                        scale_y_continuous(limits = c(-1, 1.2),
                                           breaks = c(-1, 0, 1)) +
-                       hrbrthemes::theme_ipsum() +
+                       # theme_economist_white() +
+                       hrbrthemes::theme_ipsum(grid="Y") +
                        theme(
                          axis.ticks        = element_blank(),
                          panel.background  = element_blank(),
@@ -193,12 +193,78 @@ phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
                          panel.grid.major  = element_blank(),
                          panel.grid.minor  = element_blank(),
                          plot.background   = element_rect(fill = "transparent", colour = NA),
+                         strip.background  = element_rect(fill = "transparent", colour = NA),
                          strip.text        = element_text(size = 13, face = "bold", hjust = .5),
                          axis.title.x      = element_blank(),
                          axis.title.y      = element_text(size = 14, face = "bold", hjust = .5),
                          plot.margin       = margin(.5, .5, .5, .5, "cm"),
                          legend.title      = element_blank(),
                          legend.position   = "none"
+                       )
+                   }
+
+phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
+                   .packages = "multilevelcoda") %dopar% {
+                     
+                     labels <- c("Sleep" = bquote(Sleep %<-% phantom() %->% .(rg_phq[i, "parts"])), 
+                                 "MVPA" = bquote(MVPA %<-% phantom() %->% .(rg_phq[i, "parts"])), 
+                                 "LPA" = bquote(LPA %<-% phantom() %->% .(rg_phq[i, "parts"])), 
+                                 "SB" = bquote(SB %<-% phantom() %->% .(rg_phq[i, "parts"]))
+                     )
+                     
+                     ggplot(sub_models_all[[rg_phq[i, "sub_models_phq"]]][To == eval(rg_phq[i, "parts"])], aes(x = Delta, y = Mean)) +
+                       geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
+                       geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
+                       geom_ribbon(aes(ymin = CI_low,
+                                       ymax = CI_high, fill = From),
+                                   alpha = 1/10) +
+                       geom_line(aes(colour = From), linewidth = 1) +
+                       geom_text(aes(label = Sig, colour = From),
+                                 size = 5.5, 
+                                 # nudge_x = 1, nudge_y = 0.1,
+                                 position = ggpp::position_nudge_center(center_x = 0, x = 3, 
+                                                                        y = 0
+                                 ),
+                                 show.legend = FALSE) +
+                       # 
+                       # facet_wrap(ggplot2::vars(SleepPeriod, To),
+                       #            labeller = label_bquote(cols = atop(.(as.character(SleepPeriod)),
+                       #                                                Others %<-% phantom(very) %->% .(To))),
+                       #            position = position_nudge(y = -1)) +
+                       
+                       
+                       facet_wrap(~ SleepPeriod) +
+                       # facet_wrap(ggplot2::vars(SleepPeriod, From, To),
+                       #            labeller = label_bquote(cols = atop(.(as.character(SleepPeriod)),
+                       #                                                .(To) %<-% phantom(veryveryveryveryveryveryvery) %->% .(From))),
+                       #            strip.position = "top") +
+                       scale_colour_manual(values = col,
+                                           name = "At the expense of") +
+                       scale_fill_manual(values = colf,
+                                         name = "At the expense of") +
+                       labs(x = bquote(Less ~ .(rg_phq[i, "parts"]) %<-% phantom(veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong) %->% More ~ .(rg_phq[i, "parts"])),
+                            y = paste0("Difference in ", rg_phq[i, "phq"])) +
+                       scale_x_continuous(limits = c(-23, 23),
+                                          breaks = c(-20, -10, 0, 10, 20)) +
+                       scale_y_continuous(limits = c(-0.35, 1),
+                                          breaks = c(-0.25, 0, 0.25, 0.5, 0.75, 1)) +
+                       # theme_economist_white() +
+                       hrbrthemes::theme_ipsum(grid="Y") +
+                       theme(
+                         axis.ticks        = element_blank(),
+                         panel.background  = element_blank(),
+                         panel.border      = element_blank(),
+                         panel.grid.major  = element_blank(),
+                         panel.grid.minor  = element_blank(),
+                         plot.background   = element_rect(fill = "transparent", colour = NA),
+                         strip.background  = element_rect(fill = "transparent", colour = NA),
+                         strip.text        = element_text(size = 13, hjust = .5),
+                         axis.title.x      = element_text(size = 14, face = "bold", hjust = .5),
+                         axis.title.y      = element_text(size = 14, face = "bold", hjust = .5),
+                         plot.margin       = margin(.5, .5, .5, .5, "cm"),
+                         legend.title      = element_text(size = 13, hjust = .5),
+                         legend.text       = element_text(size = 13, hjust = .5),
+                         legend.position   = "right"
                        )
                    }
 
@@ -209,12 +275,18 @@ phq_24h
 
 saveRDS(phq_24h, paste0(outputdir, "phq_24h", ".RDS"))
 
+ggarrange(phq_24h[[1]], phq_24h[[2]], 
+          phq_24h[[3]], phq_24h[[4]], 
+          nrow = 4)
+
 grDevices::cairo_pdf(
-  file = paste0(outputdir, "phq_24h_sleep", ".pdf"),
+  file = paste0(outputdir, "phq_24h", ".pdf"),
   width = 9,
-  height = 12,
+  height = 13,
 )
-phq_24h[[1]]
+ggarrange(phq_24h[[1]], phq_24h[[2]], 
+          phq_24h[[3]], phq_24h[[4]], 
+          nrow = 4)
 dev.off()
 
 grDevices::cairo_pdf(
