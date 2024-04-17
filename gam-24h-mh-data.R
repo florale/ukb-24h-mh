@@ -23,7 +23,7 @@ table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.
 table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.1, 0.9, 1))))
 table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, seq(0, 1, 1/3))))
 
-quantile_sleep <- quantile(clr_acc_mhq$data$sleep, c (0, 0.25, 0.73, 1))
+quantile_sleep <- quantile(clr_acc_mhq$data$sleep, c (0, 0.25, 0.75, 1))
 
 clr_acc_mhq_sleep_q1 <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]]],
                                transform = "ilr",
@@ -70,9 +70,7 @@ saveRDS(clr_acc_mhq_sleep_short, paste0(inputdir, "clr_acc_mhq_sleep_short", ".R
 saveRDS(clr_acc_mhq_sleep_normal, paste0(inputdir, "clr_acc_mhq_sleep_normal", ".RDS"))
 saveRDS(clr_acc_mhq_sleep_long, paste0(inputdir, "clr_acc_mhq_sleep_long", ".RDS"))
 
-
 # descriptives
-
 egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation", 
            "alcohol","current_drinker", 
@@ -125,3 +123,5 @@ nrow(clr_acc_mhq$data[!is.na(gad)])
 
 nrow(clr_acc_mhq$data[!is.na(dep_lifetime)])
 nrow(clr_acc_mhq$data[!is.na(anx_lifetime)])
+
+table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.75, 1)))) #
