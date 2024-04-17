@@ -6,74 +6,18 @@ m_phq_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_phq_gam_sub_sleep_q1", ".
 m_phq_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_phq_gam_sub_sleep_q2", ".RDS"))
 m_phq_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_phq_gam_sub_sleep_q3", ".RDS"))
 
-m_phq_gam_sub_sleep_short <- readRDS(paste0(outputdir, "m_phq_gam_sub_sleep_short", ".RDS"))
-m_phq_gam_sub_sleep_normal <- readRDS(paste0(outputdir, "m_phq_gam_sub_sleep_normal", ".RDS"))
-m_phq_gam_sub_sleep_long <- readRDS(paste0(outputdir, "m_phq_gam_sub_sleep_long", ".RDS"))
-
 m_gad_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_gad_gam_sub_sleep_q1", ".RDS"))
 m_gad_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_gad_gam_sub_sleep_q2", ".RDS"))
 m_gad_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_gad_gam_sub_sleep_q3", ".RDS"))
 
-m_gad_gam_sub_sleep_short <- readRDS(paste0(outputdir, "m_gad_gam_sub_sleep_short", ".RDS"))
-m_gad_gam_sub_sleep_normal <- readRDS(paste0(outputdir, "m_gad_gam_sub_sleep_normal", ".RDS"))
-m_gad_gam_sub_sleep_long <- readRDS(paste0(outputdir, "m_gad_gam_sub_sleep_long", ".RDS"))
-
-m_wellbeing_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_wellbeing_gam_sub_sleep_q1", ".RDS"))
-m_wellbeing_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_wellbeing_gam_sub_sleep_q2", ".RDS"))
-m_wellbeing_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_wellbeing_gam_sub_sleep_q3", ".RDS"))
-
-m_wellbeing_gam_sub_sleep_short <- readRDS(paste0(outputdir, "m_wellbeing_gam_sub_sleep_short", ".RDS"))
-m_wellbeing_gam_sub_sleep_normal <- readRDS(paste0(outputdir, "m_wellbeing_gam_sub_sleep_normal", ".RDS"))
-m_wellbeing_gam_sub_sleep_long <- readRDS(paste0(outputdir, "m_wellbeing_gam_sub_sleep_long", ".RDS"))
-
-m_dep_lifetime_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_dep_lifetime_gam_sub_sleep_q1", ".RDS"))
-m_dep_lifetime_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_dep_lifetime_gam_sub_sleep_q2", ".RDS"))
-m_dep_lifetime_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_dep_lifetime_gam_sub_sleep_q3", ".RDS"))
-
-m_dep_lifetime_gam_sub_sleep_short <- readRDS(paste0(outputdir, "m_dep_lifetime_gam_sub_sleep_short", ".RDS"))
-m_dep_lifetime_gam_sub_sleep_normal <- readRDS(paste0(outputdir, "m_dep_lifetime_gam_sub_sleep_normal", ".RDS"))
-m_dep_lifetime_gam_sub_sleep_long <- readRDS(paste0(outputdir, "m_dep_lifetime_gam_sub_sleep_long", ".RDS"))
-
-m_anx_lifetime_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_anx_lifetime_gam_sub_sleep_q1", ".RDS"))
-m_anx_lifetime_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_anx_lifetime_gam_sub_sleep_q2", ".RDS"))
-m_anx_lifetime_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_anx_lifetime_gam_sub_sleep_q3", ".RDS"))
-
-m_anx_lifetime_gam_sub_sleep_short <- readRDS(paste0(outputdir, "m_anx_lifetime_gam_sub_sleep_short", ".RDS"))
-m_anx_lifetime_gam_sub_sleep_normal <- readRDS(paste0(outputdir, "m_anx_lifetime_gam_sub_sleep_normal", ".RDS"))
-m_anx_lifetime_gam_sub_sleep_long <- readRDS(paste0(outputdir, "m_anx_lifetime_gam_sub_sleep_long", ".RDS"))
-
-m_psychosis_lifetime_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_psychosis_lifetime_gam_sub_sleep_q1", ".RDS"))
-m_psychosis_lifetime_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_psychosis_lifetime_gam_sub_sleep_q2", ".RDS"))
-m_psychosis_lifetime_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_psychosis_lifetime_gam_sub_sleep_q3", ".RDS"))
-
-m_psychosis_lifetime_gam_sub_sleep_short <- readRDS(paste0(outputdir, "m_psychosis_lifetime_gam_sub_sleep_short", ".RDS"))
-m_psychosis_lifetime_gam_sub_sleep_normal <- readRDS(paste0(outputdir, "m_psychosis_lifetime_gam_sub_sleep_normal", ".RDS"))
-m_psychosis_lifetime_gam_sub_sleep_long <- readRDS(paste0(outputdir, "m_psychosis_lifetime_gam_sub_sleep_long", ".RDS"))
-
-m_bipolar_lifetime_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_bipolar_lifetime_gam_sub_sleep_q1", ".RDS"))
-m_bipolar_lifetime_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_bipolar_lifetime_gam_sub_sleep_q2", ".RDS"))
-m_bipolar_lifetime_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_bipolar_lifetime_gam_sub_sleep_q3", ".RDS"))
-
-m_bipolar_lifetime_gam_sub_sleep_short <- readRDS(paste0(outputdir, "m_bipolar_lifetime_gam_sub_sleep_short", ".RDS"))
-m_bipolar_lifetime_gam_sub_sleep_normal <- readRDS(paste0(outputdir, "m_bipolar_lifetime_gam_sub_sleep_normal", ".RDS"))
-m_bipolar_lifetime_gam_sub_sleep_long <- readRDS(paste0(outputdir, "m_bipolar_lifetime_gam_sub_sleep_long", ".RDS"))
-
 # prep data ------------------
-sub_models_sleepg   <- c("m_phq_gam_sub_sleep_short", "m_phq_gam_sub_sleep_normal", "m_phq_gam_sub_sleep_long",
-                         "m_gad_gam_sub_sleep_short", "m_gad_gam_sub_sleep_normal", "m_gad_gam_sub_sleep_long",
-                         "m_wellbeing_gam_sub_sleep_short", "m_wellbeing_gam_sub_sleep_normal", "m_wellbeing_gam_sub_sleep_long",
-                         "m_dep_lifetime_gam_sub_sleep_short", "m_dep_lifetime_gam_sub_sleep_normal", "m_dep_lifetime_gam_sub_sleep_long",
-                         "m_anx_lifetime_gam_sub_sleep_short", "m_anx_lifetime_gam_sub_sleep_normal", "m_anx_lifetime_gam_sub_sleep_long",
-                         "m_psychosis_lifetime_gam_sub_sleep_short", "m_psychosis_lifetime_gam_sub_sleep_normal", "m_psychosis_lifetime_gam_sub_sleep_long"
+sub_models_sleepg   <- c("m_phq_gam_sub_sleep_q1", "m_phq_gam_sub_sleep_q2", "m_phq_gam_sub_sleep_q3",
+                         "m_gad_gam_sub_sleep_q1", "m_gad_gam_sub_sleep_q2", "m_gad_gam_sub_sleep_q3"
 )
 sub_models_resp   <- c("m_phq_gam_sub_sleep",
-                       "m_gad_gam_sub_sleep",
-                       "m_wellbeing_gam_sub_sleep",
-                       "m_dep_lifetime_gam_sub_sleep",
-                       "m_anx_lifetime_gam_sub_sleep",
-                       "m_psychosis_lifetime_gam_sub_sleep"
+                       "m_gad_gam_sub_sleep"
 )
-sleep_type <- c("_short", "_normal", "_long")
+sleep_type <- c("_q1", "_q2", "_q3")
 
 sub_models_all <- list()
 sub_models_sleepg_type <- list()
@@ -86,32 +30,32 @@ for(i in seq_along(sub_models_resp)) {
     
     sleep_tye_j <- sleep_type[[j]]
     
-    sleep_period <- if (j == 1) ("Short Sleepers") else if (j == 2) ("Normal Sleepers") else ("Long Sleepers")
+    sleep_period <- if (j == 1) ("Short Sleepers (Q1)") else if (j == 2) ("Normal Sleepers (Q2)") else ("Long Sleepers (Q3)")
     model_tmp <- get(paste0(sub_model_i, sleep_tye_j))
     model_tmp <- as.data.table(summary(model_tmp, delta = c(-20:20), level = "combined", digits = "asis"))
     
     model_tmp[, SleepPeriod := sleep_period]
     
     model_tmp[, From := ifelse(From == "mvpa_comp", "MVPA", From)]
-    model_tmp[, From := ifelse(From == "lpa_comp", "LPA", From)]
-    model_tmp[, From := ifelse(From == "sb_comp", "SB", From)]
+    model_tmp[, From := ifelse(From == "lpa_comp", "LPA ", From)]
+    model_tmp[, From := ifelse(From == "sb_comp", " SB ", From)]
     model_tmp[, From := ifelse(From == "sleep_comp", "Sleep", From)]
     model_tmp[, From := factor(From, ordered = TRUE,
                                levels = c("Sleep",
                                           "MVPA",
-                                          "LPA",
-                                          "SB"))]
+                                          "LPA ",
+                                          " SB "))]
     
     
     model_tmp[, To := ifelse(To == "mvpa_comp", "MVPA", To)]
-    model_tmp[, To := ifelse(To == "lpa_comp", "LPA", To)]
-    model_tmp[, To := ifelse(To == "sb_comp", "SB", To)]
+    model_tmp[, To := ifelse(To == "lpa_comp", "LPA ", To)]
+    model_tmp[, To := ifelse(To == "sb_comp", " SB ", To)]
     model_tmp[, To := ifelse(To == "sleep_comp", "Sleep", To)]
     model_tmp[, To := factor(To, ordered = TRUE,
                              levels = c("Sleep",
                                         "MVPA",
-                                        "LPA",
-                                        "SB"))]
+                                        "LPA ",
+                                        " SB "))]
     
     model_tmp$sig <- between(0, model_tmp$CI_low, model_tmp$CI_high)
     model_tmp[, Sig := NA]
@@ -121,9 +65,9 @@ for(i in seq_along(sub_models_resp)) {
   }
   sub_models_sleepg_type_i  <- rbindlist(sub_models_sleepg_type)
   sub_models_sleepg_type_i[, SleepPeriod := factor(SleepPeriod, ordered = TRUE,
-                                                   levels = c("Short Sleepers",
-                                                              "Normal Sleepers",
-                                                              "Long Sleepers"))]
+                                                   levels = c("Short Sleepers (Q1)",
+                                                              "Normal Sleepers (Q2)",
+                                                              "Long Sleepers (Q3)"))]
   sub_models_all[[i]] <- sub_models_sleepg_type_i
 }
 names(sub_models_all) <- (sub_models_resp)
@@ -135,24 +79,34 @@ extrafont::loadfonts()
 # scales::show_col(tvthemes:::hilda_palette)
 
 col <- c(
-  `Sleep` = "#5A6367",
-  `MVPA` = "#708885",
-  `LPA` = "#978787",
-  `SB` = "#FAD899"
+  # `Sleep` = "#5A6367",
+  `Short Sleepers (Q1)` = "#52796f",
+  `Normal Sleepers (Q2)` = "#A69188",
+  `Long Sleepers (Q3)` = "#FAD899"
 )
 
 colf <- c(
-  `Sleep` = "#83A192",
-  `MVPA` = "#AFC7BB",
-  `LPA` = "#DCD5CE",
-  `SB` = "#FAD899"
+  `Short Sleepers (Q1)` = "#83A192",
+  # `MVPA` = "#AFC7BB",
+  `Normal Sleepers (Q2)` = "#DCD5CE",
+  `Long Sleepers (Q3)` = "#FAD899"
 )
 
-# labels <- c("Sleep" = bquote(Sleep %<-% phantom() %->% .(rg_phq[i, "parts"])), 
-#             "MVPA" = bquote(MVPA %<-% phantom() %->% .(rg_phq[i, "parts"])), 
-#             "LPA" = bquote(LPA %<-% phantom() %->% .(rg_phq[i, "parts"])), 
-#             "SB" = bquote(SB %<-% phantom() %->% .(rg_phq[i, "parts"]))
+
+# col <- c(
+#   # `Sleep` = "#5A6367",
+#   `Short Sleepers (Q1)` = "#647F9A",
+#   `Normal Sleepers (Q2)` = "#978787",
+#   `Long Sleepers (Q3)` = "#ba6c6e"
 # )
+# 
+# colf <- c(
+#   `Short Sleepers (Q1)` = "#ADC7DA",
+#   # `MVPA` = "#AFC7BB",
+#   `Normal Sleepers (Q2)` = "#DCD5CE",
+#   `Long Sleepers (Q3)` = "#E3C9C9"
+# )
+
 
 labeller <- function(variable, value) {
   return(names[value])
@@ -160,11 +114,11 @@ labeller <- function(variable, value) {
 alpha <- 2/10
 
 # make a grid to loop plots
-parts          <- c("Sleep", "MVPA", "LPA", "SB")
+parts          <- c("Sleep", "MVPA", "LPA ", " SB ")
 part_labels    <- c("Sleep", "MVPA", 
-                    "LPA", "SB")
+                    "LPA ", " SB ")
 
-# phq ----------------
+# phq by sleep period----------------
 sub_models_phq <- grep("phq", names(sub_models_all), value = T)
 phq            <- "Depressive Symptoms"
 rg_phq <- expand.grid.df(data.frame(sub_models_phq, phq), 
@@ -172,32 +126,31 @@ rg_phq <- expand.grid.df(data.frame(sub_models_phq, phq),
 
 phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
                    .packages = "multilevelcoda") %dopar% {
-
+                     
                      ggplot(sub_models_all[[rg_phq[i, "sub_models_phq"]]][To == eval(rg_phq[i, "parts"])], aes(x = Delta, y = Mean)) +
                        geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
                        geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
                        geom_ribbon(aes(ymin = CI_low,
-                                       ymax = CI_high, fill = From),
+                                       ymax = CI_high, fill = SleepPeriod),
                                    alpha = 1/10, show.legend = TRUE) +
-                       geom_line(aes(colour = From), linewidth = 1, show.legend = TRUE) +
-                       geom_text(aes(label = Sig, colour = From),
+                       geom_line(aes(colour = SleepPeriod), linewidth = 1, show.legend = TRUE) +
+                       geom_text(aes(label = Sig, colour = SleepPeriod),
                                  size = 5.5, 
-                                 position = ggpp::position_nudge_center(
-                                   center_x = 0, x = 3, 
-                                   y = 0),
+                                 position = ggpp::position_nudge_center(center_x = 0, x = 3, 
+                                                                        y = 0.005),
                                  show.legend = FALSE) +
-                       facet_wrap(~ SleepPeriod) +
+                       facet_wrap(ggplot2::vars(From, To),
+                                  labeller = label_bquote(cols = More ~ .(as.character(From)) %<-% phantom(very) %->% More ~ .(as.character(To))),
+                                  strip.position = "bottom") +
                        labs(x = bquote(Less ~ .(rg_phq[i, "parts"]) %<-% phantom(veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong) %->% More ~ .(rg_phq[i, "parts"])),
                             y = paste0("Difference in ", rg_phq[i, "phq"])) +
                        scale_x_continuous(limits = c(-23, 23),
-                                          breaks = c(-20, -10, 0, 10, 20)) +
-                       scale_y_continuous(limits = c(-0.35, 1),
-                                          breaks = c(-0.25, 0, 0.25, 0.5, 0.75, 1)) +
+                                          breaks = c(-20, 0, 20)) +
+                       scale_y_continuous(limits = c(-0.35, 0.65),
+                                          breaks = c(-0.25, 0, 0.25, 0.5)) +
                        scale_colour_manual(values = col,
-                                           name = "At the expense of",
                                            drop = FALSE) +
                        scale_fill_manual(values = colf,
-                                         name = "At the expense of",
                                          drop = FALSE) +
                        hrbrthemes::theme_ipsum(grid="Y") +
                        theme(
@@ -208,12 +161,13 @@ phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
                          panel.grid.minor  = element_blank(),
                          plot.background   = element_rect(fill = "transparent", colour = NA),
                          strip.background  = element_rect(fill = "transparent", colour = NA),
-                         strip.text        = if (i == 1) (element_text(size = 14, face = "bold", hjust = .5)) else (element_blank()),
-                         axis.title.x      = element_text(size = 14, face = "bold", hjust = .5),
+                         strip.text        = element_text(size = 12, face = "bold", hjust = .5),
+                         strip.placement   = "outside",
+                         axis.title.x      = element_blank(),
                          axis.title.y      = element_blank(),
                          plot.margin       = margin(.5, .5, .5, .5, "cm"),
-                         legend.title      = element_text(size = 13, hjust = .5),
-                         legend.text       = element_text(size = 13, hjust = .5),
+                         legend.title      = element_blank(),
+                         legend.text       = element_text(size = 13, face = "bold", hjust = .5),
                          legend.position   = "bottom"
                        )
                      
@@ -229,7 +183,7 @@ saveRDS(phq_24h, paste0(outputdir, "phq_24h", ".RDS"))
 grDevices::cairo_pdf(
   file = paste0(outputdir, "phq_24h", ".pdf"),
   width = 9,
-  height = 13,
+  height = 12,
 )
 
 figure <- ggarrange(phq_24h[[1]], phq_24h[[2]], 
@@ -239,20 +193,11 @@ figure <- ggarrange(phq_24h[[1]], phq_24h[[2]],
                     legend   = "bottom"
 )
 annotate_figure(figure, left = text_grob("Estimated Difference in Depressive Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
-
 dev.off()
 
-grDevices::cairo_pdf(
-  file = paste0(outputdir, "phq_24h_mvpa", ".pdf"),
-  width = 9,
-  height = 12,
-)
-phq_24h[[2]]
-dev.off()
-
-# gad ----------------
+# gad by sleep period----------------
 sub_models_gad <- grep("gad", names(sub_models_all), value = T)
-gad            <- "Anxiety Symptoms"
+gad            <- "Depressive Symptoms"
 rg_gad <- expand.grid.df(data.frame(sub_models_gad, gad), 
                          data.frame(parts, part_labels))
 
@@ -263,22 +208,28 @@ gad_24h <- foreach(i = seq_len(nrow(rg_gad)),
                        geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
                        geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
                        geom_ribbon(aes(ymin = CI_low,
-                                       ymax = CI_high, fill = From),
-                                   alpha = alpha) +
-                       geom_line(aes(colour = From), linewidth = 1) +
-                       geom_text(aes(label = Sig, colour = From),
-                                 size = 6, nudge_x = 0.05, nudge_y = 0.1,
+                                       ymax = CI_high, fill = SleepPeriod),
+                                   alpha = 1/10, show.legend = TRUE) +
+                       geom_line(aes(colour = SleepPeriod), linewidth = 1, show.legend = TRUE) +
+                       geom_text(aes(label = Sig, colour = SleepPeriod),
+                                 size = 5.5, 
+                                 position = ggpp::position_nudge_center(center_x = 0, x = 3, 
+                                                                        y = 0.005),
                                  show.legend = FALSE) +
-                       facet_wrap(ggplot2::vars(SleepPeriod, From)) +
-                       scale_colour_manual(values = col) +
-                       scale_fill_manual(values = colf) +
-                       labs(x = paste0("Reallocation of Time between ", rg_gad[i, "part_labels"], " and Other Behaviours"),
+                       facet_wrap(ggplot2::vars(From, To),
+                                  labeller = label_bquote(cols = More ~ .(as.character(From)) %<-% phantom(very) %->% More ~ .(as.character(To))),
+                                  strip.position = "bottom") +
+                       labs(x = bquote(Less ~ .(rg_gad[i, "parts"]) %<-% phantom(veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong) %->% More ~ .(rg_gad[i, "parts"])),
                             y = paste0("Difference in ", rg_gad[i, "gad"])) +
-                       scale_x_continuous(limits = c(-20, 20),
+                       scale_x_continuous(limits = c(-23, 23),
                                           breaks = c(-20, 0, 20)) +
-                       scale_y_continuous(limits = c(-0.75, 0.75),
-                                          breaks = c(-0.5, 0, 0.5)) +
-                       hrbrthemes::theme_ipsum() +
+                       scale_y_continuous(limits = c(-0.35, 0.65),
+                                          breaks = c(-0.25, 0, 0.25, 0.5)) +
+                       scale_colour_manual(values = col,
+                                           drop = FALSE) +
+                       scale_fill_manual(values = colf,
+                                         drop = FALSE) +
+                       hrbrthemes::theme_ipsum(grid="Y") +
                        theme(
                          axis.ticks        = element_blank(),
                          panel.background  = element_blank(),
@@ -286,12 +237,17 @@ gad_24h <- foreach(i = seq_len(nrow(rg_gad)),
                          panel.grid.major  = element_blank(),
                          panel.grid.minor  = element_blank(),
                          plot.background   = element_rect(fill = "transparent", colour = NA),
-                         # strip.text = element_blank(),
-                         axis.title.x      = element_text(size = 14, face = "bold", hjust = .5),
-                         axis.title.y      = element_text(size = 14, face = "bold", hjust = .5),
-                         plot.margin = margin(.5, .5, .5, .5, "cm"),
-                         legend.position = "none"
+                         strip.background  = element_rect(fill = "transparent", colour = NA),
+                         strip.text        = element_text(size = 12, face = "bold", hjust = .5),
+                         strip.placement   = "outside",
+                         axis.title.x      = element_blank(),
+                         axis.title.y      = element_blank(),
+                         plot.margin       = margin(.5, .5, .5, .5, "cm"),
+                         legend.title      = element_blank(),
+                         legend.text       = element_text(size = 13, face = "bold", hjust = .5),
+                         legend.position   = "bottom"
                        )
+                     
                    }
 
 names(gad_24h) <- foreach(i = seq_len(nrow(rg_gad))) %dopar% {
@@ -302,17 +258,17 @@ gad_24h
 saveRDS(gad_24h, paste0(outputdir, "gad_24h", ".RDS"))
 
 grDevices::cairo_pdf(
-  file = paste0(outputdir, "gad_24h_sleep", ".pdf"),
+  file = paste0(outputdir, "gad_24h", ".pdf"),
   width = 9,
   height = 12,
 )
-gad_24h[[1]]
+
+figure <- ggarrange(gad_24h[[1]], gad_24h[[2]], 
+                    gad_24h[[3]], gad_24h[[4]], 
+                    nrow = 4,
+                    common.legend = TRUE,
+                    legend   = "bottom"
+)
+annotate_figure(figure, left = text_grob("Estimated Difference in Anxiety Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
 dev.off()
 
-grDevices::cairo_pdf(
-  file = paste0(outputdir, "gad_24h_mvpa", ".pdf"),
-  width = 9,
-  height = 12,
-)
-gad_24h[[2]]
-dev.off()
