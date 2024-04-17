@@ -66,7 +66,6 @@ summary(m_phq_gam_sub_sleep_q1, delta = 25)
 summary(m_phq_gam_sub_sleep_q2, delta = 25)
 summary(m_phq_gam_sub_sleep_q3, delta = 25)
 
-
 ## gad - quantile sleep ----------------------
 m_gad_gam_sub_sleep_q1 <- substitution(
   m_gad_gam_sleep_q1,

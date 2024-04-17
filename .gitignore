@@ -40,3 +40,5 @@ vignettes/*.pdf
 m3/m3-helpers.txt
 
 ukb-24h-mh.Rproj
+
+.RDataTmp

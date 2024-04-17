@@ -79,19 +79,15 @@ extrafont::loadfonts()
 # scales::show_col(tvthemes:::hilda_palette)
 
 col <- c(
-  # `Sleep` = "#5A6367",
-  `Short Sleepers (Q1)` = "#52796f",
-  `Normal Sleepers (Q2)` = "#A69188",
-  `Long Sleepers (Q3)` = "#FAD899"
+  `Short Sleepers (Q1)` = "#456691",
+  `Normal Sleepers (Q2)` = "#8AAFCA",
+  `Long Sleepers (Q3)` = "#978787"
 )
-
 colf <- c(
-  `Short Sleepers (Q1)` = "#83A192",
-  # `MVPA` = "#AFC7BB",
-  `Normal Sleepers (Q2)` = "#DCD5CE",
-  `Long Sleepers (Q3)` = "#FAD899"
+  `Short Sleepers (Q1)` = "#8399AE",
+  `Normal Sleepers (Q2)` = "#A1B2C2",
+  `Long Sleepers (Q3)` = "#DCD5CE"
 )
-
 
 # col <- c(
 #   # `Sleep` = "#5A6367",
@@ -139,8 +135,9 @@ phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
                                  position = ggpp::position_nudge_center(center_x = 0, x = 3, 
                                                                         y = 0.005),
                                  show.legend = FALSE) +
+                       # facet_wrap(~ From, strip.position = "left") +
                        facet_wrap(ggplot2::vars(From, To),
-                                  labeller = label_bquote(cols = More ~ .(as.character(From)) %<-% phantom(very) %->% More ~ .(as.character(To))),
+                                  labeller = label_bquote(cols = .(as.character(From)) %<-% phantom(veryveryveryvery) %->% .(as.character(To))),
                                   strip.position = "bottom") +
                        labs(x = bquote(Less ~ .(rg_phq[i, "parts"]) %<-% phantom(veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong) %->% More ~ .(rg_phq[i, "parts"])),
                             y = paste0("Difference in ", rg_phq[i, "phq"])) +
@@ -216,8 +213,9 @@ gad_24h <- foreach(i = seq_len(nrow(rg_gad)),
                                  position = ggpp::position_nudge_center(center_x = 0, x = 3, 
                                                                         y = 0.005),
                                  show.legend = FALSE) +
+                       # facet_wrap(~ From, strip.position = "left") +
                        facet_wrap(ggplot2::vars(From, To),
-                                  labeller = label_bquote(cols = More ~ .(as.character(From)) %<-% phantom(very) %->% More ~ .(as.character(To))),
+                                  labeller = label_bquote(cols = .(as.character(From)) %<-% phantom(veryveryveryvery) %->% .(as.character(To))),
                                   strip.position = "bottom") +
                        labs(x = bquote(Less ~ .(rg_gad[i, "parts"]) %<-% phantom(veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong) %->% More ~ .(rg_gad[i, "parts"])),
                             y = paste0("Difference in ", rg_gad[i, "gad"])) +
@@ -271,4 +269,3 @@ figure <- ggarrange(gad_24h[[1]], gad_24h[[2]],
 )
 annotate_figure(figure, left = text_grob("Estimated Difference in Anxiety Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
 dev.off()
-
