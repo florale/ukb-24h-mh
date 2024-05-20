@@ -10,6 +10,10 @@ d_acc_mhq <- Reduce(function(x, y) merge(x, y, by = "eid", all = TRUE), list(d_a
 d_acc_mhq <- d_acc_mhq[acc_data_quality == "Yes"]
 d_acc_mhq <- d_acc_mhq[, -colnames(ilr_acc), with = FALSE]
 
+# phq without sleep item
+phq8_v <- c("p20514", "p20510", "p20519", "p20511", "p20507", "p20508", "p20518", "p20513")
+d_acc_mhq[, phq8 := rowMeans(.SD) * 8, .SDcols = phd8_v]
+
 ## complr
 clr_acc_mhq <- complr(data = d_acc_mhq,
                       transform = "ilr",
