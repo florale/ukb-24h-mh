@@ -11,15 +11,12 @@ m_gad_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_gad_gam_sub_sleep_q2", ".
 m_gad_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_gad_gam_sub_sleep_q3", ".RDS"))
 
 # prep data ------------------
-sub_models_sleepg   <- c("m_phq_gam_sub_sleep_q1", "m_phq_gam_sub_sleep_q2", "m_phq_gam_sub_sleep_q3",
-                         "m_gad_gam_sub_sleep_q1", "m_gad_gam_sub_sleep_q2", "m_gad_gam_sub_sleep_q3"
-)
 sub_models_resp   <- c("m_phq_gam_sub_sleep",
                        "m_gad_gam_sub_sleep"
 )
 sleep_type <- c("_q1", "_q2", "_q3")
 
-sub_models_all <- list()
+sub_models <- list()
 sub_models_sleepg_type <- list()
 
 for(i in seq_along(sub_models_resp)) {
@@ -30,7 +27,7 @@ for(i in seq_along(sub_models_resp)) {
     
     sleep_tye_j <- sleep_type[[j]]
     
-    sleep_period <- if (j == 1) ("Short Sleepers (Q1)") else if (j == 2) ("Normal Sleepers (Q2)") else ("Long Sleepers (Q3)")
+    sleep_period <- if (j == 1) ("Short Sleep Period (Q1)") else if (j == 2) ("Medium Sleep Period (Q2 and Q3)") else ("Long Sleep Period (Q4)")
     model_tmp <- get(paste0(sub_model_i, sleep_tye_j))
     model_tmp <- as.data.table(summary(model_tmp, delta = c(-20:20), level = "combined", digits = "asis"))
     
@@ -65,48 +62,25 @@ for(i in seq_along(sub_models_resp)) {
   }
   sub_models_sleepg_type_i  <- rbindlist(sub_models_sleepg_type)
   sub_models_sleepg_type_i[, SleepPeriod := factor(SleepPeriod, ordered = TRUE,
-                                                   levels = c("Short Sleepers (Q1)",
-                                                              "Normal Sleepers (Q2)",
-                                                              "Long Sleepers (Q3)"))]
-  sub_models_all[[i]] <- sub_models_sleepg_type_i
+                                                   levels = c("Short Sleep Period (Q1)",
+                                                              "Medium Sleep Period (Q2 and Q3)",
+                                                              "Long Sleep Period (Q4)"))]
+  sub_models[[i]] <- sub_models_sleepg_type_i
 }
-names(sub_models_all) <- (sub_models_resp)
+names(sub_models) <- (sub_models_resp)
 
-# other plot add ins ----------------
-extrafont::loadfonts()
-
-# scales::show_col(tvthemes:::brooklyn99_palette$Dark)
-# scales::show_col(tvthemes:::hilda_palette)
-
+# plot add ins ----------------
 col <- c(
-  `Short Sleepers (Q1)` = "#456691",
-  `Normal Sleepers (Q2)` = "#8AAFCA",
-  `Long Sleepers (Q3)` = "#978787"
+  `Short Sleep Period (Q1)` = "#456691",
+  `Medium Sleep Period (Q2 and Q3)` = "#8AAFCA",
+  `Long Sleep Period (Q4)` = "#978787"
 )
 colf <- c(
-  `Short Sleepers (Q1)` = "#8399AE",
-  `Normal Sleepers (Q2)` = "#A1B2C2",
-  `Long Sleepers (Q3)` = "#DCD5CE"
+  `Short Sleep Period (Q1)` = "#8399AE",
+  `Medium Sleep Period (Q2 and Q3)` = "#A1B2C2",
+  `Long Sleep Period (Q4)` = "#DCD5CE"
 )
 
-# col <- c(
-#   # `Sleep` = "#5A6367",
-#   `Short Sleepers (Q1)` = "#647F9A",
-#   `Normal Sleepers (Q2)` = "#978787",
-#   `Long Sleepers (Q3)` = "#ba6c6e"
-# )
-# 
-# colf <- c(
-#   `Short Sleepers (Q1)` = "#ADC7DA",
-#   # `MVPA` = "#AFC7BB",
-#   `Normal Sleepers (Q2)` = "#DCD5CE",
-#   `Long Sleepers (Q3)` = "#E3C9C9"
-# )
-
-
-labeller <- function(variable, value) {
-  return(names[value])
-}
 alpha <- 2/10
 
 # make a grid to loop plots
@@ -115,7 +89,7 @@ part_labels    <- c("Sleep", "MVPA",
                     "LPA ", " SB ")
 
 # phq by sleep period----------------
-sub_models_phq <- grep("phq", names(sub_models_all), value = T)
+sub_models_phq <- grep("phq", names(sub_models), value = T)
 phq            <- "Depressive Symptoms"
 rg_phq <- expand.grid.df(data.frame(sub_models_phq, phq), 
                          data.frame(parts, part_labels))
@@ -123,7 +97,7 @@ rg_phq <- expand.grid.df(data.frame(sub_models_phq, phq),
 phq_24h <- foreach(i = seq_len(nrow(rg_phq)),
                    .packages = "multilevelcoda") %dopar% {
                      
-                     ggplot(sub_models_all[[rg_phq[i, "sub_models_phq"]]][To == eval(rg_phq[i, "parts"])], aes(x = Delta, y = Mean)) +
+                     ggplot(sub_models[[rg_phq[i, "sub_models_phq"]]][To == eval(rg_phq[i, "parts"])], aes(x = Delta, y = Mean)) +
                        geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
                        geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
                        geom_ribbon(aes(ymin = CI_low,
@@ -193,7 +167,7 @@ annotate_figure(figure, left = text_grob("Estimated Difference in Depressive Sym
 dev.off()
 
 # gad by sleep period----------------
-sub_models_gad <- grep("gad", names(sub_models_all), value = T)
+sub_models_gad <- grep("gad", names(sub_models), value = T)
 gad            <- "Depressive Symptoms"
 rg_gad <- expand.grid.df(data.frame(sub_models_gad, gad), 
                          data.frame(parts, part_labels))
@@ -201,7 +175,7 @@ rg_gad <- expand.grid.df(data.frame(sub_models_gad, gad),
 gad_24h <- foreach(i = seq_len(nrow(rg_gad)),
                    .packages = "multilevelcoda") %dopar% {
                      
-                     ggplot(sub_models_all[[rg_gad[i, "sub_models_gad"]]][To == eval(rg_gad[i, "parts"])], aes(x = Delta, y = Mean)) +
+                     ggplot(sub_models[[rg_gad[i, "sub_models_gad"]]][To == eval(rg_gad[i, "parts"])], aes(x = Delta, y = Mean)) +
                        geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
                        geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
                        geom_ribbon(aes(ymin = CI_low,

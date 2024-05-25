@@ -6,10 +6,10 @@ if (local) {
   source("ukb-24h-mh-utils.R")
   source(paste0(redir, "ukb_utils.R"))
   
-  clr_acc_mhq <- readRDS(paste0(inputdir, "clr_acc_mhq", "RDS"))
-  clr_acc_mhq_sleep_q1 <- readRDS(paste0(inputdir, "clr_acc_mhq_sleep_q1", "RDS"))
-  clr_acc_mhq_sleep_q2 <- readRDS(paste0(inputdir, "clr_acc_mhq_sleep_q2", "RDS"))
-  clr_acc_mhq_sleep_q3 <- readRDS(paste0(inputdir, "clr_acc_mhq_sleep_q3", "RDS"))
+  clr_acc_mhq <- readRDS(paste0(inputdir, "clr_acc_mhq", ".RDS"))
+  clr_acc_mhq_sleep_q1 <- readRDS(paste0(inputdir, "clr_acc_mhq_sleep_q1", ".RDS"))
+  clr_acc_mhq_sleep_q2 <- readRDS(paste0(inputdir, "clr_acc_mhq_sleep_q2", ".RDS"))
+  clr_acc_mhq_sleep_q3 <- readRDS(paste0(inputdir, "clr_acc_mhq_sleep_q3", ".RDS"))
   
   
 } else {
@@ -145,3 +145,35 @@ m_gad_gam_sleep_long <- brmcoda(clr_acc_mhq_sleep_long,
                                 backend = "cmdstanr"
 )
 saveRDS(m_gad_gam_sleep_long, paste0(outputdir, "m_gad_gam_sleep_long", ".RDS"))
+
+# dep_lifetime - quantile sleep ----------------------
+m_dep_lifetime_gam_sleep_q1 <- brmcoda(clr_acc_mhq_sleep_q1,
+                                       dep_lifetime ~ 
+                                         s(ilr1) + s(ilr2) + s(ilr3) +
+                                         age + sex + white + working + edu + smoking + alcohol + deprivation, 
+                                       family = bernoulli(),
+                                       chains = 4, cores = 4,
+                                       backend = "cmdstanr"
+)
+saveRDS(m_dep_lifetime_gam_sleep_q1, paste0(outputdir, "m_dep_lifetime_gam_sleep_q1", ".RDS"))
+
+m_dep_lifetime_gam_sleep_q2 <- brmcoda(clr_acc_mhq_sleep_q2,
+                                       dep_lifetime ~ 
+                                         s(ilr1) + s(ilr2) + s(ilr3) +
+                                         age + sex + white + working + edu + smoking + alcohol + deprivation, 
+                                       family = bernoulli(link = "logit"),
+                                       chains = 4, cores = 4,
+                                       backend = "cmdstanr"
+)
+saveRDS(m_dep_lifetime_gam_sleep_q2, paste0(outputdir, "m_dep_lifetime_gam_sleep_q2", ".RDS"))
+
+m_dep_lifetime_gam_sleep_q3 <- brmcoda(clr_acc_mhq_sleep_q3,
+                                       dep_lifetime ~ 
+                                         s(ilr1) + s(ilr2) + s(ilr3) +
+                                         age + sex + white + working + edu + smoking + alcohol + deprivation, 
+                                       family = bernoulli(link = "logit"),
+                                       chains = 4, cores = 4,
+                                       backend = "cmdstanr"
+)
+saveRDS(m_dep_lifetime_gam_sleep_q3, paste0(outputdir, "m_dep_lifetime_gam_sleep_q3", ".RDS"))
+

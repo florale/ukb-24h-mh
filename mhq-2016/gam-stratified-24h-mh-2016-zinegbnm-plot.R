@@ -70,6 +70,17 @@ for(i in seq_along(sub_models_resp)) {
 names(sub_models_zinegbnm) <- (sub_models_resp)
 
 # plot add ins ----------------
+# col <- c(
+#   `Short Sleep Period (Q1)` = "#03396c",
+#   `Medium Sleep Period (Q2 and Q3)` = "#978787",
+#   `Long Sleep Period (Q4)` = "#8AAFCA" 
+# )
+# colf <- c(
+#   `Short Sleep Period (Q1)` = "#6497b1",
+#   `Medium Sleep Period (Q2 and Q3)` = "#DCD5CE",
+#   `Long Sleep Period (Q4)` = "#b3cde0"
+# )
+
 col <- c(
   `Short Sleep Period (Q1)` = "#456691",
   `Medium Sleep Period (Q2 and Q3)` = "#978787",
@@ -117,7 +128,7 @@ phq_24h_zinegbnm <- foreach(i = seq_len(nrow(rg_phq)),
                                      y = paste0("Difference in ", rg_phq[i, "phq"])) +
                                 scale_x_continuous(limits = c(-23, 23),
                                                    breaks = c(-20, 0, 20)) +
-                                scale_y_continuous(limits = c(-0.35, 0.65),
+                                scale_y_continuous(limits = c(-0.4, 0.7),
                                                    breaks = c(-0.25, 0, 0.25, 0.5)) +
                                 scale_colour_manual(values = col,
                                                     drop = FALSE) +
@@ -154,7 +165,7 @@ saveRDS(phq_24h_zinegbnm, paste0(outputdir, "phq_24h_zinegbnm", ".RDS"))
 grDevices::cairo_pdf(
   file = paste0(outputdir, "phq_24h_zinegbnm", ".pdf"),
   width = 9,
-  height = 12,
+  height = 12.5,
 )
 
 figure <- ggarrange(phq_24h_zinegbnm[[1]], phq_24h_zinegbnm[[2]], 
@@ -232,7 +243,7 @@ saveRDS(gad_24h_zinegbnm, paste0(outputdir, "gad_24h_zinegbnm", ".RDS"))
 grDevices::cairo_pdf(
   file = paste0(outputdir, "gad_24h_zinegbnm", ".pdf"),
   width = 9,
-  height = 12,
+  height = 12.5,
 )
 
 figure <- ggarrange(gad_24h_zinegbnm[[1]], gad_24h_zinegbnm[[2]], 

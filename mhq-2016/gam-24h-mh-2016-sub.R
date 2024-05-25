@@ -6,8 +6,6 @@ if (local) {
   source("ukb-24h-mh-utils.R")
   source(paste0(redir, "ukb_utils.R"))
   
-  clr_acc_mhq <- readRDS(paste0(inputdir, "clr_acc_mhq.RDS"))
-  
 } else {
   library(data.table)
   library(extraoperators)
@@ -25,7 +23,6 @@ if (local) {
   library(loo)
   
   outputdir <- ""
-  clr_acc_mhq <- readRDS(paste0(outputdir, "clr_acc_mhq.RDS"))
 }
 
 m_phq_gam <- readRDS(paste0(outputdir, "m_phq_gam", ".RDS"))
