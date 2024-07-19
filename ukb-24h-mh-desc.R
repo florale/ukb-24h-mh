@@ -1,0 +1,67 @@
+source("ukb-24h-mh-data.R")
+
+# descriptives
+table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.75, 1)))) #
+
+# n complete
+nrow(d_acc_mhq_2016[!is.na(p20400)]) # 66972
+nrow(d_acc_mhq_2023[!is.na(p28755)]) # 68331
+
+egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
+           "edu", "working", "deprivation",
+           "smoking", "never_smoked",
+           "alcohol","current_drinker",
+           "sleep", "mvpa", "lpa", "sb",
+           "phq_2016", "gad_2016",
+           "insomnia_2016"
+           ), strict = FALSE, data = clr_acc_mhq$data)
+
+egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
+           "edu", "working", "deprivation",
+           "smoking", "never_smoked",
+           "alcohol","current_drinker",
+           "sleep", "mvpa", "lpa", "sb",
+           "phq_2016", "gad_2016",
+           "insomnia_2016"
+), strict = FALSE, data = clr_acc_mhq_sleep_q1$data)
+
+egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
+           "edu", "working", "deprivation",
+           "smoking", "never_smoked",
+           "alcohol","current_drinker",
+           "sleep", "mvpa", "lpa", "sb",
+           "phq_2016", "gad_2016",
+           "insomnia_2016"
+), strict = FALSE, data = clr_acc_mhq_sleep_q2$data)
+
+egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
+           "edu", "working", "deprivation",
+           "smoking", "never_smoked",
+           "alcohol","current_drinker",
+           "sleep", "mvpa", "lpa", "sb",
+           "phq_2016", "gad_2016",
+           "insomnia_2016"
+), strict = FALSE, data = clr_acc_mhq_sleep_q3$data)
+
+nrow(clr_acc_mhq$data[!is.na(age)])
+nrow(clr_acc_mhq$data[!is.na(sex)])
+nrow(clr_acc_mhq$data[!is.na(ethnicg)])
+nrow(clr_acc_mhq$data[!is.na(bmig)])
+nrow(clr_acc_mhq$data[!is.na(edu)])
+nrow(clr_acc_mhq$data[!is.na(working)])
+nrow(clr_acc_mhq$data[!is.na(deprivation)])
+nrow(clr_acc_mhq$data[!is.na(smoking)])
+nrow(clr_acc_mhq$data[!is.na(alcohol)])
+
+nrow(clr_acc_mhq$data[!is.na(sleep)])
+nrow(clr_acc_mhq$data[!is.na(mvpa)])
+nrow(clr_acc_mhq$data[!is.na(lpa)])
+nrow(clr_acc_mhq$data[!is.na(sb)])
+
+nrow(clr_acc_mhq$data[!is.na(phq_2016)])
+nrow(clr_acc_mhq$data[!is.na(gad_2016)])
+
+nrow(clr_acc_mhq$data[!is.na(dep_lifetime)])
+nrow(clr_acc_mhq$data[!is.na(anx_lifetime)])
+
+table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.75, 1)))) #
