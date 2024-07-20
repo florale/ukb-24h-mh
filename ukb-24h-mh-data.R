@@ -106,6 +106,8 @@ d_acc_mhq <- merge(d_acc_mhq, d_acc_mhq_2023[, .(
 d_acc_mhq <- d_acc_mhq[acc_data_quality == "Yes"]
 d_acc_mhq <- d_acc_mhq[, -colnames(ilr_acc), with = FALSE]
 
+d_acc_mhq[, age_at_acc := year(acc_startdate) - year_birth]
+
 quantile_sleep <- quantile(d_acc_mhq$sleep, c (0, 0.25, 0.75, 1))
 
 # d_acc_mhq[, sleep_quantile := NA]
