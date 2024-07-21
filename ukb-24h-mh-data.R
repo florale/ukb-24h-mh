@@ -148,6 +148,41 @@ clr_acc_mhq_sleep_q3 <- complr(data = d_acc_mhq[sleep >= quantile_sleep[[3]]],
                                sbp = sbp,
                                total = 1440)
 
+
+clr_acc_mhq_goodsleep <- complr(data = d_acc_mhq[insomnia_2016 == "good sleep"],
+                                transform = "ilr",
+                                parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                sbp = sbp,
+                                total = 1440)
+clr_acc_mhq_insomnia_mild <- complr(data = d_acc_mhq[insomnia_2016 == "mild"],
+                                    transform = "ilr",
+                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                    sbp = sbp,
+                                    total = 1440)
+clr_acc_mhq_insomnia_persistent <- complr(data = d_acc_mhq[insomnia_2016 %in% c("moderate", "severe")],
+                                                transform = "ilr",
+                                                parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                sbp = sbp,
+                                                total = 1440)
+
+
+clr_acc_mhq_2023_goodsleep <- complr(data = d_acc_mhq[insomnia_2023 == "good sleep"],
+                                     transform = "ilr",
+                                     parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                     sbp = sbp,
+                                     total = 1440)
+clr_acc_mhq_2023_insomnia_mild <- complr(data = d_acc_mhq[insomnia_2023 == "mild"],
+                                         transform = "ilr",
+                                         parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                         sbp = sbp,
+                                         total = 1440)
+clr_acc_mhq_2023_insomnia_persistent <- complr(data = d_acc_mhq[insomnia_2023 %in% c("moderate", "severe")],
+                                                     transform = "ilr",
+                                                     parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                     sbp = sbp,
+                                                     total = 1440)
+
+
 # saveRDS(clr_acc_mhq_sleep_q1, paste0(inputdir, "clr_acc_mhq_sleep_q1", ".RDS"))
 # saveRDS(clr_acc_mhq_sleep_q2, paste0(inputdir, "clr_acc_mhq_sleep_q2", ".RDS"))
 # saveRDS(clr_acc_mhq_sleep_q3, paste0(inputdir, "clr_acc_mhq_sleep_q3", ".RDS"))
