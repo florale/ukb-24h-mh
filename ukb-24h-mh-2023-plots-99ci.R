@@ -2,19 +2,19 @@ source("ukb-24h-mh-utils.R")
 source(paste0(redir, "ukb_utils.R"))
 
 # substitution results ----------------
-m_phq_2023_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3", ".RDS"))
+m_phq_2023_gam_sub_sleep_q1_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q2_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q3_99ci<- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3", ".RDS"))
+m_gad_2023_gam_sub_sleep_q1_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q2_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q3_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_99ci", ".RDS"))
 
 # prep data ------------------
 sub_models_resp   <- c("m_phq_2023_gam_sub_sleep",
                        "m_gad_2023_gam_sub_sleep"
 )
-sleep_type <- c("_q1", "_q2", "_q3")
+sleep_type <- c("_q1_99ci", "_q2_99ci", "_q3_99ci")
 
 sub_models <- list()
 sub_models_sleepg_type <- list()
@@ -84,16 +84,28 @@ names(sub_models) <- (sub_models_resp)
 # )
 
 
+# col <- c(
+#   `Short Sleep Period (Q1)` = "#FAD899",
+#   `Medium Sleep Period (Q2 and Q3)` = "#83A192",
+#   `Long Sleep Period (Q4)` = "#5A6367" 
+# )
+# 
+# colf <- c(
+#   `Short Sleep Period (Q1)` = "#DCD5CE",
+#   `Medium Sleep Period (Q2 and Q3)` = "#AFC7BB",
+#   `Long Sleep Period (Q4)` = "#9DB3A8"
+# )
+
 col <- c(
-  `Short Sleep Period (Q1)` = "#FAD899",
-  `Medium Sleep Period (Q2 and Q3)` = "#83A192",
-  `Long Sleep Period (Q4)` = "#5A6367" 
+  `Short Sleep Period (Q1)` = "#456691",
+  `Medium Sleep Period (Q2 and Q3)` = "#8AAFCA",
+  `Long Sleep Period (Q4)` = "#944C4C" 
 )
 
 colf <- c(
-  `Short Sleep Period (Q1)` = "#DCD5CE",
-  `Medium Sleep Period (Q2 and Q3)` = "#AFC7BB",
-  `Long Sleep Period (Q4)` = "#9DB3A8"
+  `Short Sleep Period (Q1)` = "#8399AE",
+  `Medium Sleep Period (Q2 and Q3)` = "#A1B2C2",
+  `Long Sleep Period (Q4)` = "#DCD5CE"
 )
 
 col_dep <- c(
@@ -134,7 +146,7 @@ phq            <- "Depressive Symptoms"
 rg_phq <- expand.grid.df(data.frame(sub_models_phq, phq), 
                          data.frame(parts, part_labels))
 
-phq_24h_2023 <- foreach(i = seq_len(nrow(rg_phq)),
+phq_24h_2023_99ci <- foreach(i = seq_len(nrow(rg_phq)),
                         .packages = "multilevelcoda") %dopar% {
                           
                           ggplot(sub_models[[rg_phq[i, "sub_models_phq"]]][To == eval(rg_phq[i, "parts"])], aes(x = Delta, y = Mean)) +
@@ -152,12 +164,12 @@ phq_24h_2023 <- foreach(i = seq_len(nrow(rg_phq)),
                             # facet_wrap(~ From, strip.position = "left") +
                             facet_wrap(ggplot2::vars(From, To),
                                        labeller = label_bquote(cols = .(as.character(From)) %<-% phantom(veryveryvery) %->% .(as.character(To))),
-                                       strip.position = "top") +
+                                       strip.position = "bottom") +
                             labs(x = bquote(Less ~ .(rg_phq[i, "parts"]) %<-% phantom(veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong) %->% More ~ .(rg_phq[i, "parts"])),
                                  y = paste0("Difference in ", rg_phq[i, "phq"])) +
                             scale_x_continuous(limits = c(-23, 23),
                                                breaks = c(-20, 0, 20)) +
-                            scale_y_continuous(limits = c(-0.25, 0.5),
+                            scale_y_continuous(limits = c(-0.27, 0.6),
                                                breaks = c(-0.25, 0, 0.25)) +
                             scale_colour_manual(values = col,
                                                 drop = FALSE) +
@@ -187,21 +199,21 @@ phq_24h_2023 <- foreach(i = seq_len(nrow(rg_phq)),
                           
                         }
 
-names(phq_24h_2023) <- foreach(i = seq_len(nrow(rg_phq))) %dopar% {
+names(phq_24h_2023_99ci) <- foreach(i = seq_len(nrow(rg_phq))) %dopar% {
   paste0("Reallocation of Time between ", rg_phq[i, "part_labels"], " and ", rg_phq[i, "phq"])
 }
-phq_24h_2023
+phq_24h_2023_99ci
 
-saveRDS(phq_24h_2023, paste0(outputdir, "phq_24h_2023", ".RDS"))
+saveRDS(phq_24h_2023_99ci, paste0(outputdir, "phq_24h_2023_99ci", ".RDS"))
 
 grDevices::cairo_pdf(
-  file = paste0(outputdir, "phq_24h_2023", ".pdf"),
+  file = paste0(outputdir, "phq_24h_2023_99ci", ".pdf"),
   width = 9,
   height = 12,
 )
 
-figure <- ggarrange(phq_24h_2023[[1]], phq_24h_2023[[2]], 
-                    phq_24h_2023[[3]], phq_24h_2023[[4]], 
+figure <- ggarrange(phq_24h_2023_99ci[[1]], phq_24h_2023_99ci[[2]], 
+                    phq_24h_2023_99ci[[3]], phq_24h_2023_99ci[[4]], 
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -215,7 +227,7 @@ gad            <- "Anxiety Symptoms"
 rg_gad <- expand.grid.df(data.frame(sub_models_gad, gad), 
                          data.frame(parts, part_labels))
 
-gad_24h_2023 <- foreach(i = seq_len(nrow(rg_gad)),
+gad_24h_2023_99ci <- foreach(i = seq_len(nrow(rg_gad)),
                         .packages = "multilevelcoda") %dopar% {
                           
                           ggplot(sub_models[[rg_gad[i, "sub_models_gad"]]][To == eval(rg_gad[i, "parts"])], aes(x = Delta, y = Mean)) +
@@ -233,12 +245,12 @@ gad_24h_2023 <- foreach(i = seq_len(nrow(rg_gad)),
                             # facet_wrap(~ From, strip.position = "left") +
                             facet_wrap(ggplot2::vars(From, To),
                                        labeller = label_bquote(cols = .(as.character(From)) %<-% phantom(veryveryveryvery) %->% .(as.character(To))),
-                                       strip.position = "top") +
+                                       strip.position = "bottom") +
                             labs(x = bquote(Less ~ .(rg_gad[i, "parts"]) %<-% phantom(veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong) %->% More ~ .(rg_gad[i, "parts"])),
                                  y = paste0("Difference in ", rg_gad[i, "gad"])) +
                             scale_x_continuous(limits = c(-23, 23),
                                                breaks = c(-20, 0, 20)) +
-                            scale_y_continuous(limits = c(-0.25, 0.25),
+                            scale_y_continuous(limits = c(-0.25, 0.32),
                                                breaks = c(-0.25, 0, 0.25)) +
                             scale_colour_manual(values = col,
                                                 drop = FALSE) +
@@ -268,21 +280,21 @@ gad_24h_2023 <- foreach(i = seq_len(nrow(rg_gad)),
                           
                         }
 
-names(gad_24h_2023) <- foreach(i = seq_len(nrow(rg_gad))) %dopar% {
+names(gad_24h_2023_99ci) <- foreach(i = seq_len(nrow(rg_gad))) %dopar% {
   paste0("Reallocation of Time between ", rg_gad[i, "part_labels"], " and ", rg_gad[i, "gad"])
 }
-gad_24h_2023
+gad_24h_2023_99ci
 
-saveRDS(gad_24h_2023, paste0(outputdir, "gad_24h_2023", ".RDS"))
+saveRDS(gad_24h_2023_99ci, paste0(outputdir, "gad_24h_2023_99ci", ".RDS"))
 
 grDevices::cairo_pdf(
-  file = paste0(outputdir, "gad_24h_2023", ".pdf"),
+  file = paste0(outputdir, "gad_24h_2023_99ci", ".pdf"),
   width = 9,
   height = 12,
 )
 
-figure <- ggarrange(gad_24h_2023[[1]], gad_24h_2023[[2]], 
-                    gad_24h_2023[[3]], gad_24h_2023[[4]], 
+figure <- ggarrange(gad_24h_2023_99ci[[1]], gad_24h_2023_99ci[[2]], 
+                    gad_24h_2023_99ci[[3]], gad_24h_2023_99ci[[4]], 
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -292,390 +304,390 @@ dev.off()
 
 # by sleep period and insomnia symptoms -------
 ## read models ---------
-m_phq_2023_gam_sub_sleep_q1_goodsleep <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_goodsleep", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2_goodsleep <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_goodsleep", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3_goodsleep <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_goodsleep", ".RDS"))
+m_phq_2023_gam_sub_sleep_q1_goodsleep_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_goodsleep_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q2_goodsleep_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_goodsleep_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_insomnia_mild <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_mild", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2_insomnia_mild <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_mild", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3_insomnia_mild <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_mild", ".RDS"))
+m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_insomnia_moderate <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_moderate", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2_insomnia_moderate <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_moderate", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3_insomnia_moderate <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_moderate", ".RDS"))
+# m_phq_2023_gam_sub_sleep_q1_insomnia_moderate_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_moderate_99ci", ".RDS"))
+# m_phq_2023_gam_sub_sleep_q2_insomnia_moderate_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_moderate_99ci", ".RDS"))
+# m_phq_2023_gam_sub_sleep_q3_insomnia_moderate_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_moderate_99ci", ".RDS"))
+# 
+# m_phq_2023_gam_sub_sleep_q1_insomnia_severe_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_severe_99ci", ".RDS"))
+# m_phq_2023_gam_sub_sleep_q2_insomnia_severe_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_severe_99ci", ".RDS"))
+# m_phq_2023_gam_sub_sleep_q3_insomnia_severe_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_severe_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_insomnia_severe <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_severe", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2_insomnia_severe <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_severe", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3_insomnia_severe <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_severe", ".RDS"))
+m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_insomnia_persistent <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_persistent", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2_insomnia_persistent <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_persistent", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3_insomnia_persistent <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_persistent", ".RDS"))
+m_gad_2023_gam_sub_sleep_q1_goodsleep_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_goodsleep_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q2_goodsleep_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_goodsleep_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q3_goodsleep_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_goodsleep_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_goodsleep <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_goodsleep", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2_goodsleep <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_goodsleep", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3_goodsleep <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_goodsleep", ".RDS"))
+m_gad_2023_gam_sub_sleep_q1_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_mild_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q2_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_mild_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_insomnia_mild <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_mild", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2_insomnia_mild <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_mild", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3_insomnia_mild <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_mild", ".RDS"))
+# m_gad_2023_gam_sub_sleep_q1_insomnia_moderate_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_moderate_99ci", ".RDS"))
+# m_gad_2023_gam_sub_sleep_q2_insomnia_moderate_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_moderate_99ci", ".RDS"))
+# m_gad_2023_gam_sub_sleep_q3_insomnia_moderate_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_moderate_99ci", ".RDS"))
+# 
+# m_gad_2023_gam_sub_sleep_q1_insomnia_severe_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_severe_99ci", ".RDS"))
+# m_gad_2023_gam_sub_sleep_q2_insomnia_severe_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_severe_99ci", ".RDS"))
+# m_gad_2023_gam_sub_sleep_q3_insomnia_severe_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_severe_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_insomnia_moderate <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_moderate", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2_insomnia_moderate <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_moderate", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3_insomnia_moderate <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_moderate", ".RDS"))
+m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_insomnia_severe <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_severe", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2_insomnia_severe <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_severe", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3_insomnia_severe <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_severe", ".RDS"))
-
-m_gad_2023_gam_sub_sleep_q1_insomnia_persistent <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_persistent", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2_insomnia_persistent <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_persistent", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3_insomnia_persistent <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_persistent", ".RDS"))
-
-## mild moderate severe data ----------
-sub_models_resp   <- c("m_phq_2023_gam_sub_sleep", "m_gad_2023_gam_sub_sleep")
-sleep_q_type <- c("_q1", "_q2", "_q3")
-sleep_insomnia_type <- c("_goodsleep", "_insomnia_mild", "_insomnia_moderate", "_insomnia_severe")
-
-sub_models_insomnia <- list()
-sub_models_sleep_q_type <- list()
-sub_models_sleep_i_type <- list()
-
-for(i in seq_along(sub_models_resp)) {
-  sub_model_i <- sub_models_resp[[i]]
-  
-  for (j in seq_along(sleep_q_type)) {
-    sleep_type_j <- sleep_q_type[[j]]
-    sleep_period <- if (j == 1) ("Short Sleep Period (Q1)") else if (j == 2) ("Medium Sleep Period (Q2 and Q3)") else ("Long Sleep Period (Q4)")
-    
-    for (k in seq_along(sleep_insomnia_type)){
-      insomnia_k <- sleep_insomnia_type[[k]]
-      insomnia <- if (k == 1) ("Good Sleep") else if (k == 2) ("Mild Insomnia") else if (k == 3) ("Moderate Insomnia") else ("Severe Insomnia")
-      
-      model_tmp <- get(paste0(sub_model_i, sleep_type_j, insomnia_k))
-      model_tmp <- as.data.table(summary(model_tmp, delta = c(-20:20), level = "aggregate", digits = "asis"))
-      
-      model_tmp[, SleepPeriod := sleep_period]
-      model_tmp[, Insomnia := insomnia]
-      
-      model_tmp[, From := ifelse(From == "mvpa_comp", "MVPA", From)]
-      model_tmp[, From := ifelse(From == "lpa_comp", "LPA ", From)]
-      model_tmp[, From := ifelse(From == "sb_comp", " SB ", From)]
-      model_tmp[, From := ifelse(From == "sleep_comp", "Sleep", From)]
-      model_tmp[, From := factor(From, ordered = TRUE,
-                                 levels = c("Sleep",
-                                            "MVPA",
-                                            "LPA ",
-                                            " SB "))]
-      
-      
-      model_tmp[, To := ifelse(To == "mvpa_comp", "MVPA", To)]
-      model_tmp[, To := ifelse(To == "lpa_comp", "LPA ", To)]
-      model_tmp[, To := ifelse(To == "sb_comp", " SB ", To)]
-      model_tmp[, To := ifelse(To == "sleep_comp", "Sleep", To)]
-      model_tmp[, To := factor(To, ordered = TRUE,
-                               levels = c("Sleep",
-                                          "MVPA",
-                                          "LPA ",
-                                          " SB "))]
-      
-      model_tmp[, Insomnia := factor(Insomnia, ordered = TRUE,
-                                     levels = c("Good Sleep",
-                                                "Mild Insomnia",
-                                                "Moderate Insomnia",
-                                                "Severe Insomnia"))]
-      
-      model_tmp$sig <- between(0, model_tmp$CI_low, model_tmp$CI_high)
-      model_tmp[, Sig := NA]
-      model_tmp[, Sig := ifelse(sig == FALSE & Delta %in% c(-18, 18), "*", "")]
-      
-      sub_models_sleep_i_type[[k]] <- model_tmp
-    }
-    sub_models_sleep_i_type_k <- rbindlist(sub_models_sleep_i_type)
-    sub_models_sleep_q_type[[j]] <- sub_models_sleep_i_type_k
-  }
-  sub_models_sleep_q_type_i  <- rbindlist(sub_models_sleep_q_type)
-  sub_models_sleep_q_type_i[, SleepPeriod := factor(SleepPeriod, ordered = TRUE,
-                                                    levels = c("Short Sleep Period (Q1)",
-                                                               "Medium Sleep Period (Q2 and Q3)",
-                                                               "Long Sleep Period (Q4)"))]
-  sub_models_insomnia[[i]] <- sub_models_sleep_q_type_i
-}
-names(sub_models_insomnia) <- (sub_models_resp)
-
-# make a grid to loop plots
-parts                   <- c("Sleep", "MVPA", "LPA ", " SB ")
-part_labels             <- c("Sleep", "MVPA", "LPA ", " SB ")
-sub_models_phq_insomnia <- grep("phq", names(sub_models_insomnia), value = T)
-phq                     <- "Depressive Symptoms"
-rg_phq                  <- expand.grid.df(data.frame(sub_models_phq_insomnia, phq), 
-                                          data.frame(parts, part_labels))
-
-## only 20 min reallocations ------------------
-d_tmp_dep <- sub_models_insomnia[[1]][Delta == 20]
-d_tmp_dep[, Sig := ifelse(sig == FALSE, "*", "")]
-d_tmp_dep[, by := paste0(SleepPeriod, " - ",Insomnia)]
-d_tmp_dep[, SleepPeriodID := 1:.N, by = .(From, To)]
-d_tmp_dep <- d_tmp_dep[order(From, To, SleepPeriod, Insomnia)]
-d_tmp_dep[, text_position := min(CI_high), by = From]
-
-### other variations -----
-ggplot(d_tmp_dep, aes(x = SleepPeriodID, y = Mean, colour = by)) +
-  geom_pointrange(aes(ymin = CI_low,
-                      ymax = CI_high, colour = by), size = .5, linewidth = 0.5,
-                  position = position_dodge2(width = .75)
-  ) +
-  geom_text(aes(y = text_position, label = Sig),
-            size = 6, 
-            # nudge_x = 0.2,
-            show.legend = FALSE) +
-  # facet_wrap(~From, scale = "free") +
-  facet_wrap(ggplot2::vars(From, To), scale = "free") +
-  scale_colour_manual(values = col) +
-  scale_x_continuous(
-    breaks = unique(d_tmp_dep$SleepPeriodID), 
-    labels = d_tmp_dep[1:12]$SleepPeriod,
-    sec.axis = sec_axis(~.,
-                        breaks = unique(d_tmp_dep$SleepPeriodID),
-                        labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
-    )
-  ) +
-  labs(x = "", y = "", colour = "") +
-  coord_flip() +
-  theme_ipsum() +
-  theme(
-    axis.ticks          = element_blank(),
-    panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
-    plot.background     = element_rect(fill = "transparent", colour = NA),
-    panel.grid.major.x  = element_blank(),
-    panel.grid.minor    = element_blank(),
-    strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
-    legend.position     = "none"
-  )
-
-ggplot(d_tmp_dep[From == "MVPA"], aes(x = SleepPeriodID, y = Mean, colour = by)) +
-  geom_pointrange(aes(ymin = CI_low,
-                      ymax = CI_high, colour = by), size = .5, linewidth = 0.5,
-                  position = position_dodge2(width = .75)
-  ) +
-  geom_text(aes(y = text_position, label = Sig),
-            size = 6, 
-            # nudge_x = 0.2,
-            show.legend = FALSE) +
-  # facet_wrap(~From, scale = "free") +
-  facet_wrap(ggplot2::vars(From, To), scale = "free") +
-  scale_colour_manual(values = col) +
-  scale_x_continuous(
-    breaks = unique(d_tmp_dep$SleepPeriodID), 
-    labels = d_tmp_dep[1:12]$SleepPeriod,
-    sec.axis = sec_axis(~.,
-                        breaks = unique(d_tmp_dep$SleepPeriodID),
-                        labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
-    )
-  ) +
-  labs(x = "", y = "", colour = "") +
-  coord_flip() +
-  theme_ipsum() +
-  theme(
-    axis.ticks          = element_blank(),
-    panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
-    plot.background     = element_rect(fill = "transparent", colour = NA),
-    panel.grid.major.x  = element_blank(),
-    panel.grid.minor    = element_blank(),
-    strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
-    legend.position     = "none"
-  )
-
-ggplot(d_tmp_dep, aes(x = SleepPeriod, y = Mean, colour = Insomnia)) +
-  geom_pointrange(aes(ymin = CI_low,
-                      ymax = CI_high, colour = Insomnia), size = .5, linewidth = 0.5,
-                  position = position_dodge2(width = .75)
-  ) +
-  geom_text(aes(y = text_position, label = Sig),
-            size = 6, 
-            # nudge_x = 0.2,
-            show.legend = FALSE) +
-  # facet_wrap(~From, scale = "free") +
-  facet_wrap(ggplot2::vars(From, To), scale = "free") +
-  scale_colour_manual(values = col) +
-  # scale_x_continuous(
-  #   breaks = unique(d_tmp_dep$SleepPeriodID), 
-  #   labels = d_tmp_dep[1:12]$SleepPeriod,
-  #   sec.axis = sec_axis(~.,
-  #                       breaks = unique(d_tmp_dep$SleepPeriodID),
-  #                       labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
-  #   )
-  # ) +
-  labs(x = "", y = "", colour = "") +
-  coord_flip() +
-  theme_ipsum() +
-  theme(
-    axis.ticks          = element_blank(),
-    panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
-    plot.background     = element_rect(fill = "transparent", colour = NA),
-    panel.grid.major.x  = element_blank(),
-    panel.grid.minor    = element_blank(),
-    strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
-    # axis.text.y        = element_text(angle = 90),
-    legend.position     = "bottom"
-  )
-
-phq_by_insomnia_sleep_period <- foreach(i = seq_along(parts),
-                                        .packages = "multilevelcoda") %dopar% {
-                                          
-                                          part <- parts[i]
-                                          
-                                          ggplot(d_tmp_dep[From == eval(part)], aes(x = SleepPeriod, y = Mean, colour = Insomnia)) +
-                                            geom_pointrange(aes(ymin = CI_low,
-                                                                ymax = CI_high, colour = Insomnia), size = .5, linewidth = 0.5,
-                                                            position = position_dodge2(width = .75)
-                                            ) +
-                                            geom_text(aes(y = text_position, label = Sig),
-                                                      size = 6, 
-                                                      # nudge_x = 0.2,
-                                                      show.legend = FALSE) +
-                                            # facet_wrap(~From, scale = "free") +
-                                            facet_wrap(ggplot2::vars(From, To), scale = "free") +
-                                            scale_colour_manual(values = col) +
-                                            # scale_x_continuous(
-                                            #   breaks = unique(d_tmp_dep$SleepPeriodID), 
-                                            #   labels = d_tmp_dep[1:12]$SleepPeriod,
-                                            #   sec.axis = sec_axis(~.,
-                                            #                       breaks = unique(d_tmp_dep$SleepPeriodID),
-                                            #                       labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
-                                            #   )
-                                            # ) +
-                                            labs(x = "", y = "", colour = "") +
-                                            coord_flip() +
-                                            theme_ipsum() +
-                                            theme(
-                                              axis.ticks          = element_blank(),
-                                              panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
-                                              plot.background     = element_rect(fill = "transparent", colour = NA),
-                                              panel.grid.major.x  = element_blank(),
-                                              panel.grid.minor    = element_blank(),
-                                              strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
-                                              legend.position     = "bottom"
-                                            )
-                                        }
-
+# ## mild moderate severe data ----------
+# sub_models_resp   <- c("m_phq_2023_gam_sub_sleep", "m_gad_2023_gam_sub_sleep")
+# sleep_q_type <- c("_q1", "_q2", "_q3")
+# sleep_insomnia_type <- c("_goodsleep_99ci", "_insomnia_mild_99ci", "_insomnia_moderate_99ci", "_insomnia_severe_99ci")
+# 
+# sub_models_insomnia <- list()
+# sub_models_sleep_q_type <- list()
+# sub_models_sleep_i_type <- list()
+# 
+# for(i in seq_along(sub_models_resp)) {
+#   sub_model_i <- sub_models_resp[[i]]
+#   
+#   for (j in seq_along(sleep_q_type)) {
+#     sleep_type_j <- sleep_q_type[[j]]
+#     sleep_period <- if (j == 1) ("Short Sleep Period (Q1)") else if (j == 2) ("Medium Sleep Period (Q2 and Q3)") else ("Long Sleep Period (Q4)")
+#     
+#     for (k in seq_along(sleep_insomnia_type)){
+#       insomnia_k <- sleep_insomnia_type[[k]]
+#       insomnia <- if (k == 1) ("Good Sleep") else if (k == 2) ("Mild Insomnia") else if (k == 3) ("Moderate Insomnia") else ("Severe Insomnia")
+#       
+#       model_tmp <- get(paste0(sub_model_i, sleep_type_j, insomnia_k))
+#       model_tmp <- as.data.table(summary(model_tmp, delta = c(-20:20), level = "aggregate", digits = "asis"))
+#       
+#       model_tmp[, SleepPeriod := sleep_period]
+#       model_tmp[, Insomnia := insomnia]
+#       
+#       model_tmp[, From := ifelse(From == "mvpa_comp", "MVPA", From)]
+#       model_tmp[, From := ifelse(From == "lpa_comp", "LPA ", From)]
+#       model_tmp[, From := ifelse(From == "sb_comp", " SB ", From)]
+#       model_tmp[, From := ifelse(From == "sleep_comp", "Sleep", From)]
+#       model_tmp[, From := factor(From, ordered = TRUE,
+#                                  levels = c("Sleep",
+#                                             "MVPA",
+#                                             "LPA ",
+#                                             " SB "))]
+#       
+#       
+#       model_tmp[, To := ifelse(To == "mvpa_comp", "MVPA", To)]
+#       model_tmp[, To := ifelse(To == "lpa_comp", "LPA ", To)]
+#       model_tmp[, To := ifelse(To == "sb_comp", " SB ", To)]
+#       model_tmp[, To := ifelse(To == "sleep_comp", "Sleep", To)]
+#       model_tmp[, To := factor(To, ordered = TRUE,
+#                                levels = c("Sleep",
+#                                           "MVPA",
+#                                           "LPA ",
+#                                           " SB "))]
+#       
+#       model_tmp[, Insomnia := factor(Insomnia, ordered = TRUE,
+#                                      levels = c("Good Sleep",
+#                                                 "Mild Insomnia",
+#                                                 "Moderate Insomnia",
+#                                                 "Severe Insomnia"))]
+#       
+#       model_tmp$sig <- between(0, model_tmp$CI_low, model_tmp$CI_high)
+#       model_tmp[, Sig := NA]
+#       model_tmp[, Sig := ifelse(sig == FALSE & Delta %in% c(-18, 18), "*", "")]
+#       
+#       sub_models_sleep_i_type[[k]] <- model_tmp
+#     }
+#     sub_models_sleep_i_type_k <- rbindlist(sub_models_sleep_i_type)
+#     sub_models_sleep_q_type[[j]] <- sub_models_sleep_i_type_k
+#   }
+#   sub_models_sleep_q_type_i  <- rbindlist(sub_models_sleep_q_type)
+#   sub_models_sleep_q_type_i[, SleepPeriod := factor(SleepPeriod, ordered = TRUE,
+#                                                     levels = c("Short Sleep Period (Q1)",
+#                                                                "Medium Sleep Period (Q2 and Q3)",
+#                                                                "Long Sleep Period (Q4)"))]
+#   sub_models_insomnia[[i]] <- sub_models_sleep_q_type_i
+# }
+# names(sub_models_insomnia) <- (sub_models_resp)
+# 
+# # make a grid to loop plots
+# parts                   <- c("Sleep", "MVPA", "LPA ", " SB ")
+# part_labels             <- c("Sleep", "MVPA", "LPA ", " SB ")
+# sub_models_phq_insomnia <- grep("phq", names(sub_models_insomnia), value = T)
+# phq                     <- "Depressive Symptoms"
+# rg_phq                  <- expand.grid.df(data.frame(sub_models_phq_insomnia, phq), 
+#                                           data.frame(parts, part_labels))
+# 
+# ## only 20 min reallocations ------------------
+# d_tmp_dep <- sub_models_insomnia[[1]][Delta == 20]
+# d_tmp_dep[, Sig := ifelse(sig == FALSE, "*", "")]
+# d_tmp_dep[, by := paste0(SleepPeriod, " - ",Insomnia)]
+# d_tmp_dep[, SleepPeriodID := 1:.N, by = .(From, To)]
+# d_tmp_dep <- d_tmp_dep[order(From, To, SleepPeriod, Insomnia)]
+# d_tmp_dep[, text_position := min(CI_high), by = From]
+# 
+# ### other variations -----
+# ggplot(d_tmp_dep, aes(x = SleepPeriodID, y = Mean, colour = by)) +
+#   geom_pointrange(aes(ymin = CI_low,
+#                       ymax = CI_high, colour = by), size = .5, linewidth = 0.5,
+#                   position = position_dodge2(width = .75)
+#   ) +
+#   geom_text(aes(y = text_position, label = Sig),
+#             size = 6, 
+#             # nudge_x = 0.2,
+#             show.legend = FALSE) +
+#   # facet_wrap(~From, scale = "free") +
+#   facet_wrap(ggplot2::vars(From, To), scale = "free") +
+#   scale_colour_manual(values = col) +
+#   scale_x_continuous(
+#     breaks = unique(d_tmp_dep$SleepPeriodID), 
+#     labels = d_tmp_dep[1:12]$SleepPeriod,
+#     sec.axis = sec_axis(~.,
+#                         breaks = unique(d_tmp_dep$SleepPeriodID),
+#                         labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
+#     )
+#   ) +
+#   labs(x = "", y = "", colour = "") +
+#   coord_flip() +
+#   theme_ipsum() +
+#   theme(
+#     axis.ticks          = element_blank(),
+#     panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+#     plot.background     = element_rect(fill = "transparent", colour = NA),
+#     panel.grid.major.x  = element_blank(),
+#     panel.grid.minor    = element_blank(),
+#     strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
+#     legend.position     = "none"
+#   )
+# 
+# ggplot(d_tmp_dep[From == "MVPA"], aes(x = SleepPeriodID, y = Mean, colour = by)) +
+#   geom_pointrange(aes(ymin = CI_low,
+#                       ymax = CI_high, colour = by), size = .5, linewidth = 0.5,
+#                   position = position_dodge2(width = .75)
+#   ) +
+#   geom_text(aes(y = text_position, label = Sig),
+#             size = 6, 
+#             # nudge_x = 0.2,
+#             show.legend = FALSE) +
+#   # facet_wrap(~From, scale = "free") +
+#   facet_wrap(ggplot2::vars(From, To), scale = "free") +
+#   scale_colour_manual(values = col) +
+#   scale_x_continuous(
+#     breaks = unique(d_tmp_dep$SleepPeriodID), 
+#     labels = d_tmp_dep[1:12]$SleepPeriod,
+#     sec.axis = sec_axis(~.,
+#                         breaks = unique(d_tmp_dep$SleepPeriodID),
+#                         labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
+#     )
+#   ) +
+#   labs(x = "", y = "", colour = "") +
+#   coord_flip() +
+#   theme_ipsum() +
+#   theme(
+#     axis.ticks          = element_blank(),
+#     panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+#     plot.background     = element_rect(fill = "transparent", colour = NA),
+#     panel.grid.major.x  = element_blank(),
+#     panel.grid.minor    = element_blank(),
+#     strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
+#     legend.position     = "none"
+#   )
+# 
+# ggplot(d_tmp_dep, aes(x = SleepPeriod, y = Mean, colour = Insomnia)) +
+#   geom_pointrange(aes(ymin = CI_low,
+#                       ymax = CI_high, colour = Insomnia), size = .5, linewidth = 0.5,
+#                   position = position_dodge2(width = .75)
+#   ) +
+#   geom_text(aes(y = text_position, label = Sig),
+#             size = 6, 
+#             # nudge_x = 0.2,
+#             show.legend = FALSE) +
+#   # facet_wrap(~From, scale = "free") +
+#   facet_wrap(ggplot2::vars(From, To), scale = "free") +
+#   scale_colour_manual(values = col) +
+#   # scale_x_continuous(
+#   #   breaks = unique(d_tmp_dep$SleepPeriodID), 
+#   #   labels = d_tmp_dep[1:12]$SleepPeriod,
+#   #   sec.axis = sec_axis(~.,
+#   #                       breaks = unique(d_tmp_dep$SleepPeriodID),
+#   #                       labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
+#   #   )
+#   # ) +
+#   labs(x = "", y = "", colour = "") +
+#   coord_flip() +
+#   theme_ipsum() +
+#   theme(
+#     axis.ticks          = element_blank(),
+#     panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+#     plot.background     = element_rect(fill = "transparent", colour = NA),
+#     panel.grid.major.x  = element_blank(),
+#     panel.grid.minor    = element_blank(),
+#     strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
+#     # axis.text.y        = element_text(angle = 90),
+#     legend.position     = "bottom"
+#   )
+# 
+# phq_by_insomnia_sleep_period <- foreach(i = seq_along(parts),
+#                                         .packages = "multilevelcoda") %dopar% {
+#                                           
+#                                           part <- parts[i]
+#                                           
+#                                           ggplot(d_tmp_dep[From == eval(part)], aes(x = SleepPeriod, y = Mean, colour = Insomnia)) +
+#                                             geom_pointrange(aes(ymin = CI_low,
+#                                                                 ymax = CI_high, colour = Insomnia), size = .5, linewidth = 0.5,
+#                                                             position = position_dodge2(width = .75)
+#                                             ) +
+#                                             geom_text(aes(y = text_position, label = Sig),
+#                                                       size = 6, 
+#                                                       # nudge_x = 0.2,
+#                                                       show.legend = FALSE) +
+#                                             # facet_wrap(~From, scale = "free") +
+#                                             facet_wrap(ggplot2::vars(From, To), scale = "free") +
+#                                             scale_colour_manual(values = col) +
+#                                             # scale_x_continuous(
+#                                             #   breaks = unique(d_tmp_dep$SleepPeriodID), 
+#                                             #   labels = d_tmp_dep[1:12]$SleepPeriod,
+#                                             #   sec.axis = sec_axis(~.,
+#                                             #                       breaks = unique(d_tmp_dep$SleepPeriodID),
+#                                             #                       labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
+#                                             #   )
+#                                             # ) +
+#                                             labs(x = "", y = "", colour = "") +
+#                                             coord_flip() +
+#                                             theme_ipsum() +
+#                                             theme(
+#                                               axis.ticks          = element_blank(),
+#                                               panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+#                                               plot.background     = element_rect(fill = "transparent", colour = NA),
+#                                               panel.grid.major.x  = element_blank(),
+#                                               panel.grid.minor    = element_blank(),
+#                                               strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
+#                                               legend.position     = "bottom"
+#                                             )
+#                                         }
+# 
+# # grDevices::cairo_pdf(
+# #   file = paste0(outputdir, "phq_by_insomnia_sleep_period", ".pdf"),
+# #   width = 9,
+# #   height = 12,
+# # )
+# # 
+# # figure <- ggarrange(phq_by_insomnia_sleep_period[[1]], phq_by_insomnia_sleep_period[[2]], 
+# #                     phq_by_insomnia_sleep_period[[3]], phq_by_insomnia_sleep_period[[4]], 
+# #                     nrow = 4,
+# #                     common.legend = TRUE,
+# #                     legend   = "bottom"
+# # )
+# # annotate_figure(figure, left = text_grob("Estimated Difference in Depressive Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
+# # dev.off()
+# 
+# 
+# ggplot(d_tmp_dep, aes(x = Insomnia, y = Mean, colour = SleepPeriod)) +
+#   geom_pointrange(aes(ymin = CI_low,
+#                       ymax = CI_high, colour = SleepPeriod), size = .5, linewidth = 0.5,
+#                   position = position_dodge2(width = .75)
+#   ) +
+#   geom_text(aes(y = text_position, label = Sig),
+#             size = 6, 
+#             # nudge_x = 0.2,
+#             show.legend = FALSE) +
+#   # facet_wrap(~From, scale = "free") +
+#   facet_wrap(ggplot2::vars(From, To), scale = "free") +
+#   scale_colour_manual(values = col) +
+#   # scale_x_continuous(
+#   #   breaks = unique(d_tmp_dep$SleepPeriodID), 
+#   #   labels = d_tmp_dep[1:12]$SleepPeriod,
+#   #   sec.axis = sec_axis(~.,
+#   #                       breaks = unique(d_tmp_dep$SleepPeriodID),
+#   #                       labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
+#   #   )
+#   # ) +
+#   labs(x = "", y = "", colour = "") +
+#   coord_flip() +
+#   theme_ipsum() +
+#   theme(
+#     axis.ticks          = element_blank(),
+#     panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+#     plot.background     = element_rect(fill = "transparent", colour = NA),
+#     panel.grid.major.x  = element_blank(),
+#     panel.grid.minor    = element_blank(),
+#     strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
+#     # axis.text.y        = element_text(angle = 90),
+#     legend.position     = "bottom"
+#   )
+# 
+# ### going with this -----------
+# phq_by_sleep_period_insomnia_2023_99ci <- foreach(i = seq_along(parts),
+#                                              .packages = "multilevelcoda") %dopar% {
+#                                                
+#                                                part <- parts[i]
+#                                                
+#                                                ggplot(d_tmp_dep[From == eval(part)], aes(x = Insomnia, y = Mean, colour = SleepPeriod, group = by)) +
+#                                                  geom_hline(aes(yintercept = 0), linewidth = 0.5, linetype = 2, colour = "#a8a8a8") +
+#                                                  geom_pointrange(aes(ymin = CI_low,
+#                                                                      ymax = CI_high, colour = SleepPeriod), size = .5, linewidth = 0.5,
+#                                                                  position = position_dodge2(width = .75)
+#                                                  ) +
+#                                                  # geom_text(aes(y = text_position - 0.2, label = Sig),
+#                                                  #           size = 6, 
+#                                                  #           # nudge_x = 0.2,
+#                                                  #           show.legend = FALSE) +
+#                                                  # facet_wrap(~From, scale = "free") +
+#                                                  facet_wrap(ggplot2::vars(From, To),
+#                                                             labeller = label_bquote(cols = .(as.character(From)) ~ phantom(lalalala) %->% phantom(lalalala) ~ .(as.character(To))),
+#                                                             strip.position = "top") +
+#                                                  scale_colour_manual(values = col) +
+#                                                  scale_y_continuous(limits = c(-1, 2),
+#                                                                     breaks = c(-1, 0, 1, 2)
+#                                                  ) +
+#                                                  # scale_x_continuous(
+#                                                  #   breaks = unique(d_tmp_dep$SleepPeriodID), 
+#                                                  #   labels = d_tmp_dep[1:12]$SleepPeriod,
+#                                                  #   sec.axis = sec_axis(~.,
+#                                                  #                       breaks = unique(d_tmp_dep$SleepPeriodID),
+#                                                  #                       labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
+#                                                  #   )
+#                                                  # ) +
+#                                                  labs(x = "", y = "", colour = "") +
+#                                                  coord_flip() +
+#                                                  theme_ipsum() +
+#                                                  theme(
+#                                                    axis.ticks          = element_blank(),
+#                                                    panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+#                                                    plot.background     = element_rect(fill = "transparent", colour = NA),
+#                                                    panel.grid.major.y  = element_blank(),
+#                                                    panel.grid.minor    = element_blank(),
+#                                                    strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
+#                                                    legend.position     = "bottom",
+#                                                    plot.margin = unit(c(0,0,0,1), "lines")
+#                                                  )
+#                                              }
+# phq_by_sleep_period_insomnia_2023_99ci
+# 
+# phq_by_sleep_period_insomnia_2023_99ci[[1]] / phq_by_sleep_period_insomnia_2023_99ci[[2]] / phq_by_sleep_period_insomnia_2023_99ci[[3]] / phq_by_sleep_period_insomnia_2023_99ci[[4]] + 
+#   plot_layout(guides = "collect") & theme(legend.position = "bottom")
+# 
 # grDevices::cairo_pdf(
-#   file = paste0(outputdir, "phq_by_insomnia_sleep_period", ".pdf"),
+#   file = paste0(outputdir, "phq_by_sleep_period_insomnia_2023_99ci", ".pdf"),
 #   width = 9,
 #   height = 12,
 # )
 # 
-# figure <- ggarrange(phq_by_insomnia_sleep_period[[1]], phq_by_insomnia_sleep_period[[2]], 
-#                     phq_by_insomnia_sleep_period[[3]], phq_by_insomnia_sleep_period[[4]], 
-#                     nrow = 4,
-#                     common.legend = TRUE,
-#                     legend   = "bottom"
-# )
-# annotate_figure(figure, left = text_grob("Estimated Difference in Depressive Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
+# phq_by_sleep_period_insomnia_2023_99ci[[1]] / phq_by_sleep_period_insomnia_2023_99ci[[2]] / phq_by_sleep_period_insomnia_2023_99ci[[3]] / phq_by_sleep_period_insomnia_2023_99ci[[4]] + 
+#   plot_layout(guides = "collect") & theme(legend.position = "bottom")
+# 
+# # annotate_figure(figure, left = text_grob("Estimated Difference in Depressive Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
 # dev.off()
-
-
-ggplot(d_tmp_dep, aes(x = Insomnia, y = Mean, colour = SleepPeriod)) +
-  geom_pointrange(aes(ymin = CI_low,
-                      ymax = CI_high, colour = SleepPeriod), size = .5, linewidth = 0.5,
-                  position = position_dodge2(width = .75)
-  ) +
-  geom_text(aes(y = text_position, label = Sig),
-            size = 6, 
-            # nudge_x = 0.2,
-            show.legend = FALSE) +
-  # facet_wrap(~From, scale = "free") +
-  facet_wrap(ggplot2::vars(From, To), scale = "free") +
-  scale_colour_manual(values = col) +
-  # scale_x_continuous(
-  #   breaks = unique(d_tmp_dep$SleepPeriodID), 
-  #   labels = d_tmp_dep[1:12]$SleepPeriod,
-  #   sec.axis = sec_axis(~.,
-  #                       breaks = unique(d_tmp_dep$SleepPeriodID),
-  #                       labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
-  #   )
-  # ) +
-  labs(x = "", y = "", colour = "") +
-  coord_flip() +
-  theme_ipsum() +
-  theme(
-    axis.ticks          = element_blank(),
-    panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
-    plot.background     = element_rect(fill = "transparent", colour = NA),
-    panel.grid.major.x  = element_blank(),
-    panel.grid.minor    = element_blank(),
-    strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
-    # axis.text.y        = element_text(angle = 90),
-    legend.position     = "bottom"
-  )
-
-### going with this -----------
-phq_by_sleep_period_insomnia_2023 <- foreach(i = seq_along(parts),
-                                             .packages = "multilevelcoda") %dopar% {
-                                               
-                                               part <- parts[i]
-                                               
-                                               ggplot(d_tmp_dep[From == eval(part)], aes(x = Insomnia, y = Mean, colour = SleepPeriod, group = by)) +
-                                                 geom_hline(aes(yintercept = 0), linewidth = 0.5, linetype = 2, colour = "#a8a8a8") +
-                                                 geom_pointrange(aes(ymin = CI_low,
-                                                                     ymax = CI_high, colour = SleepPeriod), size = .5, linewidth = 0.5,
-                                                                 position = position_dodge2(width = .75)
-                                                 ) +
-                                                 # geom_text(aes(y = text_position - 0.2, label = Sig),
-                                                 #           size = 6, 
-                                                 #           # nudge_x = 0.2,
-                                                 #           show.legend = FALSE) +
-                                                 # facet_wrap(~From, scale = "free") +
-                                                 facet_wrap(ggplot2::vars(From, To),
-                                                            labeller = label_bquote(cols = .(as.character(From)) ~ phantom(lalalala) %->% phantom(lalalala) ~ .(as.character(To))),
-                                                            strip.position = "top") +
-                                                 scale_colour_manual(values = col) +
-                                                 scale_y_continuous(limits = c(-1, 2),
-                                                                    breaks = c(-1, 0, 1, 2)
-                                                 ) +
-                                                 # scale_x_continuous(
-                                                 #   breaks = unique(d_tmp_dep$SleepPeriodID), 
-                                                 #   labels = d_tmp_dep[1:12]$SleepPeriod,
-                                                 #   sec.axis = sec_axis(~.,
-                                                 #                       breaks = unique(d_tmp_dep$SleepPeriodID),
-                                                 #                       labels = rep(levels(d_tmp_dep$Insomnia), length.out = length(unique(d_tmp_dep$SleepPeriodID)))
-                                                 #   )
-                                                 # ) +
-                                                 labs(x = "", y = "", colour = "") +
-                                                 coord_flip() +
-                                                 theme_ipsum() +
-                                                 theme(
-                                                   axis.ticks          = element_blank(),
-                                                   panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
-                                                   plot.background     = element_rect(fill = "transparent", colour = NA),
-                                                   panel.grid.major.y  = element_blank(),
-                                                   panel.grid.minor    = element_blank(),
-                                                   strip.text          = element_text(size = 12, hjust = .5, face = "bold"),
-                                                   legend.position     = "bottom",
-                                                   plot.margin = unit(c(0,0,0,1), "lines")
-                                                 )
-                                             }
-phq_by_sleep_period_insomnia_2023
-
-phq_by_sleep_period_insomnia_2023[[1]] / phq_by_sleep_period_insomnia_2023[[2]] / phq_by_sleep_period_insomnia_2023[[3]] / phq_by_sleep_period_insomnia_2023[[4]] + 
-  plot_layout(guides = "collect") & theme(legend.position = "bottom")
-
-grDevices::cairo_pdf(
-  file = paste0(outputdir, "phq_by_sleep_period_insomnia_2023", ".pdf"),
-  width = 9,
-  height = 12,
-)
-
-phq_by_sleep_period_insomnia_2023[[1]] / phq_by_sleep_period_insomnia_2023[[2]] / phq_by_sleep_period_insomnia_2023[[3]] / phq_by_sleep_period_insomnia_2023[[4]] + 
-  plot_layout(guides = "collect") & theme(legend.position = "bottom")
-
-# annotate_figure(figure, left = text_grob("Estimated Difference in Depressive Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
-dev.off()
 
 ## acute and persistent data -------
 sub_models_resp   <- c("m_phq_2023_gam_sub_sleep", "m_gad_2023_gam_sub_sleep")
 sleep_q_type <- c("_q1", "_q2", "_q3")
-sleep_insomnia_type <- c("_goodsleep", "_insomnia_mild", "_insomnia_persistent")
+sleep_insomnia_type <- c("_goodsleep_99ci", "_insomnia_mild_99ci", "_insomnia_persistent_99ci")
 
 sub_models_insomnia <- list()
 sub_models_sleep_q_type <- list()
@@ -691,7 +703,7 @@ for(i in seq_along(sub_models_resp)) {
     for (k in seq_along(sleep_insomnia_type)){
       insomnia_k <- sleep_insomnia_type[[k]]
       insomnia <- if (k == 1) ("None") else if (k == 2) ("Mild") else ("Moderate-Severe")
-
+      
       model_tmp <- get(paste0(sub_model_i, sleep_type_j, insomnia_k))
       model_tmp <- as.data.table(summary(model_tmp, delta = c(-20:20), level = "aggregate", digits = "asis"))
       
@@ -771,7 +783,7 @@ d_tmp_dep <- d_tmp_dep[order(Insomnia, From, To, SleepPeriod)]
 d_tmp_dep[, text_position := min(CI_high), by = From]
 
 ## final plot ----------
-phq_by_sleep_period_insomnia_2023 <- foreach(i = seq_along(parts),
+phq_by_sleep_period_insomnia_2023_99ci <- foreach(i = seq_along(parts),
                                              .packages = "multilevelcoda") %dopar% {
                                                
                                                part <- parts[i]
@@ -792,7 +804,7 @@ phq_by_sleep_period_insomnia_2023 <- foreach(i = seq_along(parts),
                                                             strip.position = "bottom") +
                                                  scale_colour_manual(values = col) +
                                                  scale_y_continuous(limits = c(-1, 1.52),
-                                                                    breaks = c(-1, -0.5, 0, 0.5, 1)
+                                                                    breaks = c(-1, 0, 1)
                                                  ) +
                                                  scale_x_discrete(position = "top") +
                                                  # scale_x_continuous(
@@ -827,22 +839,21 @@ phq_by_sleep_period_insomnia_2023 <- foreach(i = seq_along(parts),
                                                    plot.margin         = unit(c(0.5,0.5,0.5,0), "lines")
                                                  )
                                              }
-phq_by_sleep_period_insomnia_2023[[1]]
 
-phq_by_sleep_period_insomnia_2023[[1]] / phq_by_sleep_period_insomnia_2023[[2]] / phq_by_sleep_period_insomnia_2023[[3]] / phq_by_sleep_period_insomnia_2023[[4]]  + 
+phq_by_sleep_period_insomnia_2023_99ci[[1]] / phq_by_sleep_period_insomnia_2023_99ci[[2]] / phq_by_sleep_period_insomnia_2023_99ci[[3]] / phq_by_sleep_period_insomnia_2023_99ci[[4]]  + 
   plot_layout(guides = "collect") & theme(legend.position = "bottom")
 
 grDevices::cairo_pdf(
-  file = paste0(outputdir, "phq_by_sleep_period_insomnia_2023", ".pdf"),
-  width = 10,
+  file = paste0(outputdir, "phq_by_sleep_period_insomnia_2023_99ci", ".pdf"),
+  width = 9,
   height = 12,
 )
 
-# phq_by_sleep_period_insomnia_2023[[1]] / phq_by_sleep_period_insomnia_2023[[2]] / phq_by_sleep_period_insomnia_2023[[3]] / phq_by_sleep_period_insomnia_2023[[4]] + 
+# phq_by_sleep_period_insomnia_2023_99ci[[1]] / phq_by_sleep_period_insomnia_2023_99ci[[2]] / phq_by_sleep_period_insomnia_2023_99ci[[3]] / phq_by_sleep_period_insomnia_2023_99ci[[4]] + 
 #   plot_layout(guides = "collect") & theme(legend.position = "bottom")
 
-figure <- ggarrange(phq_by_sleep_period_insomnia_2023[[1]], phq_by_sleep_period_insomnia_2023[[2]], 
-                    phq_by_sleep_period_insomnia_2023[[3]], phq_by_sleep_period_insomnia_2023[[4]], 
+figure <- ggarrange(phq_by_sleep_period_insomnia_2023_99ci[[1]], phq_by_sleep_period_insomnia_2023_99ci[[2]], 
+                    phq_by_sleep_period_insomnia_2023_99ci[[3]], phq_by_sleep_period_insomnia_2023_99ci[[4]], 
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -859,7 +870,7 @@ d_tmp_anx <- d_tmp_anx[order(Insomnia, From, To, SleepPeriod)]
 d_tmp_anx[, text_position := min(CI_high), by = From]
 
 ## final plot ----------
-gad_by_sleep_period_insomnia_2023 <- foreach(i = seq_along(parts),
+gad_by_sleep_period_insomnia_2023_99ci <- foreach(i = seq_along(parts),
                                              .packages = "multilevelcoda") %dopar% {
                                                
                                                part <- parts[i]
@@ -880,7 +891,7 @@ gad_by_sleep_period_insomnia_2023 <- foreach(i = seq_along(parts),
                                                             strip.position = "bottom") +
                                                  scale_colour_manual(values = col) +
                                                  scale_y_continuous(limits = c(-1, 1.52),
-                                                                    breaks = c(-1, -0.5, 0, 0.5, 1)
+                                                                    breaks = c(-1, 0, 1)
                                                  ) +
                                                  scale_x_discrete(position = "top") +
                                                  # scale_x_continuous(
@@ -915,26 +926,27 @@ gad_by_sleep_period_insomnia_2023 <- foreach(i = seq_along(parts),
                                                    plot.margin         = unit(c(0.5,0.5,0.5,0), "lines")
                                                  )
                                              }
-gad_by_sleep_period_insomnia_2023[[1]]
+gad_by_sleep_period_insomnia_2023_99ci[[1]]
 
-gad_by_sleep_period_insomnia_2023[[1]] / gad_by_sleep_period_insomnia_2023[[2]] / gad_by_sleep_period_insomnia_2023[[3]] / gad_by_sleep_period_insomnia_2023[[4]]  + 
+gad_by_sleep_period_insomnia_2023_99ci[[1]] / gad_by_sleep_period_insomnia_2023_99ci[[2]] / gad_by_sleep_period_insomnia_2023_99ci[[3]] / gad_by_sleep_period_insomnia_2023_99ci[[4]]  + 
   plot_layout(guides = "collect") & theme(legend.position = "bottom")
 
 grDevices::cairo_pdf(
-  file = paste0(outputdir, "gad_by_sleep_period_insomnia_2023", ".pdf"),
+  file = paste0(outputdir, "gad_by_sleep_period_insomnia_2023_99ci", ".pdf"),
   width = 9,
   height = 12,
 )
 
-# gad_by_sleep_period_insomnia_2023[[1]] / gad_by_sleep_period_insomnia_2023[[2]] / gad_by_sleep_period_insomnia_2023[[3]] / gad_by_sleep_period_insomnia_2023[[4]] + 
+# gad_by_sleep_period_insomnia_2023_99ci[[1]] / gad_by_sleep_period_insomnia_2023_99ci[[2]] / gad_by_sleep_period_insomnia_2023_99ci[[3]] / gad_by_sleep_period_insomnia_2023_99ci[[4]] + 
 #   plot_layout(guides = "collect") & theme(legend.position = "bottom")
 
-figure <- ggarrange(gad_by_sleep_period_insomnia_2023[[1]], gad_by_sleep_period_insomnia_2023[[2]], 
-                    gad_by_sleep_period_insomnia_2023[[3]], gad_by_sleep_period_insomnia_2023[[4]], 
+figure <- ggarrange(gad_by_sleep_period_insomnia_2023_99ci[[1]], gad_by_sleep_period_insomnia_2023_99ci[[2]], 
+                    gad_by_sleep_period_insomnia_2023_99ci[[3]], gad_by_sleep_period_insomnia_2023_99ci[[4]], 
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
 )
 annotate_figure(figure, left = text_grob("Estimated Difference in Anxiety Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
 dev.off()
+
 

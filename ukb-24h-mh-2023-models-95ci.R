@@ -833,7 +833,7 @@ m_gad_2023_gam_sub_sleep_q1_insomnia_persistent <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4
-)
+  )
 saveRDS(m_gad_2023_gam_sub_sleep_q1_insomnia_persistent, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_persistent", ".RDS"))
 
 m_gad_2023_gam_sub_sleep_q2_insomnia_persistent <- substitution(
@@ -856,6 +856,10 @@ m_gad_2023_gam_sub_sleep_q3_insomnia_persistent <- substitution(
 saveRDS(m_gad_2023_gam_sub_sleep_q3_insomnia_persistent, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_persistent", ".RDS"))
 
 ## gad summary --------------------
+# m_gad_2023_gam_sleep_q1 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q1", ".RDS"))
+# m_gad_2023_gam_sleep_q2 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q2", ".RDS"))
+# m_gad_2023_gam_sleep_q3 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q3", ".RDS"))
+
 m_gad_2023_gam_sub_sleep_q1 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1", ".RDS"))
 m_gad_2023_gam_sub_sleep_q2 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2", ".RDS"))
 m_gad_2023_gam_sub_sleep_q3 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3", ".RDS"))

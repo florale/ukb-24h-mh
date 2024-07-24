@@ -99,7 +99,7 @@ d_acc_mhq <- merge(d_acc_icd, d_acc_mhq_2016, by = "eid", all.x = TRUE)
 
 # merge wih mhq 2023
 d_acc_mhq <- merge(d_acc_mhq, d_acc_mhq_2023[, .(
-  eid, phq_2023, phq8_2023, gad_2023, phq4_2023, insomnia_2023, p28755
+  eid, phq_2023, phq8_2023, gad_2023, phq4_2023, insomnia_2023, p29197
 )], by = "eid", all.x = TRUE)
 
 # subset only good data# subset only good data# subset only good data

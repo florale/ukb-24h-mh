@@ -5,7 +5,7 @@ table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.
 
 # n complete
 nrow(d_acc_mhq_2016[!is.na(p20400)]) # 66972
-nrow(d_acc_mhq_2023[!is.na(p28755)]) # 68331
+nrow(d_acc_mhq_2023[!is.na(p29197)]) # 63530
 
 # followup time
 d_acc_mhq[, age_diff_mh_2016_acc := (acc_startdate - p20400)/365.25]
@@ -13,45 +13,53 @@ table(round(d_acc_mhq$age_diff_mh_2016_acc), useNA = "always")
 mean(d_acc_mhq$age_diff_mh_2016_acc, na.rm = TRUE)
 sd(d_acc_mhq$age_diff_mh_2016_acc, na.rm = TRUE)
 
-d_acc_mhq[, age_diff_mh_2023_acc := (acc_startdate - as.Date(p28755))/365.25]
+d_acc_mhq[, age_diff_mh_2023_acc := (acc_startdate - as.Date(p29197))/365.25]
 table(round(d_acc_mhq$age_diff_mh_2023_acc), useNA = "always")
 mean(d_acc_mhq$age_diff_mh_2023_acc, na.rm = TRUE)
 sd(d_acc_mhq$age_diff_mh_2023_acc, na.rm = TRUE)
 
-egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
+egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
            "sleep", "mvpa", "lpa", "sb",
            "phq_2016", "gad_2016",
-           "insomnia_2016"
+           "insomnia_2016",
+           "phq_2023", "gad_2023",
+           "insomnia_2023"
            ), strict = FALSE, data = clr_acc_mhq$data)
 
-egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
+egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
            "sleep", "mvpa", "lpa", "sb",
            "phq_2016", "gad_2016",
-           "insomnia_2016"
+           "insomnia_2016",
+           "phq_2023", "gad_2023",
+           "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q1$data)
 
-egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
+egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
            "sleep", "mvpa", "lpa", "sb",
            "phq_2016", "gad_2016",
-           "insomnia_2016"
+           "insomnia_2016",
+           "phq_2023", "gad_2023",
+           "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q2$data)
 
-egltable(c("age", "sex", "ethnicg", "white", "bmi", "bmig",
+egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
            "sleep", "mvpa", "lpa", "sb",
            "phq_2016", "gad_2016",
-           "insomnia_2016"
+           "insomnia_2016",
+           "phq_2023", "gad_2023",
+           "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q3$data)
 
 nrow(clr_acc_mhq$data[!is.na(age)])
