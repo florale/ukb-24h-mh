@@ -1,22 +1,22 @@
 source("ukb-24h-mh-utils.R")
 source(paste0(redir, "ukb_utils.R"))
 source(paste0(redir, "data/data_mhq_2023.R"))
-source(paste0(redir, "data/data_mhq_2016.R"))
+# source(paste0(redir, "data/data_mhq_2016.R"))
 source(paste0(redir, "data/data_acc.R"))
 source(paste0(redir, "data/data_demographics.R"))
 
-d_acc_mhq <- Reduce(function(x, y) merge(x, y, by = "eid", all = TRUE), list(d_acc, d_mhq_2023, d_mhq_2016, dm))
+d_acc_mhq_all <- Reduce(function(x, y) merge(x, y, by = "eid", all = TRUE), list(d_acc, d_mhq_2023, dm))
 
 # subset only good data
-d_acc_mhq <- d_acc_mhq[acc_data_quality == "Yes"]
-d_acc_mhq <- d_acc_mhq[, -colnames(ilr_acc), with = FALSE]
+d_acc_mhq_all <- d_acc_mhq_all[acc_data_quality == "Yes"]
+d_acc_mhq_all <- d_acc_mhq_all[, -colnames(ilr_acc), with = FALSE]
 
-d_acc_mhq[, age_at_acc := year(acc_startdate) - year_birth]
-quantile_sleep <- quantile(d_acc_mhq$sleep, c (0, 0.25, 0.75, 1))
+d_acc_mhq_all[, age_at_acc := year(acc_startdate) - year_birth]
+quantile_sleep <- quantile(d_acc_mhq_all$sleep, c (0, 0.25, 0.75, 1))
 
 # n completed
-nrow(d_acc_mhq[!is.na(p20400)]) # 66972
-nrow(d_acc_mhq[!is.na(p28755)]) # 68331
+nrow(d_acc_mhq_all[!is.na(p20400)]) # 66972
+nrow(d_acc_mhq_all[!is.na(p28755)]) # 68331
 
 # # all mh icd data
 d_icd_acc_mh <- readRDS(paste0(inputdir, "d_icd_acc_mh", ".RDS"))
@@ -93,7 +93,8 @@ d_acc_icd     <- d_acc_icd[time_diff_dep_anx_acc < -1 | is.na(time_diff_dep_anx_
 d_acc_icd <- d_acc_icd[, .(eid, icd_any_at_acc, icd_any, icd_v_any, icd_sub_fo, icd_v_dep_anx, icd_dep_anx_fo, time_diff_dep_anx_acc)]
 
 # merge with mhq
-d_acc_mhq <- merge(d_acc_icd, d_acc_mhq, by = "eid", all.x = TRUE)
+d_acc_mhq <- merge(d_acc_icd, d_acc_mhq_all, by = "eid", all.x = TRUE)
+d_acc_mhq <- d_acc_mhq[acc_data_quality == "Yes"]
 
 # composition and ilr ------------------------------------
 ## complr
@@ -339,7 +340,9 @@ clr_acc_mhq_2023_sleep_q3_insomnia_persistent <- complr(data = d_acc_mhq[sleep >
 d_acc_dep_anx <- d_acc_dep_anx[, .(eid, icd_any_at_acc, icd_any, icd_v_any, icd_sub_fo, icd_v_dep_anx, icd_dep_anx_fo, time_diff_dep_anx_acc)]
 
 # merge with mhq
-d_acc_mhq_dep_anx <- merge(d_acc_dep_anx, d_acc_mhq, by = "eid", all.x = TRUE)
+d_acc_mhq_dep_anx <- merge(d_acc_dep_anx, d_acc_mhq_all, by = "eid", all.x = TRUE)
+d_acc_mhq_dep_anx <- d_acc_mhq_dep_anx[acc_data_quality == "Yes"]
+
 clr_acc_mhq_dep_anx <- complr(d_acc_mhq_dep_anx,
                               transform = "ilr",
                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
