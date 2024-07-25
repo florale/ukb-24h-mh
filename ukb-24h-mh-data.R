@@ -343,6 +343,9 @@ d_acc_dep_anx <- d_acc_dep_anx[, .(eid, icd_any_at_acc, icd_any, icd_v_any, icd_
 d_acc_mhq_dep_anx <- merge(d_acc_dep_anx, d_acc_mhq_all, by = "eid", all.x = TRUE)
 d_acc_mhq_dep_anx <- d_acc_mhq_dep_anx[acc_data_quality == "Yes"]
 
+### everyone has another condition
+table(d_acc_mhq_dep_anx$icd_any_at_acc, useNA = "always")
+
 clr_acc_mhq_dep_anx <- complr(d_acc_mhq_dep_anx,
                               transform = "ilr",
                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
