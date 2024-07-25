@@ -248,7 +248,8 @@ m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
-  cores = 4
+  cores = 4,
+  ci = 0.99
 )
 saveRDS(m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci", ".RDS"))
 
@@ -257,7 +258,8 @@ m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
-  cores = 4
+  cores = 4,
+  ci = 0.99
 )
 saveRDS(m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci", ".RDS"))
 
@@ -267,7 +269,8 @@ m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   scale = "response",
-  cores = 4
+  cores = 4,
+  ci = 0.99
 )
 saveRDS(m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci", ".RDS"))
 
@@ -307,14 +310,6 @@ summary(m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci, delta = 20)
-
-# summary(m_phq_2023_gam_sub_sleep_q1_insomnia_moderate_99ci, delta = 20)
-# summary(m_phq_2023_gam_sub_sleep_q2_insomnia_moderate_99ci, delta = 20)
-# summary(m_phq_2023_gam_sub_sleep_q3_insomnia_moderate_99ci, delta = 20)
-# 
-# summary(m_phq_2023_gam_sub_sleep_q1_insomnia_severe_99ci, delta = 20)
-# summary(m_phq_2023_gam_sub_sleep_q2_insomnia_severe_99ci, delta = 20)
-# summary(m_phq_2023_gam_sub_sleep_q3_insomnia_severe_99ci, delta = 20)
 
 summary(m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci, delta = 20)
@@ -626,4 +621,3 @@ summary(m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci, delta = 20)
-
