@@ -18,6 +18,10 @@ table(round(d_acc_mhq$age_diff_mh_2023_acc), useNA = "always")
 mean(d_acc_mhq$age_diff_mh_2023_acc, na.rm = TRUE)
 sd(d_acc_mhq$age_diff_mh_2023_acc, na.rm = TRUE)
 
+# possible clinical
+nrow(d_acc_mhq[phq_2023 >= 10])
+nrow(d_acc_mhq[gad_2023 >= 10])
+
 egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation",
            "smoking", "never_smoked",

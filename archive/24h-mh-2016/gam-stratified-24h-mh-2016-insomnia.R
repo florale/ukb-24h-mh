@@ -1,4 +1,4 @@
-source("gam-24h-mh-data.R")
+source("24h-mh-2016/gam-24h-mh-2016-data.R")
 
 # notes:
 ## for sleep period, q1 = q1, q2 = q2 + q3, q3 = q4

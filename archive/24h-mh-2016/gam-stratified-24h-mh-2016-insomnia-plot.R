@@ -132,7 +132,7 @@ phq_24h_goodsleep <- foreach(i = seq_len(nrow(rg_phq)),
                                            show.legend = FALSE) +
                                  # facet_wrap(~ From, strip.position = "left") +
                                  facet_wrap(ggplot2::vars(From, To, Insomnia),
-                                            labeller = label_bquote(cols = .(as.character(From)) %<-% phantom() ~ .(as.character(Insomnia)) ~ phantom() %->% .(as.character(To))),
+                                            labeller = label_bquote(cols = .(as.character(From)) %<-%   ~ .(as.character(Insomnia)) ~ phantom() %->% .(as.character(To))),
                                             strip.position = "bottom") +
                                  labs(x = bquote(Less ~ .(rg_phq[i, "parts"]) %<-% phantom(veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong) %->% More ~ .(rg_phq[i, "parts"])),
                                       y = paste0("Difference in ", rg_phq[i, "phq"])) +

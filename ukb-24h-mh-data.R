@@ -1,6 +1,22 @@
 source("ukb-24h-mh-utils.R")
-source("24h-mh-2016/24h-mh-2016-data.R")
-source("24h-mh-2023/24h-mh-2023-data.R")
+source(paste0(redir, "ukb_utils.R"))
+source(paste0(redir, "data/data_mhq_2023.R"))
+source(paste0(redir, "data/data_mhq_2016.R"))
+source(paste0(redir, "data/data_acc.R"))
+source(paste0(redir, "data/data_demographics.R"))
+
+d_acc_mhq <- Reduce(function(x, y) merge(x, y, by = "eid", all = TRUE), list(d_acc, d_mhq_2023, d_mhq_2016, dm))
+
+# subset only good data
+d_acc_mhq <- d_acc_mhq[acc_data_quality == "Yes"]
+d_acc_mhq <- d_acc_mhq[, -colnames(ilr_acc), with = FALSE]
+
+d_acc_mhq[, age_at_acc := year(acc_startdate) - year_birth]
+quantile_sleep <- quantile(d_acc_mhq$sleep, c (0, 0.25, 0.75, 1))
+
+# n completed
+nrow(d_acc_mhq[!is.na(p20400)]) # 66972
+nrow(d_acc_mhq[!is.na(p28755)]) # 68331
 
 # # all mh icd data
 d_icd_acc_mh <- readRDS(paste0(inputdir, "d_icd_acc_mh", ".RDS"))
@@ -53,34 +69,13 @@ table(d_acc_icd$icd_v_anxiety, useNA = "always")
 nrow(d_acc_icd[!is.na(icd_v_sub_fo)])
 nrow(d_acc_icd[!is.na(icd_not_v_sub_fo)])
 
-# # time since first icd v diagnoses
-# ## negative value means acc is before diagnosis
-# # d_acc_icd[, age_diff_cancer_acc := year(acc_startdate) - year(icd_ii_sub_fo)]
-# d_acc_icd[, time_diff_mh_acc := (acc_startdate - icd_v_sub_fo)/365.25]
-# # table(d_acc_icd$age_diff_cancer_acc, useNA = "always")
-# table(round(d_acc_icd$time_diff_mh_acc), useNA = "always")
-# 
-# # time since most recent other diagnoses
-# # d_acc_icd[, age_diff_other_cond_acc := year(acc_startdate) - year(icd_not_ii_sub_fo)]
-# d_acc_icd[, time_diff_not_mh_acc := (acc_startdate - icd_not_v_sub_fo)/365.25]
-# table(round(d_acc_icd$time_diff_not_mh_acc), useNA = "always")
-# # table(round(as.integer(as.Date("2015-03-02") - as.Date("1938-03-16"))/365.25))
-# 
-# # as.integer(as.Date("2015-03-02") - as.Date("1938-03-16"))/365.25
-# # table(round(as.integer(as.Date("2015-03-02") - as.Date("1938-03-16"))/365.25))
-# 
-# # exclude people with a mh diagnoses before to 1 year after acc
-# ## ie include people with mh diagnoses after 1 year from acc
-# d_acc_icd <- d_acc_icd[time_diff_mh_acc < -1 | is.na(time_diff_mh_acc)]
-
 icd_dep_anx_vars <- c(icd_v_depressive_vars, icd_v_anxiety_vars)
 icd_dep_anx_fo_vars <- paste0(icd_dep_anx_vars, "_fo")
-  
+
 d_acc_icd[, icd_v_dep_anx := ifelse(icd_v_anxiety == 1 | icd_v_depressive == 1, 1, 0)]
 d_acc_icd[, icd_dep_anx_fo := do.call(pmin, c(.SD, list(na.rm = TRUE))), .SDcols = icd_dep_anx_fo_vars]
 d_acc_icd[, time_diff_dep_anx_acc := (acc_startdate - icd_dep_anx_fo)/365.25]
 
-d_acc_icd <- d_acc_icd[time_diff_dep_anx_acc < -1 | is.na(time_diff_dep_anx_acc)]
 
 d_acc_icd[, time_diff_any_conds_acc := (acc_startdate - icd_sub_fo)/365.25]
 table(round(d_acc_icd$time_diff_any_conds_acc), useNA = "always")
@@ -91,33 +86,16 @@ d_acc_icd[, icd_any_at_acc := ifelse(time_diff_any_conds_acc >= - 1 & icd_any ==
 d_acc_icd[, icd_any_at_acc := ifelse((time_diff_any_conds_acc < -1 & icd_any == 1) | (icd_any == 0) | (icd_any == 1 & time_diff_any_conds_acc < -1 & is.na(time_diff_any_conds_acc)), 0, icd_any_at_acc)]
 table(d_acc_icd$icd_any_at_acc, useNA = "always")
 
-# --------------
+d_acc_dep_anx <- d_acc_icd[time_diff_dep_anx_acc >= -1]
+d_acc_icd     <- d_acc_icd[time_diff_dep_anx_acc < -1 | is.na(time_diff_dep_anx_acc)]
+
+# final dataset--------------
 d_acc_icd <- d_acc_icd[, .(eid, icd_any_at_acc, icd_any, icd_v_any, icd_sub_fo, icd_v_dep_anx, icd_dep_anx_fo, time_diff_dep_anx_acc)]
 
-# merge with mhq 2016
-d_acc_mhq <- merge(d_acc_icd, d_acc_mhq_2016, by = "eid", all.x = TRUE)
+# merge with mhq
+d_acc_mhq <- merge(d_acc_icd, d_acc_mhq, by = "eid", all.x = TRUE)
 
-# merge wih mhq 2023
-d_acc_mhq <- merge(d_acc_mhq, d_acc_mhq_2023[, .(
-  eid, phq_2023, phq8_2023, gad_2023, phq4_2023, insomnia_2023, p29197
-)], by = "eid", all.x = TRUE)
-
-# subset only good data# subset only good data# subset only good data
-d_acc_mhq <- d_acc_mhq[acc_data_quality == "Yes"]
-d_acc_mhq <- d_acc_mhq[, -colnames(ilr_acc), with = FALSE]
-
-d_acc_mhq[, age_at_acc := year(acc_startdate) - year_birth]
-
-quantile_sleep <- quantile(d_acc_mhq$sleep, c (0, 0.25, 0.75, 1))
-
-# d_acc_mhq[, sleep_quantile := NA]
-# d_acc_mhq[, sleep_quantile := ifelse(sleep <= quantile_sleep[[2]], "Q1", sleep_quantile)]
-# d_acc_mhq[, sleep_quantile := ifelse(sleep %gl% quantile_sleep[c(2:3)], "Q2 and Q3", sleep_quantile)]
-# d_acc_mhq[, sleep_quantile := ifelse(sleep >= quantile_sleep[[3]], "Q4", sleep_quantile)]
-# 
-# table(d_acc_mhq$sleep_quantile, useNA = "always")
-
-# # composition and ilr ------------------------------------
+# composition and ilr ------------------------------------
 ## complr
 clr_acc_mhq <- complr(data = d_acc_mhq,
                       transform = "ilr",
@@ -130,7 +108,6 @@ saveRDS(clr_acc_mhq, paste0(inputdir, "clr_acc_mhq", ".RDS"))
 table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.75, 1)))) #
 table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.1, 0.9, 1))))
 table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, seq(0, 1, 1/3))))
-
 
 clr_acc_mhq_sleep_q1 <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]]],
                                transform = "ilr",
@@ -160,10 +137,10 @@ clr_acc_mhq_insomnia_mild <- complr(data = d_acc_mhq[insomnia_2016 == "mild"],
                                     sbp = sbp,
                                     total = 1440)
 clr_acc_mhq_insomnia_persistent <- complr(data = d_acc_mhq[insomnia_2016 %in% c("moderate", "severe")],
-                                                transform = "ilr",
-                                                parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                                sbp = sbp,
-                                                total = 1440)
+                                          transform = "ilr",
+                                          parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                          sbp = sbp,
+                                          total = 1440)
 
 
 clr_acc_mhq_2023_goodsleep <- complr(data = d_acc_mhq[insomnia_2023 == "good sleep"],
@@ -177,17 +154,17 @@ clr_acc_mhq_2023_insomnia_mild <- complr(data = d_acc_mhq[insomnia_2023 == "mild
                                          sbp = sbp,
                                          total = 1440)
 clr_acc_mhq_2023_insomnia_persistent <- complr(data = d_acc_mhq[insomnia_2023 %in% c("moderate", "severe")],
-                                                     transform = "ilr",
-                                                     parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                                     sbp = sbp,
-                                                     total = 1440)
+                                               transform = "ilr",
+                                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                               sbp = sbp,
+                                               total = 1440)
 
 
 # saveRDS(clr_acc_mhq_sleep_q1, paste0(inputdir, "clr_acc_mhq_sleep_q1", ".RDS"))
 # saveRDS(clr_acc_mhq_sleep_q2, paste0(inputdir, "clr_acc_mhq_sleep_q2", ".RDS"))
 # saveRDS(clr_acc_mhq_sleep_q3, paste0(inputdir, "clr_acc_mhq_sleep_q3", ".RDS"))
 
-# quantile - good sleep 2016 -----------------------
+## quantile - good sleep 2016 -----------------------
 clr_acc_mhq_sleep_q1_goodsleep <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2016 == "good sleep"],
                                          transform = "ilr",
                                          parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
@@ -204,7 +181,7 @@ clr_acc_mhq_sleep_q3_goodsleep <- complr(data = d_acc_mhq[sleep >= quantile_slee
                                          sbp = sbp,
                                          total = 1440)
 
-# quantile - mild insomnia_2016 -----------------------
+## quantile - mild insomnia_2016 -----------------------
 clr_acc_mhq_sleep_q1_insomnia_mild <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2016 == "mild"],
                                              transform = "ilr",
                                              parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
@@ -221,7 +198,7 @@ clr_acc_mhq_sleep_q3_insomnia_mild <- complr(data = d_acc_mhq[sleep >= quantile_
                                              sbp = sbp,
                                              total = 1440)
 
-# quantile - moderate insomnia_2016 -----------------------
+## quantile - moderate insomnia_2016 -----------------------
 clr_acc_mhq_sleep_q1_insomnia_moderate <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2016 == "moderate"],
                                                  transform = "ilr",
                                                  parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
@@ -238,7 +215,7 @@ clr_acc_mhq_sleep_q3_insomnia_moderate <- complr(data = d_acc_mhq[sleep >= quant
                                                  sbp = sbp,
                                                  total = 1440)
 
-# quantile - severe insomnia_2016 -----------------------
+## quantile - severe insomnia_2016 -----------------------
 clr_acc_mhq_sleep_q1_insomnia_severe <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2016 == "severe"],
                                                transform = "ilr",
                                                parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
@@ -255,7 +232,7 @@ clr_acc_mhq_sleep_q3_insomnia_severe <- complr(data = d_acc_mhq[sleep >= quantil
                                                sbp = sbp,
                                                total = 1440)
 
-# quantile - moderate + severe = persistent insomnia_2016 -----------------------
+## quantile - moderate + severe = persistent insomnia_2016 -----------------------
 clr_acc_mhq_sleep_q1_insomnia_persistent <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2016 %in% c("moderate", "severe")],
                                                    transform = "ilr",
                                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
@@ -272,88 +249,104 @@ clr_acc_mhq_sleep_q3_insomnia_persistent <- complr(data = d_acc_mhq[sleep >= qua
                                                    sbp = sbp,
                                                    total = 1440)
 
-# 2023 ------
-# quantile - good sleep 2023 -----------------------
+## 2023 ------
+### quantile - good sleep 2023 -----------------------
 clr_acc_mhq_2023_sleep_q1_goodsleep <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2023 == "good sleep"],
-                                         transform = "ilr",
-                                         parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                         sbp = sbp,
-                                         total = 1440)
+                                              transform = "ilr",
+                                              parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                              sbp = sbp,
+                                              total = 1440)
 clr_acc_mhq_2023_sleep_q2_goodsleep <- complr(data = d_acc_mhq[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "good sleep"],
-                                         transform = "ilr",
-                                         parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                         sbp = sbp,
-                                         total = 1440)
+                                              transform = "ilr",
+                                              parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                              sbp = sbp,
+                                              total = 1440)
 clr_acc_mhq_2023_sleep_q3_goodsleep <- complr(data = d_acc_mhq[sleep >= quantile_sleep[[3]] & insomnia_2023 == "good sleep"],
-                                         transform = "ilr",
-                                         parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                         sbp = sbp,
-                                         total = 1440)
+                                              transform = "ilr",
+                                              parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                              sbp = sbp,
+                                              total = 1440)
 
-# quantile - mild insomnia_2023 -----------------------
+### quantile - mild insomnia_2023 -----------------------
 clr_acc_mhq_2023_sleep_q1_insomnia_mild <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2023 == "mild"],
-                                             transform = "ilr",
-                                             parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                             sbp = sbp,
-                                             total = 1440)
+                                                  transform = "ilr",
+                                                  parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                  sbp = sbp,
+                                                  total = 1440)
 clr_acc_mhq_2023_sleep_q2_insomnia_mild <- complr(data = d_acc_mhq[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "mild"],
-                                             transform = "ilr",
-                                             parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                             sbp = sbp,
-                                             total = 1440)
+                                                  transform = "ilr",
+                                                  parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                  sbp = sbp,
+                                                  total = 1440)
 clr_acc_mhq_2023_sleep_q3_insomnia_mild <- complr(data = d_acc_mhq[sleep >= quantile_sleep[[3]] & insomnia_2023 == "mild"],
-                                             transform = "ilr",
-                                             parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                             sbp = sbp,
-                                             total = 1440)
+                                                  transform = "ilr",
+                                                  parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                  sbp = sbp,
+                                                  total = 1440)
 
-# quantile - moderate insomnia_2023 -----------------------
+### quantile - moderate insomnia_2023 -----------------------
 clr_acc_mhq_2023_sleep_q1_insomnia_moderate <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2023 == "moderate"],
-                                                 transform = "ilr",
-                                                 parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                                 sbp = sbp,
-                                                 total = 1440)
+                                                      transform = "ilr",
+                                                      parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                      sbp = sbp,
+                                                      total = 1440)
 clr_acc_mhq_2023_sleep_q2_insomnia_moderate <- complr(data = d_acc_mhq[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "moderate"],
-                                                 transform = "ilr",
-                                                 parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                                 sbp = sbp,
-                                                 total = 1440)
+                                                      transform = "ilr",
+                                                      parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                      sbp = sbp,
+                                                      total = 1440)
 clr_acc_mhq_2023_sleep_q3_insomnia_moderate <- complr(data = d_acc_mhq[sleep >= quantile_sleep[[3]] & insomnia_2023 == "moderate"],
-                                                 transform = "ilr",
-                                                 parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                                 sbp = sbp,
-                                                 total = 1440)
+                                                      transform = "ilr",
+                                                      parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                      sbp = sbp,
+                                                      total = 1440)
 
-# quantile - severe insomnia_2023 -----------------------
+### quantile - severe insomnia_2023 -----------------------
 clr_acc_mhq_2023_sleep_q1_insomnia_severe <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2023 == "severe"],
-                                               transform = "ilr",
-                                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                               sbp = sbp,
-                                               total = 1440)
+                                                    transform = "ilr",
+                                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                    sbp = sbp,
+                                                    total = 1440)
 clr_acc_mhq_2023_sleep_q2_insomnia_severe <- complr(data = d_acc_mhq[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "severe"],
-                                               transform = "ilr",
-                                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                               sbp = sbp,
-                                               total = 1440)
+                                                    transform = "ilr",
+                                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                    sbp = sbp,
+                                                    total = 1440)
 clr_acc_mhq_2023_sleep_q3_insomnia_severe <- complr(data = d_acc_mhq[sleep >= quantile_sleep[[3]] & insomnia_2023 == "severe"],
-                                               transform = "ilr",
-                                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                               sbp = sbp,
-                                               total = 1440)
+                                                    transform = "ilr",
+                                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                    sbp = sbp,
+                                                    total = 1440)
 
-# quantile - moderate + severe = persistent insomnia_2023 -----------------------
+### quantile - moderate + severe = persistent insomnia_2023 -----------------------
 clr_acc_mhq_2023_sleep_q1_insomnia_persistent <- complr(data = d_acc_mhq[sleep <= quantile_sleep[[2]] & insomnia_2023 %in% c("moderate", "severe")],
-                                                   transform = "ilr",
-                                                   parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                                   sbp = sbp,
-                                                   total = 1440)
+                                                        transform = "ilr",
+                                                        parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                        sbp = sbp,
+                                                        total = 1440)
 clr_acc_mhq_2023_sleep_q2_insomnia_persistent <- complr(data = d_acc_mhq[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 %in% c("moderate", "severe")],
-                                                   transform = "ilr",
-                                                   parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                                   sbp = sbp,
-                                                   total = 1440)
+                                                        transform = "ilr",
+                                                        parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                        sbp = sbp,
+                                                        total = 1440)
 clr_acc_mhq_2023_sleep_q3_insomnia_persistent <- complr(data = d_acc_mhq[sleep >= quantile_sleep[[3]] & insomnia_2023 %in% c("moderate", "severe")],
-                                                   transform = "ilr",
-                                                   parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                                   sbp = sbp,
-                                                   total = 1440)
+                                                        transform = "ilr",
+                                                        parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                                                        sbp = sbp,
+                                                        total = 1440)
+
+# sensitivity dataset--------------------
+d_acc_dep_anx <- d_acc_dep_anx[, .(eid, icd_any_at_acc, icd_any, icd_v_any, icd_sub_fo, icd_v_dep_anx, icd_dep_anx_fo, time_diff_dep_anx_acc)]
+
+# merge with mhq
+d_acc_mhq_dep_anx <- merge(d_acc_dep_anx, d_acc_mhq, by = "eid", all.x = TRUE)
+clr_acc_mhq_dep_anx <- complr(d_acc_mhq_dep_anx,
+                              transform = "ilr",
+                              parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
+                              sbp = sbp,
+                              total = 1440)
+
+# stratifed by sleep quantile
+table(cut(clr_acc_mhq_dep_anx$data$sleep, quantile(clr_acc_mhq_dep_anx$data$sleep, c(0, 0.25, 0.75, 1)))) #
+table(cut(clr_acc_mhq_dep_anx$data$sleep, quantile(clr_acc_mhq_dep_anx$data$sleep, c(0, 0.1, 0.9, 1))))
+table(cut(clr_acc_mhq_dep_anx$data$sleep, quantile(clr_acc_mhq_dep_anx$data$sleep, seq(0, 1, 1/3))))
