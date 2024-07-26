@@ -749,8 +749,8 @@ clr_acc_mhq_2023_sleep_q3_healthy_insomnia_persistent <- complr(data = d_acc_mhq
 m_phq_2023_gam_sleep_q1_healthy <- brmcoda(clr_acc_mhq_sleep_q1_healthy,
                                            phq_2023 ~ 
                                              s(ilr1) + s(ilr2) + s(ilr3) +
-                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                            family = zero_inflated_negbinomial(),
                                            chains = 4, cores = 4,
                                            backend = "cmdstanr"
@@ -760,8 +760,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_healthy, paste0(outputdir, "m_phq_2023_gam_sleep
 m_phq_2023_gam_sleep_q2_healthy <- brmcoda(clr_acc_mhq_sleep_q2_healthy,
                                            phq_2023 ~ 
                                              s(ilr1) + s(ilr2) + s(ilr3) +
-                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                            family = zero_inflated_negbinomial(),
                                            chains = 4, cores = 4,
                                            backend = "cmdstanr"
@@ -771,8 +771,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_healthy, paste0(outputdir, "m_phq_2023_gam_sleep
 m_phq_2023_gam_sleep_q3_healthy <- brmcoda(clr_acc_mhq_sleep_q3_healthy,
                                            phq_2023 ~ 
                                              s(ilr1) + s(ilr2) + s(ilr3) +
-                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                            family = zero_inflated_negbinomial(),
                                            chains = 4, cores = 4,
                                            backend = "cmdstanr"
@@ -817,8 +817,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_healthy_99ci, paste0(outputdir, "m_phq_2023_
 m_phq_2023_gam_sleep_q1_healthy_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_healthy_goodsleep,
                                                      phq_2023 ~ 
                                                        s(ilr1) + s(ilr2) + s(ilr3) +
-                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                      family = zero_inflated_negbinomial(),
                                                      chains = 4, cores = 4,
                                                      backend = "cmdstanr"
@@ -828,8 +828,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_healthy_goodsleep, paste0(outputdir, "m_phq_2023
 m_phq_2023_gam_sleep_q2_healthy_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_healthy_goodsleep,
                                                      phq_2023 ~ 
                                                        s(ilr1) + s(ilr2) + s(ilr3) +
-                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                      family = zero_inflated_negbinomial(),
                                                      chains = 4, cores = 4,
                                                      backend = "cmdstanr"
@@ -839,8 +839,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_healthy_goodsleep, paste0(outputdir, "m_phq_2023
 m_phq_2023_gam_sleep_q3_healthy_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_healthy_goodsleep,
                                                      phq_2023 ~ 
                                                        s(ilr1) + s(ilr2) + s(ilr3) +
-                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                      family = zero_inflated_negbinomial(),
                                                      chains = 4, cores = 4,
                                                      backend = "cmdstanr"
@@ -885,8 +885,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_healthy_goodsleep_99ci, paste0(outputdir, "m
 m_phq_2023_gam_sleep_q1_healthy_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_healthy_insomnia_mild,
                                                          phq_2023 ~ 
                                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                          family = zero_inflated_negbinomial(),
                                                          chains = 4, cores = 4,
                                                          backend = "cmdstanr"
@@ -896,8 +896,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_healthy_insomnia_mild, paste0(outputdir, "m_phq_
 m_phq_2023_gam_sleep_q2_healthy_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_healthy_insomnia_mild,
                                                          phq_2023 ~ 
                                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                          family = zero_inflated_negbinomial(),
                                                          chains = 4, cores = 4,
                                                          backend = "cmdstanr"
@@ -907,8 +907,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_healthy_insomnia_mild, paste0(outputdir, "m_phq_
 m_phq_2023_gam_sleep_q3_healthy_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_healthy_insomnia_mild,
                                                          phq_2023 ~ 
                                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                          family = zero_inflated_negbinomial(),
                                                          chains = 4, cores = 4,
                                                          backend = "cmdstanr"
@@ -953,8 +953,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_healthy_insomnia_mild_99ci, paste0(outputdir
 m_phq_2023_gam_sleep_q1_healthy_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1_healthy_insomnia_persistent,
                                                                phq_2023 ~ 
                                                                  s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                                family = zero_inflated_negbinomial(),
                                                                chains = 4, cores = 4,
                                                                backend = "cmdstanr"
@@ -964,8 +964,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_healthy_insomnia_persistent, paste0(outputdir, "
 m_phq_2023_gam_sleep_q2_healthy_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2_healthy_insomnia_persistent,
                                                                phq_2023 ~ 
                                                                  s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                                family = zero_inflated_negbinomial(),
                                                                chains = 4, cores = 4,
                                                                backend = "cmdstanr"
@@ -975,8 +975,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_healthy_insomnia_persistent, paste0(outputdir, "
 m_phq_2023_gam_sleep_q3_healthy_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3_healthy_insomnia_persistent,
                                                                phq_2023 ~ 
                                                                  s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                                family = zero_inflated_negbinomial(),
                                                                chains = 4, cores = 4,
                                                                backend = "cmdstanr"
@@ -1056,8 +1056,8 @@ summary(m_phq_2023_gam_sub_sleep_q3_healthy_insomnia_persistent_99ci, delta = 20
 m_gad_2023_gam_sleep_q1_healthy <- brmcoda(clr_acc_mhq_sleep_q1_healthy,
                                            gad_2023 ~ 
                                              s(ilr1) + s(ilr2) + s(ilr3) +
-                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                            family = zero_inflated_negbinomial(),
                                            chains = 4, cores = 4,
                                            backend = "cmdstanr"
@@ -1067,8 +1067,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_healthy, paste0(outputdir, "m_gad_2023_gam_sleep
 m_gad_2023_gam_sleep_q2_healthy <- brmcoda(clr_acc_mhq_sleep_q2_healthy,
                                            gad_2023 ~ 
                                              s(ilr1) + s(ilr2) + s(ilr3) +
-                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                            family = zero_inflated_negbinomial(),
                                            chains = 4, cores = 4,
                                            backend = "cmdstanr"
@@ -1078,8 +1078,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_healthy, paste0(outputdir, "m_gad_2023_gam_sleep
 m_gad_2023_gam_sleep_q3_healthy <- brmcoda(clr_acc_mhq_sleep_q3_healthy,
                                            gad_2023 ~ 
                                              s(ilr1) + s(ilr2) + s(ilr3) +
-                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                             s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                            family = zero_inflated_negbinomial(),
                                            chains = 4, cores = 4,
                                            backend = "cmdstanr"
@@ -1124,8 +1124,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_healthy_99ci, paste0(outputdir, "m_gad_2023_
 m_gad_2023_gam_sleep_q1_healthy_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_healthy_goodsleep,
                                                      gad_2023 ~ 
                                                        s(ilr1) + s(ilr2) + s(ilr3) +
-                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                      family = zero_inflated_negbinomial(),
                                                      chains = 4, cores = 4,
                                                      backend = "cmdstanr"
@@ -1135,8 +1135,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_healthy_goodsleep, paste0(outputdir, "m_gad_2023
 m_gad_2023_gam_sleep_q2_healthy_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_healthy_goodsleep,
                                                      gad_2023 ~ 
                                                        s(ilr1) + s(ilr2) + s(ilr3) +
-                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                      family = zero_inflated_negbinomial(),
                                                      chains = 4, cores = 4,
                                                      backend = "cmdstanr"
@@ -1146,8 +1146,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_healthy_goodsleep, paste0(outputdir, "m_gad_2023
 m_gad_2023_gam_sleep_q3_healthy_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_healthy_goodsleep,
                                                      gad_2023 ~ 
                                                        s(ilr1) + s(ilr2) + s(ilr3) +
-                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                      family = zero_inflated_negbinomial(),
                                                      chains = 4, cores = 4,
                                                      backend = "cmdstanr"
@@ -1192,8 +1192,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_healthy_goodsleep_99ci, paste0(outputdir, "m
 m_gad_2023_gam_sleep_q1_healthy_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_healthy_insomnia_mild,
                                                          gad_2023 ~ 
                                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                          family = zero_inflated_negbinomial(),
                                                          chains = 4, cores = 4,
                                                          backend = "cmdstanr"
@@ -1203,8 +1203,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_healthy_insomnia_mild, paste0(outputdir, "m_gad_
 m_gad_2023_gam_sleep_q2_healthy_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_healthy_insomnia_mild,
                                                          gad_2023 ~ 
                                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                          family = zero_inflated_negbinomial(),
                                                          chains = 4, cores = 4,
                                                          backend = "cmdstanr"
@@ -1214,8 +1214,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_healthy_insomnia_mild, paste0(outputdir, "m_gad_
 m_gad_2023_gam_sleep_q3_healthy_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_healthy_insomnia_mild,
                                                          gad_2023 ~ 
                                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                          family = zero_inflated_negbinomial(),
                                                          chains = 4, cores = 4,
                                                          backend = "cmdstanr"
@@ -1260,8 +1260,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_healthy_insomnia_mild_99ci, paste0(outputdir
 m_gad_2023_gam_sleep_q1_healthy_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1_healthy_insomnia_persistent,
                                                                gad_2023 ~ 
                                                                  s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                                family = zero_inflated_negbinomial(),
                                                                chains = 4, cores = 4,
                                                                backend = "cmdstanr"
@@ -1271,8 +1271,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_healthy_insomnia_persistent, paste0(outputdir, "
 m_gad_2023_gam_sleep_q2_healthy_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2_healthy_insomnia_persistent,
                                                                gad_2023 ~ 
                                                                  s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                                family = zero_inflated_negbinomial(),
                                                                chains = 4, cores = 4,
                                                                backend = "cmdstanr"
@@ -1282,8 +1282,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_healthy_insomnia_persistent, paste0(outputdir, "
 m_gad_2023_gam_sleep_q3_healthy_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3_healthy_insomnia_persistent,
                                                                gad_2023 ~ 
                                                                  s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                                family = zero_inflated_negbinomial(),
                                                                chains = 4, cores = 4,
                                                                backend = "cmdstanr"
@@ -1428,8 +1428,8 @@ clr_acc_mhq_2023_sleep_q3_overweight_insomnia_persistent <- complr(data = d_acc_
 m_phq_2023_gam_sleep_q1_overweight <- brmcoda(clr_acc_mhq_sleep_q1_overweight,
                                               phq_2023 ~ 
                                                 s(ilr1) + s(ilr2) + s(ilr3) +
-                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                              # + icd_any_at_acc,
+                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                              + icd_any_at_acc,
                                               family = zero_inflated_negbinomial(),
                                               chains = 4, cores = 4,
                                               backend = "cmdstanr"
@@ -1439,8 +1439,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_overweight, paste0(outputdir, "m_phq_2023_gam_sl
 m_phq_2023_gam_sleep_q2_overweight <- brmcoda(clr_acc_mhq_sleep_q2_overweight,
                                               phq_2023 ~ 
                                                 s(ilr1) + s(ilr2) + s(ilr3) +
-                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                              # + icd_any_at_acc,
+                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                              + icd_any_at_acc,
                                               family = zero_inflated_negbinomial(),
                                               chains = 4, cores = 4,
                                               backend = "cmdstanr"
@@ -1450,8 +1450,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_overweight, paste0(outputdir, "m_phq_2023_gam_sl
 m_phq_2023_gam_sleep_q3_overweight <- brmcoda(clr_acc_mhq_sleep_q3_overweight,
                                               phq_2023 ~ 
                                                 s(ilr1) + s(ilr2) + s(ilr3) +
-                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                              # + icd_any_at_acc,
+                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                              + icd_any_at_acc,
                                               family = zero_inflated_negbinomial(),
                                               chains = 4, cores = 4,
                                               backend = "cmdstanr"
@@ -1496,8 +1496,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_overweight_99ci, paste0(outputdir, "m_phq_20
 m_phq_2023_gam_sleep_q1_overweight_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_overweight_goodsleep,
                                                         phq_2023 ~ 
                                                           s(ilr1) + s(ilr2) + s(ilr3) +
-                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                        # + icd_any_at_acc,
+                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                        + icd_any_at_acc,
                                                         family = zero_inflated_negbinomial(),
                                                         chains = 4, cores = 4,
                                                         backend = "cmdstanr"
@@ -1507,8 +1507,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_overweight_goodsleep, paste0(outputdir, "m_phq_2
 m_phq_2023_gam_sleep_q2_overweight_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_overweight_goodsleep,
                                                         phq_2023 ~ 
                                                           s(ilr1) + s(ilr2) + s(ilr3) +
-                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                        # + icd_any_at_acc,
+                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                        + icd_any_at_acc,
                                                         family = zero_inflated_negbinomial(),
                                                         chains = 4, cores = 4,
                                                         backend = "cmdstanr"
@@ -1518,8 +1518,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_overweight_goodsleep, paste0(outputdir, "m_phq_2
 m_phq_2023_gam_sleep_q3_overweight_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_overweight_goodsleep,
                                                         phq_2023 ~ 
                                                           s(ilr1) + s(ilr2) + s(ilr3) +
-                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                        # + icd_any_at_acc,
+                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                        + icd_any_at_acc,
                                                         family = zero_inflated_negbinomial(),
                                                         chains = 4, cores = 4,
                                                         backend = "cmdstanr"
@@ -1564,8 +1564,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_overweight_goodsleep_99ci, paste0(outputdir,
 m_phq_2023_gam_sleep_q1_overweight_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_overweight_insomnia_mild,
                                                             phq_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
-                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                            # + icd_any_at_acc,
+                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                            + icd_any_at_acc,
                                                             family = zero_inflated_negbinomial(),
                                                             chains = 4, cores = 4,
                                                             backend = "cmdstanr"
@@ -1575,8 +1575,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_overweight_insomnia_mild, paste0(outputdir, "m_p
 m_phq_2023_gam_sleep_q2_overweight_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_overweight_insomnia_mild,
                                                             phq_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
-                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                            # + icd_any_at_acc,
+                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                            + icd_any_at_acc,
                                                             family = zero_inflated_negbinomial(),
                                                             chains = 4, cores = 4,
                                                             backend = "cmdstanr"
@@ -1586,8 +1586,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_overweight_insomnia_mild, paste0(outputdir, "m_p
 m_phq_2023_gam_sleep_q3_overweight_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_overweight_insomnia_mild,
                                                             phq_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
-                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                            # + icd_any_at_acc,
+                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                            + icd_any_at_acc,
                                                             family = zero_inflated_negbinomial(),
                                                             chains = 4, cores = 4,
                                                             backend = "cmdstanr"
@@ -1632,8 +1632,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_overweight_insomnia_mild_99ci, paste0(output
 m_phq_2023_gam_sleep_q1_overweight_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1_overweight_insomnia_persistent,
                                                                   phq_2023 ~ 
                                                                     s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                                  # + icd_any_at_acc,
+                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                                  + icd_any_at_acc,
                                                                   family = zero_inflated_negbinomial(),
                                                                   chains = 4, cores = 4,
                                                                   backend = "cmdstanr"
@@ -1643,8 +1643,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_overweight_insomnia_persistent, paste0(outputdir
 m_phq_2023_gam_sleep_q2_overweight_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2_overweight_insomnia_persistent,
                                                                   phq_2023 ~ 
                                                                     s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                                  # + icd_any_at_acc,
+                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                                  + icd_any_at_acc,
                                                                   family = zero_inflated_negbinomial(),
                                                                   chains = 4, cores = 4,
                                                                   backend = "cmdstanr"
@@ -1654,8 +1654,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_overweight_insomnia_persistent, paste0(outputdir
 m_phq_2023_gam_sleep_q3_overweight_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3_overweight_insomnia_persistent,
                                                                   phq_2023 ~ 
                                                                     s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                                  # + icd_any_at_acc,
+                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                                  + icd_any_at_acc,
                                                                   family = zero_inflated_negbinomial(),
                                                                   chains = 4, cores = 4,
                                                                   backend = "cmdstanr"
@@ -1735,8 +1735,8 @@ summary(m_phq_2023_gam_sub_sleep_q3_overweight_insomnia_persistent_99ci, delta =
 m_gad_2023_gam_sleep_q1_overweight <- brmcoda(clr_acc_mhq_sleep_q1_overweight,
                                               gad_2023 ~ 
                                                 s(ilr1) + s(ilr2) + s(ilr3) +
-                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                # + icd_any_at_acc,
+                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                + icd_any_at_acc,
                                               family = zero_inflated_negbinomial(),
                                               chains = 4, cores = 4,
                                               backend = "cmdstanr"
@@ -1746,8 +1746,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_overweight, paste0(outputdir, "m_gad_2023_gam_sl
 m_gad_2023_gam_sleep_q2_overweight <- brmcoda(clr_acc_mhq_sleep_q2_overweight,
                                               gad_2023 ~ 
                                                 s(ilr1) + s(ilr2) + s(ilr3) +
-                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                # + icd_any_at_acc,
+                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                + icd_any_at_acc,
                                               family = zero_inflated_negbinomial(),
                                               chains = 4, cores = 4,
                                               backend = "cmdstanr"
@@ -1757,8 +1757,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_overweight, paste0(outputdir, "m_gad_2023_gam_sl
 m_gad_2023_gam_sleep_q3_overweight <- brmcoda(clr_acc_mhq_sleep_q3_overweight,
                                               gad_2023 ~ 
                                                 s(ilr1) + s(ilr2) + s(ilr3) +
-                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                # + icd_any_at_acc,
+                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                + icd_any_at_acc,
                                               family = zero_inflated_negbinomial(),
                                               chains = 4, cores = 4,
                                               backend = "cmdstanr"
@@ -1803,8 +1803,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_overweight_99ci, paste0(outputdir, "m_gad_20
 m_gad_2023_gam_sleep_q1_overweight_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_overweight_goodsleep,
                                                         gad_2023 ~ 
                                                           s(ilr1) + s(ilr2) + s(ilr3) +
-                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                          # + icd_any_at_acc,
+                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                          + icd_any_at_acc,
                                                         family = zero_inflated_negbinomial(),
                                                         chains = 4, cores = 4,
                                                         backend = "cmdstanr"
@@ -1814,8 +1814,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_overweight_goodsleep, paste0(outputdir, "m_gad_2
 m_gad_2023_gam_sleep_q2_overweight_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_overweight_goodsleep,
                                                         gad_2023 ~ 
                                                           s(ilr1) + s(ilr2) + s(ilr3) +
-                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                          # + icd_any_at_acc,
+                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                          + icd_any_at_acc,
                                                         family = zero_inflated_negbinomial(),
                                                         chains = 4, cores = 4,
                                                         backend = "cmdstanr"
@@ -1825,8 +1825,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_overweight_goodsleep, paste0(outputdir, "m_gad_2
 m_gad_2023_gam_sleep_q3_overweight_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_overweight_goodsleep,
                                                         gad_2023 ~ 
                                                           s(ilr1) + s(ilr2) + s(ilr3) +
-                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                          # + icd_any_at_acc,
+                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                          + icd_any_at_acc,
                                                         family = zero_inflated_negbinomial(),
                                                         chains = 4, cores = 4,
                                                         backend = "cmdstanr"
@@ -1871,8 +1871,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_overweight_goodsleep_99ci, paste0(outputdir,
 m_gad_2023_gam_sleep_q1_overweight_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_overweight_insomnia_mild,
                                                             gad_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
-                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                              # + icd_any_at_acc,
+                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                              + icd_any_at_acc,
                                                             family = zero_inflated_negbinomial(),
                                                             chains = 4, cores = 4,
                                                             backend = "cmdstanr"
@@ -1882,8 +1882,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_overweight_insomnia_mild, paste0(outputdir, "m_g
 m_gad_2023_gam_sleep_q2_overweight_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_overweight_insomnia_mild,
                                                             gad_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
-                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                              # + icd_any_at_acc,
+                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                              + icd_any_at_acc,
                                                             family = zero_inflated_negbinomial(),
                                                             chains = 4, cores = 4,
                                                             backend = "cmdstanr"
@@ -1893,8 +1893,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_overweight_insomnia_mild, paste0(outputdir, "m_g
 m_gad_2023_gam_sleep_q3_overweight_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_overweight_insomnia_mild,
                                                             gad_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
-                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                              # + icd_any_at_acc,
+                                                              s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                              + icd_any_at_acc,
                                                             family = zero_inflated_negbinomial(),
                                                             chains = 4, cores = 4,
                                                             backend = "cmdstanr"
@@ -1939,8 +1939,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_overweight_insomnia_mild_99ci, paste0(output
 m_gad_2023_gam_sleep_q1_overweight_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1_overweight_insomnia_persistent,
                                                                   gad_2023 ~ 
                                                                     s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                                    # + icd_any_at_acc,
+                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                                    + icd_any_at_acc,
                                                                   family = zero_inflated_negbinomial(),
                                                                   chains = 4, cores = 4,
                                                                   backend = "cmdstanr"
@@ -1950,8 +1950,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_overweight_insomnia_persistent, paste0(outputdir
 m_gad_2023_gam_sleep_q2_overweight_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2_overweight_insomnia_persistent,
                                                                   gad_2023 ~ 
                                                                     s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                                    # + icd_any_at_acc,
+                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                                    + icd_any_at_acc,
                                                                   family = zero_inflated_negbinomial(),
                                                                   chains = 4, cores = 4,
                                                                   backend = "cmdstanr"
@@ -1961,8 +1961,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_overweight_insomnia_persistent, paste0(outputdir
 m_gad_2023_gam_sleep_q3_overweight_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3_overweight_insomnia_persistent,
                                                                   gad_2023 ~ 
                                                                     s(ilr1) + s(ilr2) + s(ilr3) +
-                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                                    # + icd_any_at_acc,
+                                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                                    + icd_any_at_acc,
                                                                   family = zero_inflated_negbinomial(),
                                                                   chains = 4, cores = 4,
                                                                   backend = "cmdstanr"
@@ -2107,8 +2107,8 @@ clr_acc_mhq_2023_sleep_q3_obese_insomnia_persistent <- complr(data = d_acc_mhq[s
 m_phq_2023_gam_sleep_q1_obese <- brmcoda(clr_acc_mhq_sleep_q1_obese,
                                          phq_2023 ~ 
                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                          family = zero_inflated_negbinomial(),
                                          chains = 4, cores = 4,
                                          backend = "cmdstanr"
@@ -2118,8 +2118,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_obese, paste0(outputdir, "m_phq_2023_gam_sleep_q
 m_phq_2023_gam_sleep_q2_obese <- brmcoda(clr_acc_mhq_sleep_q2_obese,
                                          phq_2023 ~ 
                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                          family = zero_inflated_negbinomial(),
                                          chains = 4, cores = 4,
                                          backend = "cmdstanr"
@@ -2129,8 +2129,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_obese, paste0(outputdir, "m_phq_2023_gam_sleep_q
 m_phq_2023_gam_sleep_q3_obese <- brmcoda(clr_acc_mhq_sleep_q3_obese,
                                          phq_2023 ~ 
                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                          family = zero_inflated_negbinomial(),
                                          chains = 4, cores = 4,
                                          backend = "cmdstanr"
@@ -2175,8 +2175,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_obese_99ci, paste0(outputdir, "m_phq_2023_ga
 m_phq_2023_gam_sleep_q1_obese_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_obese_goodsleep,
                                                    phq_2023 ~ 
                                                      s(ilr1) + s(ilr2) + s(ilr3) +
-                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                    family = zero_inflated_negbinomial(),
                                                    chains = 4, cores = 4,
                                                    backend = "cmdstanr"
@@ -2186,8 +2186,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_obese_goodsleep, paste0(outputdir, "m_phq_2023_g
 m_phq_2023_gam_sleep_q2_obese_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_obese_goodsleep,
                                                    phq_2023 ~ 
                                                      s(ilr1) + s(ilr2) + s(ilr3) +
-                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                    family = zero_inflated_negbinomial(),
                                                    chains = 4, cores = 4,
                                                    backend = "cmdstanr"
@@ -2197,8 +2197,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_obese_goodsleep, paste0(outputdir, "m_phq_2023_g
 m_phq_2023_gam_sleep_q3_obese_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_obese_goodsleep,
                                                    phq_2023 ~ 
                                                      s(ilr1) + s(ilr2) + s(ilr3) +
-                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                    family = zero_inflated_negbinomial(),
                                                    chains = 4, cores = 4,
                                                    backend = "cmdstanr"
@@ -2243,8 +2243,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_obese_goodsleep_99ci, paste0(outputdir, "m_p
 m_phq_2023_gam_sleep_q1_obese_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_obese_insomnia_mild,
                                                        phq_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
-                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                        family = zero_inflated_negbinomial(),
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
@@ -2254,8 +2254,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_obese_insomnia_mild, paste0(outputdir, "m_phq_20
 m_phq_2023_gam_sleep_q2_obese_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_obese_insomnia_mild,
                                                        phq_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
-                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                        family = zero_inflated_negbinomial(),
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
@@ -2265,8 +2265,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_obese_insomnia_mild, paste0(outputdir, "m_phq_20
 m_phq_2023_gam_sleep_q3_obese_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_obese_insomnia_mild,
                                                        phq_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
-                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                        family = zero_inflated_negbinomial(),
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
@@ -2311,8 +2311,8 @@ saveRDS(m_phq_2023_gam_sub_sleep_q3_obese_insomnia_mild_99ci, paste0(outputdir, 
 m_phq_2023_gam_sleep_q1_obese_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1_obese_insomnia_persistent,
                                                              phq_2023 ~ 
                                                                s(ilr1) + s(ilr2) + s(ilr3) +
-                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                              family = zero_inflated_negbinomial(),
                                                              chains = 4, cores = 4,
                                                              backend = "cmdstanr"
@@ -2322,8 +2322,8 @@ saveRDS(m_phq_2023_gam_sleep_q1_obese_insomnia_persistent, paste0(outputdir, "m_
 m_phq_2023_gam_sleep_q2_obese_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2_obese_insomnia_persistent,
                                                              phq_2023 ~ 
                                                                s(ilr1) + s(ilr2) + s(ilr3) +
-                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                              family = zero_inflated_negbinomial(),
                                                              chains = 4, cores = 4,
                                                              backend = "cmdstanr"
@@ -2333,8 +2333,8 @@ saveRDS(m_phq_2023_gam_sleep_q2_obese_insomnia_persistent, paste0(outputdir, "m_
 m_phq_2023_gam_sleep_q3_obese_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3_obese_insomnia_persistent,
                                                              phq_2023 ~ 
                                                                s(ilr1) + s(ilr2) + s(ilr3) +
-                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                              family = zero_inflated_negbinomial(),
                                                              chains = 4, cores = 4,
                                                              backend = "cmdstanr"
@@ -2395,27 +2395,27 @@ m_phq_2023_gam_sub_sleep_q3_obese_insomnia_persistent_99ci <- readRDS(paste0(out
 
 summary(m_phq_2023_gam_sub_sleep_q1_obese_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q2_obese_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q3_obese_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q3_obese_99ci, delta = 19)
 
 summary(m_phq_2023_gam_sub_sleep_q1_obese_goodsleep_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q2_obese_goodsleep_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q3_obese_goodsleep_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q3_obese_goodsleep_99ci, delta = 19)
 
 summary(m_phq_2023_gam_sub_sleep_q1_obese_insomnia_mild_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q2_obese_insomnia_mild_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q3_obese_insomnia_mild_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q3_obese_insomnia_mild_99ci, delta = 19)
 
 summary(m_phq_2023_gam_sub_sleep_q1_obese_insomnia_persistent_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q2_obese_insomnia_persistent_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q3_obese_insomnia_persistent_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q3_obese_insomnia_persistent_99ci, delta = 19)
 
 # GAD7 -------------------
 ## all stratified by sleep quantiles ------------
 m_gad_2023_gam_sleep_q1_obese <- brmcoda(clr_acc_mhq_sleep_q1_obese,
                                          gad_2023 ~ 
                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                          family = zero_inflated_negbinomial(),
                                          chains = 4, cores = 4,
                                          backend = "cmdstanr"
@@ -2425,8 +2425,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_obese, paste0(outputdir, "m_gad_2023_gam_sleep_q
 m_gad_2023_gam_sleep_q2_obese <- brmcoda(clr_acc_mhq_sleep_q2_obese,
                                          gad_2023 ~ 
                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                          family = zero_inflated_negbinomial(),
                                          chains = 4, cores = 4,
                                          backend = "cmdstanr"
@@ -2436,8 +2436,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_obese, paste0(outputdir, "m_gad_2023_gam_sleep_q
 m_gad_2023_gam_sleep_q3_obese <- brmcoda(clr_acc_mhq_sleep_q3_obese,
                                          gad_2023 ~ 
                                            s(ilr1) + s(ilr2) + s(ilr3) +
-                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                           # + icd_any_at_acc,
+                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                           + icd_any_at_acc,
                                          family = zero_inflated_negbinomial(),
                                          chains = 4, cores = 4,
                                          backend = "cmdstanr"
@@ -2482,8 +2482,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_obese_99ci, paste0(outputdir, "m_gad_2023_ga
 m_gad_2023_gam_sleep_q1_obese_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_obese_goodsleep,
                                                    gad_2023 ~ 
                                                      s(ilr1) + s(ilr2) + s(ilr3) +
-                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                    family = zero_inflated_negbinomial(),
                                                    chains = 4, cores = 4,
                                                    backend = "cmdstanr"
@@ -2493,8 +2493,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_obese_goodsleep, paste0(outputdir, "m_gad_2023_g
 m_gad_2023_gam_sleep_q2_obese_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_obese_goodsleep,
                                                    gad_2023 ~ 
                                                      s(ilr1) + s(ilr2) + s(ilr3) +
-                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                    family = zero_inflated_negbinomial(),
                                                    chains = 4, cores = 4,
                                                    backend = "cmdstanr"
@@ -2504,8 +2504,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_obese_goodsleep, paste0(outputdir, "m_gad_2023_g
 m_gad_2023_gam_sleep_q3_obese_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_obese_goodsleep,
                                                    gad_2023 ~ 
                                                      s(ilr1) + s(ilr2) + s(ilr3) +
-                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                     # + icd_any_at_acc,
+                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                     + icd_any_at_acc,
                                                    family = zero_inflated_negbinomial(),
                                                    chains = 4, cores = 4,
                                                    backend = "cmdstanr"
@@ -2550,8 +2550,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_obese_goodsleep_99ci, paste0(outputdir, "m_g
 m_gad_2023_gam_sleep_q1_obese_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_obese_insomnia_mild,
                                                        gad_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
-                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                        family = zero_inflated_negbinomial(),
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
@@ -2561,8 +2561,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_obese_insomnia_mild, paste0(outputdir, "m_gad_20
 m_gad_2023_gam_sleep_q2_obese_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_obese_insomnia_mild,
                                                        gad_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
-                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                        family = zero_inflated_negbinomial(),
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
@@ -2572,8 +2572,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_obese_insomnia_mild, paste0(outputdir, "m_gad_20
 m_gad_2023_gam_sleep_q3_obese_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_obese_insomnia_mild,
                                                        gad_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
-                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                         # + icd_any_at_acc,
+                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                         + icd_any_at_acc,
                                                        family = zero_inflated_negbinomial(),
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
@@ -2606,7 +2606,7 @@ saveRDS(m_gad_2023_gam_sub_sleep_q2_obese_insomnia_mild_99ci, paste0(outputdir, 
 
 m_gad_2023_gam_sub_sleep_q3_obese_insomnia_mild_99ci <- substitution(
   m_gad_2023_gam_sleep_q3_obese_insomnia_mild,
-  delta = 1:20,
+  delta = 1:19,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
@@ -2618,8 +2618,8 @@ saveRDS(m_gad_2023_gam_sub_sleep_q3_obese_insomnia_mild_99ci, paste0(outputdir, 
 m_gad_2023_gam_sleep_q1_obese_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1_obese_insomnia_persistent,
                                                              gad_2023 ~ 
                                                                s(ilr1) + s(ilr2) + s(ilr3) +
-                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                              family = zero_inflated_negbinomial(),
                                                              chains = 4, cores = 4,
                                                              backend = "cmdstanr"
@@ -2629,8 +2629,8 @@ saveRDS(m_gad_2023_gam_sleep_q1_obese_insomnia_persistent, paste0(outputdir, "m_
 m_gad_2023_gam_sleep_q2_obese_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2_obese_insomnia_persistent,
                                                              gad_2023 ~ 
                                                                s(ilr1) + s(ilr2) + s(ilr3) +
-                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                              family = zero_inflated_negbinomial(),
                                                              chains = 4, cores = 4,
                                                              backend = "cmdstanr"
@@ -2640,8 +2640,8 @@ saveRDS(m_gad_2023_gam_sleep_q2_obese_insomnia_persistent, paste0(outputdir, "m_
 m_gad_2023_gam_sleep_q3_obese_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3_obese_insomnia_persistent,
                                                              gad_2023 ~ 
                                                                s(ilr1) + s(ilr2) + s(ilr3) +
-                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation),
-                                                               # + icd_any_at_acc,
+                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation)
+                                                               + icd_any_at_acc,
                                                              family = zero_inflated_negbinomial(),
                                                              chains = 4, cores = 4,
                                                              backend = "cmdstanr"
@@ -2674,7 +2674,7 @@ saveRDS(m_gad_2023_gam_sub_sleep_q2_obese_insomnia_persistent_99ci, paste0(outpu
 
 m_gad_2023_gam_sub_sleep_q3_obese_insomnia_persistent_99ci <- substitution(
   m_gad_2023_gam_sleep_q3_obese_insomnia_persistent,
-  delta = 1:20,
+  delta = 1:19,
   ref = "grandmean",
   level = "aggregate",
   scale = "response",
@@ -2702,16 +2702,16 @@ m_gad_2023_gam_sub_sleep_q3_obese_insomnia_persistent_99ci <- readRDS(paste0(out
 
 summary(m_gad_2023_gam_sub_sleep_q1_obese_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q2_obese_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q3_obese_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q3_obese_99ci, delta = 19)
 
 summary(m_gad_2023_gam_sub_sleep_q1_obese_goodsleep_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q2_obese_goodsleep_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q3_obese_goodsleep_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q3_obese_goodsleep_99ci, delta = 19)
 
 summary(m_gad_2023_gam_sub_sleep_q1_obese_insomnia_mild_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q2_obese_insomnia_mild_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q3_obese_insomnia_mild_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q3_obese_insomnia_mild_99ci, delta = 19)
 
 summary(m_gad_2023_gam_sub_sleep_q1_obese_insomnia_persistent_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q2_obese_insomnia_persistent_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q3_obese_insomnia_persistent_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q3_obese_insomnia_persistent_99ci, delta = 19)
