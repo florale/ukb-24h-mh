@@ -88,3 +88,36 @@ nrow(clr_acc_mhq$data[!is.na(dep_lifetime)])
 nrow(clr_acc_mhq$data[!is.na(anx_lifetime)])
 
 table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.75, 1)))) #
+
+# distribution -----------
+hist(clr_acc_mhq$data$phq4_2023)
+
+phq_2023_hist <- 
+  ggplot(clr_acc_mhq$data, aes(x = phq_2023)) +
+  geom_density(color = "darkblue", fill = "lightblue") +
+  geom_vline(
+    aes(xintercept = mean(phq_2023, na.rm = TRUE)),
+    color = "#666666",
+    linetype = "dashed",
+    size = 0.75
+  ) +
+  # scale_x_continuous(limits = c(0, 20)) +
+  scale_y_continuous(limits = 0:1) +
+  labs(x = "PHQ9") +
+  theme_minimal()
+saveRDS(phq_2023_hist, paste0(outputdir, "phq_2023_hist", ".RDS"))
+
+
+gad_2023_hist <- 
+  ggplot(clr_acc_mhq$data, aes(x = gad_2023)) +
+  geom_density(color = "darkblue", fill = "lightblue") +
+  geom_vline(
+    aes(xintercept = mean(gad_2023, na.rm = TRUE)),
+    color = "#666666",
+    linetype = "dashed",
+    size = 0.75
+  ) +
+  scale_y_continuous(limits = 0:1) +
+  labs(x = "GAD7") +
+  theme_minimal()
+saveRDS(gad_2023_hist, paste0(outputdir, "gad_2023_hist", ".RDS"))
