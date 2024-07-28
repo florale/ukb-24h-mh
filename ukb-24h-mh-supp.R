@@ -2,6 +2,10 @@ source("ukb-24h-mh-utils.R")
 source(paste0(redir, "ukb_utils.R"))
 
 # output ---------------------
+## histogram
+phq_2023_hist <- readRDS(paste0(outputdir, "phq_2023_hist", ".RDS"))
+gad_2023_hist <- readRDS(paste0(outputdir, "gad_2023_hist", ".RDS"))
+
 ## dep and anx incidences
 m_phq_2023_gam_sub_sleep_q1_dep_anx_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_dep_anx_99ci", ".RDS"))
 m_phq_2023_gam_sub_sleep_q2_dep_anx_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_dep_anx_99ci", ".RDS"))
