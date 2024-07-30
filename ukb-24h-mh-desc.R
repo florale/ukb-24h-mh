@@ -92,32 +92,47 @@ table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.
 # distribution -----------
 hist(clr_acc_mhq$data$phq4_2023)
 
-phq_2023_hist <- 
+(phq_2023_hist <- 
   ggplot(clr_acc_mhq$data, aes(x = phq_2023)) +
-  geom_density(color = "darkblue", fill = "lightblue") +
+  geom_bar(color = "darkblue", fill = "lightblue") +
   geom_vline(
     aes(xintercept = mean(phq_2023, na.rm = TRUE)),
     color = "#666666",
     linetype = "dashed",
-    size = 0.75
+    linewidth = 0.75
   ) +
-  # scale_x_continuous(limits = c(0, 20)) +
-  scale_y_continuous(limits = 0:1) +
+    ggforce::facet_zoom(xlim = 10:27, ylim = 0:1000, horizontal = FALSE, zoom.size = 0.5) +
+    # ggforce::facet_zoom(x = phq_2023 >= 10) +
+  # scale_y_sqrt(breaks = c(0, 100, 1000, 5000, 10000, 20000)) +
   labs(x = "PHQ9") +
-  theme_minimal()
+  theme_minimal() +
+    theme(
+      panel.background  = element_blank(),
+      panel.border      = element_blank(),
+      panel.grid.major  = element_blank(),
+      panel.grid.minor  = element_blank()
+    )
+)
 saveRDS(phq_2023_hist, paste0(outputdir, "phq_2023_hist", ".RDS"))
 
-
-gad_2023_hist <- 
+(gad_2023_hist <- 
   ggplot(clr_acc_mhq$data, aes(x = gad_2023)) +
-  geom_density(color = "darkblue", fill = "lightblue") +
+  geom_bar(color = "darkblue", fill = "lightblue") +
   geom_vline(
     aes(xintercept = mean(gad_2023, na.rm = TRUE)),
     color = "#666666",
     linetype = "dashed",
-    size = 0.75
+    linewidth = 0.75
   ) +
-  scale_y_continuous(limits = 0:1) +
+    # scale_y_sqrt(breaks = c(0, 100, 1000, 5000, 10000, 20000)) +
+    ggforce::facet_zoom(xlim = 10:27, ylim = 0:1000, horizontal = FALSE, zoom.size = 0.5) +
   labs(x = "GAD7") +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    panel.background  = element_blank(),
+    panel.border      = element_blank(),
+    panel.grid.major  = element_blank(),
+    panel.grid.minor  = element_blank()
+  )
+)
 saveRDS(gad_2023_hist, paste0(outputdir, "gad_2023_hist", ".RDS"))
