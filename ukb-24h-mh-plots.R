@@ -97,15 +97,27 @@ names(sub_models) <- (sub_models_resp)
 # )
 
 col <- c(
-  `Short Sleep Period (Q1)` = "#456691",
-  `Medium Sleep Period (Q2 and Q3)` = "#8AAFCA",
-  `Long Sleep Period (Q4)` = "#944C4C" 
+  `Short Sleep Period (Q1)` = "#CEA299", #D2ABA3
+  `Medium Sleep Period (Q2 and Q3)` = "#7E6661",
+  `Long Sleep Period (Q4)` = "#708885" 
 )
 
 colf <- c(
-  `Short Sleep Period (Q1)` = "#8399AE",
-  `Medium Sleep Period (Q2 and Q3)` = "#A1B2C2",
-  `Long Sleep Period (Q4)` = "#DCD5CE"
+  `Short Sleep Period (Q1)` = "#DCD5CE",
+  `Medium Sleep Period (Q2 and Q3)` = "#BEACA2",
+  `Long Sleep Period (Q4)` = "#AFC7BB"
+)
+
+col <- c(
+  `Short Sleep Period (Q1)` = "#978787", #D2ABA3
+  `Medium Sleep Period (Q2 and Q3)` = "#83A192",
+  `Long Sleep Period (Q4)` = "#465A3D" 
+)
+
+colf <- c(
+  `Short Sleep Period (Q1)` = "#DCD5CE",
+  `Medium Sleep Period (Q2 and Q3)` = "#AFC7BB",
+  `Long Sleep Period (Q4)` = "#9DB3A8"
 )
 
 col_dep <- c(
@@ -123,8 +135,8 @@ colf_dep <- c(
 
 col_anx <- c(
   `Short Sleep Period (Q1)` = "#FAD899",
-  `Medium Sleep Period (Q2 and Q3)` = "#83A192",
-  `Long Sleep Period (Q4)` = "#465A3D" 
+  `Medium Sleep Period (Q2 and Q3)` = "#708885",
+  `Long Sleep Period (Q4)` = "#B49797" 
 )
 
 colf_anx <- c(
@@ -447,7 +459,7 @@ phq_by_sleep_period_insomnia_2023_99ci <- foreach(i = seq_along(parts),
                                                             labeller = label_bquote(cols = .(as.character(From)) ~ phantom(lalalala) %->% phantom(lalalala) ~ .(as.character(To))),
                                                             strip.position = "bottom") +
                                                  scale_colour_manual(values = col) +
-                                                 scale_y_continuous(limits = c(-1, 1.52),
+                                                 scale_y_continuous(limits = c(-1, 1.80),
                                                                     breaks = c(-1, 0, 1)
                                                  ) +
                                                  scale_x_discrete(position = "top") +
