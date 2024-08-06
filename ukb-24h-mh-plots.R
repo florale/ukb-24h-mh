@@ -34,25 +34,25 @@ for(i in seq_along(sub_models_resp)) {
     model_tmp[, SleepPeriod := sleep_period]
     
     model_tmp[, From := ifelse(From == "mvpa_comp", "MVPA", From)]
-    model_tmp[, From := ifelse(From == "lpa_comp", "LPA ", From)]
-    model_tmp[, From := ifelse(From == "sb_comp", " SB ", From)]
+    model_tmp[, From := ifelse(From == "lpa_comp", "LPA", From)]
+    model_tmp[, From := ifelse(From == "sb_comp", "SB", From)]
     model_tmp[, From := ifelse(From == "sleep_comp", "Sleep", From)]
     model_tmp[, From := factor(From, ordered = TRUE,
                                levels = c("Sleep",
                                           "MVPA",
-                                          "LPA ",
-                                          " SB "))]
+                                          "LPA",
+                                          "SB"))]
     
     
     model_tmp[, To := ifelse(To == "mvpa_comp", "MVPA", To)]
-    model_tmp[, To := ifelse(To == "lpa_comp", "LPA ", To)]
-    model_tmp[, To := ifelse(To == "sb_comp", " SB ", To)]
+    model_tmp[, To := ifelse(To == "lpa_comp", "LPA", To)]
+    model_tmp[, To := ifelse(To == "sb_comp", "SB", To)]
     model_tmp[, To := ifelse(To == "sleep_comp", "Sleep", To)]
     model_tmp[, To := factor(To, ordered = TRUE,
                              levels = c("Sleep",
                                         "MVPA",
-                                        "LPA ",
-                                        " SB "))]
+                                        "LPA",
+                                        "SB"))]
     
     model_tmp$sig <- between(0, model_tmp$CI_low, model_tmp$CI_high)
     model_tmp[, Sig := NA]
@@ -82,8 +82,6 @@ names(sub_models) <- (sub_models_resp)
 #   `Medium Sleep Period (Q2 and Q3)` = "#DCD5CE",
 #   `Long Sleep Period (Q4)` = "#b3cde0"
 # )
-
-
 # col <- c(
 #   `Short Sleep Period (Q1)` = "#FAD899",
 #   `Medium Sleep Period (Q2 and Q3)` = "#83A192",
@@ -110,14 +108,14 @@ colf <- c(
 
 col <- c(
   `Short Sleep Period (Q1)` = "#978787", #D2ABA3
-  `Medium Sleep Period (Q2 and Q3)` = "#83A192",
-  `Long Sleep Period (Q4)` = "#465A3D" 
+  `Medium Sleep Period (Q2 and Q3)` = "#8AAFCA",
+  `Long Sleep Period (Q4)` = "#456691" 
 )
 
 colf <- c(
   `Short Sleep Period (Q1)` = "#DCD5CE",
-  `Medium Sleep Period (Q2 and Q3)` = "#AFC7BB",
-  `Long Sleep Period (Q4)` = "#9DB3A8"
+  `Medium Sleep Period (Q2 and Q3)` = "#ADC7DA",
+  `Long Sleep Period (Q4)` = "#8399AE"
 )
 
 col_dep <- c(
@@ -148,9 +146,8 @@ colf_anx <- c(
 alpha <- 2/10
 
 # make a grid to loop plots
-parts          <- c("Sleep", "MVPA", "LPA ", " SB ")
-part_labels    <- c("Sleep", "MVPA", 
-                    "LPA ", " SB ")
+parts          <- c("Sleep", "MVPA", "LPA", "SB")
+part_labels    <- c("Sleep", "MVPA", "LPA", "SB")
 
 # phq by sleep period----------------
 sub_models_phq <- grep("phq", names(sub_models), value = T)
@@ -212,7 +209,7 @@ phq_24h_2023_99ci <- foreach(i = seq_len(nrow(rg_phq)),
                         }
 
 names(phq_24h_2023_99ci) <- foreach(i = seq_len(nrow(rg_phq))) %dopar% {
-  paste0("Reallocation of Time between ", rg_phq[i, "part_labels"], " and ", rg_phq[i, "phq"])
+  paste0("Reallocation of Time between ", rg_phq[i, "parts"], " and ", rg_phq[i, "phq"])
 }
 phq_24h_2023_99ci
 
@@ -293,7 +290,7 @@ gad_24h_2023_99ci <- foreach(i = seq_len(nrow(rg_gad)),
                         }
 
 names(gad_24h_2023_99ci) <- foreach(i = seq_len(nrow(rg_gad))) %dopar% {
-  paste0("Reallocation of Time between ", rg_gad[i, "part_labels"], " and ", rg_gad[i, "gad"])
+  paste0("Reallocation of Time between ", rg_gad[i, "parts"], " and ", rg_gad[i, "gad"])
 }
 gad_24h_2023_99ci
 
@@ -312,6 +309,361 @@ figure <- ggarrange(gad_24h_2023_99ci[[1]], gad_24h_2023_99ci[[2]],
                     legend   = "bottom"
 )
 annotate_figure(figure, left = text_grob("Estimated Difference in Anxiety Symptoms", size = 14, rot = 90, family = "Arial Narrow", face = "bold"))
+dev.off()
+
+### dep + anx diag figure ---------------
+to <- parts
+rg_phq_exp <- as.data.table(expand.grid.df(data.frame(to), rg_phq))
+rg_phq_exp <- as.data.frame(rg_phq_exp[to != parts])
+
+rg_gad_exp <- as.data.table(expand.grid.df(data.frame(to), rg_gad))
+rg_gad_exp <- as.data.frame(rg_gad_exp[to != parts])
+
+# phq
+phq_24h_2023_99ci_exp <- foreach(i = seq_len(nrow(rg_phq_exp)),
+                                 .packages = "multilevelcoda") %dopar% {
+                                   
+                                   ggplot(sub_models[[rg_phq_exp[i, "sub_models_phq"]]][From == eval(rg_phq_exp[i, "parts"]) & To == eval(rg_phq_exp[i, "to"])], 
+                                          aes(x = Delta, y = Mean)) +
+                                     geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
+                                     geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
+                                     geom_ribbon(aes(ymin = CI_low,
+                                                     ymax = CI_high, fill = SleepPeriod),
+                                                 alpha = alpha, show.legend = TRUE) +
+                                     geom_line(aes(colour = SleepPeriod), linewidth = 1, show.legend = TRUE) +
+                                     geom_text(aes(label = Sig, colour = SleepPeriod),
+                                               size = 6, 
+                                               position = ggpp::position_nudge_center(center_x = 0, x = 3, 
+                                                                                      y = 0.005),
+                                               show.legend = FALSE) +
+                                     # facet_wrap(~ From, strip.position = "left") +
+                                     # facet_wrap(ggplot2::vars(From, To),
+                                     #            labeller = label_bquote(cols = .(as.character(From)) %<-% phantom(veryveryvery) %->% .(as.character(To))),
+                                     #            strip.position = "bottom") +
+                                     labs(x = bquote(.(rg_phq_exp[i, "parts"]) %<-% phantom(oooooooooooooooooooo) %->%  .(rg_phq_exp[i, "to"])),
+                                          y = paste0("Difference in ", rg_phq_exp[i, "phq"])) +
+                                     scale_x_continuous(limits = c(-23, 23),
+                                                        breaks = c(-20, 0, 20)) +
+                                     scale_y_continuous(limits = c(-0.27, 0.6),
+                                                        breaks = c(-0.25, 0, 0.25)) +
+                                     scale_colour_manual(values = col,
+                                                         drop = FALSE) +
+                                     scale_fill_manual(values = colf,
+                                                       drop = FALSE) +
+                                     hrbrthemes::theme_ipsum(grid="Y") +
+                                     theme(
+                                       axis.ticks        = element_blank(),
+                                       panel.background  = element_blank(),
+                                       # panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+                                       panel.border      = element_blank(),
+                                       panel.grid.major  = element_blank(),
+                                       panel.grid.minor  = element_blank(),
+                                       plot.background   = element_rect(fill = "transparent", colour = NA),
+                                       # plot.background   = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),                                       strip.background  = element_rect(fill = "transparent", colour = NA),
+                                       strip.text        = element_text(size = 13, face = "bold", hjust = .5),
+                                       strip.placement   = "outside",
+                                       axis.title.x      = element_text(size = 12, hjust = 0.5),
+                                       axis.text.x       = element_text(size = 12),
+                                       axis.title.y      = element_blank(),
+                                       # plot.margin       = margin(.5, .5, .5, .5, "cm"),
+                                       legend.title      = element_blank(),
+                                       legend.text       = element_text(size = 13, face = "bold", hjust = .5),
+                                       legend.position   = "bottom",
+                                       plot.margin       = unit(c(0,0,0,0), "lines")
+                                     )
+                                   
+                                 }
+names(phq_24h_2023_99ci_exp) <- foreach(i = seq_len(nrow(rg_phq_exp))) %dopar% {
+  paste0("Reallocation from ", rg_phq_exp[i, "parts"], " to ",  rg_phq_exp[i, "to"], " and ", rg_phq_exp[i, "phq"])
+}
+
+# no x axis text
+phq_24h_2023_99ci_exp_notxt <- foreach(i = seq_len(nrow(rg_phq_exp)),
+                                 .packages = "multilevelcoda") %dopar% {
+                                   
+                                   ggplot(sub_models[[rg_phq_exp[i, "sub_models_phq"]]][From == eval(rg_phq_exp[i, "parts"]) & To == eval(rg_phq_exp[i, "to"])], 
+                                          aes(x = Delta, y = Mean)) +
+                                     geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
+                                     geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
+                                     geom_ribbon(aes(ymin = CI_low,
+                                                     ymax = CI_high, fill = SleepPeriod),
+                                                 alpha = alpha, show.legend = TRUE) +
+                                     geom_line(aes(colour = SleepPeriod), linewidth = 1, show.legend = TRUE) +
+                                     geom_text(aes(label = Sig, colour = SleepPeriod),
+                                               size = 6, 
+                                               position = ggpp::position_nudge_center(center_x = 0, x = 3, 
+                                                                                      y = 0.005),
+                                               show.legend = FALSE) +
+                                     # facet_wrap(~ From, strip.position = "left") +
+                                     # facet_wrap(ggplot2::vars(From, To),
+                                     #            labeller = label_bquote(cols = .(as.character(From)) %<-% phantom(veryveryvery) %->% .(as.character(To))),
+                                     #            strip.position = "bottom") +
+                                     labs(x = bquote(.(rg_phq_exp[i, "parts"]) %<-% phantom(oooooooooooooo) %->%  .(rg_phq_exp[i, "to"])),
+                                          y = paste0("Difference in ", rg_phq_exp[i, "phq"])) +
+                                     scale_x_continuous(limits = c(-23, 23),
+                                                        breaks = c(-20, 0, 20)) +
+                                     scale_y_continuous(limits = c(-0.27, 0.6),
+                                                        breaks = c(-0.25, 0, 0.25)) +
+                                     scale_colour_manual(values = col,
+                                                         drop = FALSE) +
+                                     scale_fill_manual(values = colf,
+                                                       drop = FALSE) +
+                                     hrbrthemes::theme_ipsum(grid="Y") +
+                                     theme(
+                                       axis.ticks        = element_blank(),
+                                       panel.background  = element_blank(),
+                                       # panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+                                       panel.border      = element_blank(),
+                                       panel.grid.major  = element_blank(),
+                                       panel.grid.minor  = element_blank(),
+                                       plot.background   = element_rect(fill = "transparent", colour = NA),
+                                       # plot.background   = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),                                       strip.background  = element_rect(fill = "transparent", colour = NA),
+                                       strip.text        = element_text(size = 13, face = "bold", hjust = .5),
+                                       strip.placement   = "outside",
+                                       axis.title.x      = element_text(size = 12, hjust = 0.5),
+                                       axis.text.x       = element_text(size = 12),
+                                       axis.text.y       = element_blank(),
+                                       axis.title.y      = element_blank(),
+                                       # plot.margin       = margin(.5, .5, .5, .5, "cm"),
+                                       legend.title      = element_blank(),
+                                       legend.text       = element_text(size = 13, face = "bold", hjust = .5),
+                                       legend.position   = "bottom",
+                                       plot.margin       = unit(c(0,0,0,0), "lines"),
+                                       aspect.ratio      = 1
+                                     )
+                                   
+                                 }
+names(phq_24h_2023_99ci_exp_notxt) <- foreach(i = seq_len(nrow(rg_phq_exp))) %dopar% {
+  paste0("Reallocation from ", rg_phq_exp[i, "parts"], " to ",  rg_phq_exp[i, "to"], " and ", rg_phq_exp[i, "phq"])
+}
+
+# gad
+gad_24h_2023_99ci_exp <- foreach(i = seq_len(nrow(rg_gad_exp)),
+                                 .packages = "multilevelcoda") %dopar% {
+                                   
+                                   ggplot(sub_models[[rg_gad_exp[i, "sub_models_gad"]]][From == eval(rg_gad_exp[i, "parts"]) & To == eval(rg_gad_exp[i, "to"])], 
+                                          aes(x = Delta, y = Mean)) +
+                                     geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
+                                     geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
+                                     geom_ribbon(aes(ymin = CI_low,
+                                                     ymax = CI_high, fill = SleepPeriod),
+                                                 alpha = alpha, show.legend = TRUE) +
+                                     geom_line(aes(colour = SleepPeriod), linewidth = 1, show.legend = TRUE) +
+                                     geom_text(aes(label = Sig, colour = SleepPeriod),
+                                               size = 6, 
+                                               position = ggpp::position_nudge_center(center_x = 0, x = 3, 
+                                                                                      y = 0.005),
+                                               show.legend = FALSE) +
+                                     # facet_wrap(~ From, strip.position = "left") +
+                                     # facet_wrap(ggplot2::vars(From, To),
+                                     #            labeller = label_bquote(cols = .(as.character(From)) %<-% phantom(veryveryvery) %->% .(as.character(To))),
+                                     #            strip.position = "bottom") +
+                                     labs(x = bquote(.(rg_gad_exp[i, "parts"]) %<-% phantom(oooooooooooooooooooo) %->%  .(rg_gad_exp[i, "to"])),
+                                          y = paste0("Difference in ", rg_gad_exp[i, "phq"])) +
+                                     scale_x_continuous(limits = c(-23, 23),
+                                                        breaks = c(-20, 0, 20)) +
+                                     scale_y_continuous(limits = c(-0.27, 0.6),
+                                                        breaks = c(-0.25, 0, 0.25),
+                                                        position = "right",
+                                                        name = NULL) +
+                                     scale_colour_manual(values = col,
+                                                         drop = FALSE) +
+                                     scale_fill_manual(values = colf,
+                                                       drop = FALSE) +
+                                     hrbrthemes::theme_ipsum(grid="Y") +
+                                     theme(
+                                       axis.ticks        = element_blank(),
+                                       panel.background  = element_blank(),
+                                       # panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+                                       panel.border      = element_blank(),
+                                       panel.grid.major  = element_blank(),
+                                       panel.grid.minor  = element_blank(),
+                                       plot.background   = element_rect(fill = "transparent", colour = NA),
+                                       # plot.background   = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),                                       strip.background  = element_rect(fill = "transparent", colour = NA),
+                                       strip.text        = element_text(size = 13, face = "bold", hjust = .5),
+                                       strip.placement   = "outside",
+                                       axis.title.x      = element_text(size = 12, hjust = 0.5),
+                                       axis.text.x       = element_text(size = 12),
+                                       axis.title.y      = element_blank(),
+                                       # plot.margin       = margin(.5, .5, .5, .5, "cm"),
+                                       legend.title      = element_blank(),
+                                       legend.text       = element_text(size = 13, face = "bold", hjust = .5),
+                                       legend.position   = "bottom",
+                                       plot.margin       = unit(c(0,0,0,0), "lines")
+                                     )
+                                   
+                                 }
+names(gad_24h_2023_99ci_exp) <- foreach(i = seq_len(nrow(rg_gad_exp))) %dopar% {
+  paste0("Reallocation from ", rg_gad_exp[i, "parts"], " to ",  rg_gad_exp[i, "to"], " and ", rg_gad_exp[i, "gad"])
+}
+
+gad_24h_2023_99ci_exp_notxt <- foreach(i = seq_len(nrow(rg_gad_exp)),
+                                 .packages = "multilevelcoda") %dopar% {
+                                   
+                                   ggplot(sub_models[[rg_gad_exp[i, "sub_models_gad"]]][From == eval(rg_gad_exp[i, "parts"]) & To == eval(rg_gad_exp[i, "to"])], 
+                                          aes(x = Delta, y = Mean)) +
+                                     geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
+                                     geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
+                                     geom_ribbon(aes(ymin = CI_low,
+                                                     ymax = CI_high, fill = SleepPeriod),
+                                                 alpha = alpha, show.legend = TRUE) +
+                                     geom_line(aes(colour = SleepPeriod), linewidth = 1, show.legend = TRUE) +
+                                     geom_text(aes(label = Sig, colour = SleepPeriod),
+                                               size = 6, 
+                                               position = ggpp::position_nudge_center(center_x = 0, x = 3, 
+                                                                                      y = 0.005),
+                                               show.legend = FALSE) +
+                                     # facet_wrap(~ From, strip.position = "left") +
+                                     # facet_wrap(ggplot2::vars(From, To),
+                                     #            labeller = label_bquote(cols = .(as.character(From)) %<-% phantom(veryveryvery) %->% .(as.character(To))),
+                                     #            strip.position = "bottom") +
+                                     labs(x = bquote(.(rg_gad_exp[i, "parts"]) %<-% phantom(oooooooooooooo) %->%  .(rg_gad_exp[i, "to"])),
+                                          y = paste0("Difference in ", rg_gad_exp[i, "phq"])) +
+                                     scale_x_continuous(limits = c(-23, 23),
+                                                        breaks = c(-20, 0, 20)) +
+                                     scale_y_continuous(limits = c(-0.27, 0.6),
+                                                        breaks = c(-0.25, 0, 0.25),
+                                                        position = "right",
+                                                        name = NULL) +
+                                     scale_colour_manual(values = col,
+                                                         drop = FALSE) +
+                                     scale_fill_manual(values = colf,
+                                                       drop = FALSE) +
+                                     hrbrthemes::theme_ipsum(grid="Y") +
+                                     theme(
+                                       axis.ticks        = element_blank(),
+                                       panel.background  = element_blank(),
+                                       # panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+                                       panel.border      = element_blank(),
+                                       panel.grid.major  = element_blank(),
+                                       panel.grid.minor  = element_blank(),
+                                       plot.background   = element_rect(fill = "transparent", colour = NA),
+                                       # plot.background   = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),                                       strip.background  = element_rect(fill = "transparent", colour = NA),
+                                       strip.text        = element_text(size = 13, face = "bold", hjust = .5),
+                                       strip.placement   = "outside",
+                                       axis.title.x      = element_text(size = 12, hjust = 0.5),
+                                       axis.text.x       = element_text(size = 12),
+                                       axis.text.y       = element_blank(),
+                                       axis.title.y      = element_blank(),
+                                       # plot.margin       = margin(.5, .5, .5, .5, "cm"),
+                                       legend.title      = element_blank(),
+                                       legend.text       = element_text(size = 13, face = "bold", hjust = .5),
+                                       legend.position   = "bottom",
+                                       plot.margin       = unit(c(0,0,0,0), "lines"),
+                                       aspect.ratio      = 1
+                                     )
+                                   
+                                 }
+names(gad_24h_2023_99ci_exp_notxt) <- foreach(i = seq_len(nrow(rg_gad_exp))) %dopar% {
+  paste0("Reallocation from ", rg_gad_exp[i, "parts"], " to ",  rg_gad_exp[i, "to"], " and ", rg_gad_exp[i, "gad"])
+}
+
+#### patch ------
+# with plot spacer
+plot_spacer <- 
+  ggplot() + 
+  geom_blank() +
+  hrbrthemes::theme_ipsum(grid="Y") +
+  theme(
+    axis.ticks        = element_blank(),
+    panel.background  = element_blank(),
+    # panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+    panel.border      = element_blank(),
+    panel.grid.major  = element_blank(),
+    panel.grid.minor  = element_blank(),
+    plot.background   = element_rect(fill = "transparent", colour = NA),
+    # plot.background   = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+    strip.background  = element_rect(fill = "transparent", colour = NA),
+    strip.text        = element_text(size = 13, face = "bold", hjust = .5),
+    strip.placement   = "outside",
+    axis.title.x      = element_text(size = 12),
+    axis.text.x       = element_text(size = 12),
+    axis.title.y      = element_blank(),
+    # plot.margin       = margin(.5, .5, .5, .5, "cm"),
+    legend.title      = element_blank(),
+    legend.text       = element_text(size = 13, face = "bold", hjust = .5),
+    legend.position   = "bottom",
+    plot.margin       = unit(c(0,0,0,2), "lines")
+  )
+plot_spacer_mid <- 
+  ggplot() + 
+  geom_blank() +
+  hrbrthemes::theme_ipsum(grid="Y") +
+  theme(
+    axis.ticks        = element_blank(),
+    panel.background  = element_blank(),
+    # panel.background    = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+    panel.border      = element_blank(),
+    panel.grid.major  = element_blank(),
+    panel.grid.minor  = element_blank(),
+    plot.background   = element_rect(fill = "transparent", colour = NA),
+    # plot.background   = element_rect(fill = "transparent", colour = "black", linewidth = 0.5),
+    strip.background  = element_rect(fill = "transparent", colour = NA),
+    strip.text        = element_text(size = 13, face = "bold", hjust = .5),
+    strip.placement   = "outside",
+    axis.title.x      = element_text(size = 12),
+    axis.text.x       = element_text(size = 12),
+    axis.title.y      = element_blank(),
+    # plot.margin       = margin(.5, .5, .5, .5, "cm"),
+    legend.title      = element_blank(),
+    legend.text       = element_text(size = 13, face = "bold", hjust = .5),
+    legend.position   = "bottom",
+    plot.margin       = unit(c(0,0,0,0.25), "lines"),
+    aspect.ratio      = 1
+  )
+
+(p1 <- plot_spacer                + gad_24h_2023_99ci_exp_notxt[[8]]  + gad_24h_2023_99ci_exp_notxt[[11]] + gad_24h_2023_99ci_exp[[1]] + plot_layout(guides = "collect", ncol = 4) & theme(legend.position = "none"))
+(p2 <- phq_24h_2023_99ci_exp[[3]] + plot_spacer_mid                   + gad_24h_2023_99ci_exp_notxt[[12]] + gad_24h_2023_99ci_exp[[2]] + plot_layout(guides = "collect", ncol = 4) & theme(legend.position = "none"))
+(p3 <- phq_24h_2023_99ci_exp[[2]] + phq_24h_2023_99ci_exp_notxt[[12]] + plot_spacer_mid                   + gad_24h_2023_99ci_exp[[3]] + plot_layout(guides = "collect", ncol = 4) & theme(legend.position = "none"))
+(p4 <- phq_24h_2023_99ci_exp[[1]] + phq_24h_2023_99ci_exp_notxt[[11]] + phq_24h_2023_99ci_exp_notxt[[8]]  + plot_spacer              + plot_layout(guides = "collect", ncol = 4) & theme(legend.position = "none"))
+
+# p1 / p2 / p3 / p4 + plot_layout(guides = "collect", nrow = 4) & theme(legend.position = "bottom")
+#  + plot_annotation(tag_levels = 'A')
+grDevices::cairo_pdf(
+  file = paste0(outputdir, "phq_gad_24h_2023_99ci", ".pdf"),
+  width = 12,
+  height = 12,
+)
+
+figure <- ggarrange(p1, p2, p3, p4, 
+          nrow = 4,
+          common.legend = TRUE,
+          legend   = "bottom"
+)
+annotate_figure(figure, 
+                left = text_grob("Estimated Difference in Depression Symptoms", size = 15, rot = 90, family = "Arial Narrow", face = "bold"),
+                right = text_grob("Estimated Difference in Anxiety Symptoms", size = 15, rot = 270, family = "Arial Narrow", face = "bold"))
+
+dev.off()
+
+# with hist
+sleep_hist <- readRDS(paste0(outputdir, "sleep_hist", ".RDS"))
+mvpa_hist <- readRDS(paste0(outputdir, "mvpa_hist", ".RDS"))
+lpa_hist <- readRDS(paste0(outputdir, "lpa_hist", ".RDS"))
+sb_hist <- readRDS(paste0(outputdir, "sb_hist", ".RDS"))
+
+(p1 <- sleep_hist                 + gad_24h_2023_99ci_exp_notxt[[8]]  + gad_24h_2023_99ci_exp_notxt[[11]] + gad_24h_2023_99ci_exp[[1]] + plot_layout(guides = "collect", ncol = 4) & theme(legend.position = "none"))
+(p2 <- phq_24h_2023_99ci_exp[[3]] + mvpa_hist                         + gad_24h_2023_99ci_exp_notxt[[12]] + gad_24h_2023_99ci_exp[[2]] + plot_layout(guides = "collect", ncol = 4) & theme(legend.position = "none"))
+(p3 <- phq_24h_2023_99ci_exp[[2]] + phq_24h_2023_99ci_exp_notxt[[12]] + lpa_hist                          + gad_24h_2023_99ci_exp[[3]] + plot_layout(guides = "collect", ncol = 4) & theme(legend.position = "none"))
+(p4 <- phq_24h_2023_99ci_exp[[1]] + phq_24h_2023_99ci_exp_notxt[[11]] + phq_24h_2023_99ci_exp_notxt[[8]]  + sb_hist                    + plot_layout(guides = "collect", ncol = 4) & theme(legend.position = "none"))
+
+# p1 / p2 / p3 / p4 + plot_layout(guides = "collect", nrow = 4) & theme(legend.position = "bottom")
+#  + plot_annotation(tag_levels = 'A')
+grDevices::cairo_pdf(
+  file = paste0(outputdir, "phq_gad_24h_2023_99ci_hists", ".pdf"),
+  width = 13,
+  height = 13,
+)
+
+figure <- ggarrange(p1, p2, p3, p4, 
+                    nrow = 4,
+                    common.legend = TRUE,
+                    legend   = "bottom"
+)
+annotate_figure(figure, 
+                left = text_grob("Estimated Difference in Depression Symptoms", size = 15, rot = 90, family = "Arial Narrow", face = "bold"),
+                right = text_grob("Estimated Difference in Anxiety Symptoms", size = 15, rot = 270, family = "Arial Narrow", face = "bold"))
+
 dev.off()
 
 # by sleep period and insomnia symptoms -------
