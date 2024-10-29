@@ -4,8 +4,20 @@ source("ukb-24h-mh-data.R")
 table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.75, 1)))) #
 
 # n complete
-nrow(d_acc_mhq_2016[!is.na(p20400)]) # 66972
-nrow(d_acc_mhq_2023[!is.na(p29197)]) # 63530
+nrow(d_acc_mhq[!is.na(p20400)]) # 66972
+nrow(d_acc_mhq_all[!is.na(p29197)]) # 63530
+
+nrow(d_acc_mhq[!is.na(p29197)]) # 55945
+
+# n diag prior
+nrow(d_acc_dep_anx[time_diff_dep_anx_acc > 0]) # 11009
+
+# n < 1y follow up
+nrow(d_acc_dep_anx[time_diff_dep_anx_acc %gele% c(-1, 0)]) #368
+
+nrow(d_acc_dep_anx[time_diff_dep_anx_acc >= -1]) # 11377
+
+nrow(d_acc_mhq_dep_anx[time_diff_dep_anx_acc >= -1 & !is.na(p29197)]) # 7585
 
 # followup time
 d_acc_mhq[, age_diff_mh_2016_acc := (acc_startdate - p20400)/365.25]
@@ -13,81 +25,166 @@ table(round(d_acc_mhq$age_diff_mh_2016_acc), useNA = "always")
 mean(d_acc_mhq$age_diff_mh_2016_acc, na.rm = TRUE)
 sd(d_acc_mhq$age_diff_mh_2016_acc, na.rm = TRUE)
 
-d_acc_mhq[, age_diff_mh_2023_acc := (acc_startdate - as.Date(p29197))/365.25]
-table(round(d_acc_mhq$age_diff_mh_2023_acc), useNA = "always")
-mean(d_acc_mhq$age_diff_mh_2023_acc, na.rm = TRUE)
-sd(d_acc_mhq$age_diff_mh_2023_acc, na.rm = TRUE)
+d_acc_mhq_clean[, age_diff_mh_2023_acc := (acc_startdate - as.Date(p29197))/365.25]
+table(round(d_acc_mhq_clean$age_diff_mh_2023_acc), useNA = "always")
+mean(d_acc_mhq_clean$age_diff_mh_2023_acc, na.rm = TRUE)
+sd(d_acc_mhq_clean$age_diff_mh_2023_acc, na.rm = TRUE)
+
+# met who
+nrow(d_acc_mhq_clean[mvpa*7 >= 150])
+nrow(d_acc_mhq_clean[mvpa*7 < 150])
 
 # possible clinical
-nrow(d_acc_mhq[phq_2023 >= 10])
-nrow(d_acc_mhq[gad_2023 >= 10])
+nrow(d_acc_mhq_clean[phq_2023 >= 10])
+nrow(d_acc_mhq_clean[gad_2023 >= 10])
 
+nrow(d_acc_mhq[!is.na(age)])
+nrow(d_acc_mhq[!is.na(sex)])
+nrow(d_acc_mhq[!is.na(ethnicg)])
+nrow(d_acc_mhq[!is.na(bmig)])
+nrow(d_acc_mhq[!is.na(edu)])
+nrow(d_acc_mhq[!is.na(working)])
+nrow(d_acc_mhq[!is.na(deprivation)])
+nrow(d_acc_mhq[!is.na(smoking)])
+nrow(d_acc_mhq[!is.na(alcohol)])
+
+nrow(d_acc_mhq[!is.na(sleep)])
+nrow(d_acc_mhq[!is.na(mvpa)])
+nrow(d_acc_mhq[!is.na(lpa)])
+nrow(d_acc_mhq[!is.na(sb)])
+
+nrow(d_acc_mhq[!is.na(phq_2016)])
+nrow(d_acc_mhq[!is.na(gad_2016)])
+nrow(d_acc_mhq[!is.na(phq_2023)])
+nrow(d_acc_mhq[!is.na(gad_2023)])
+
+nrow(d_acc_mhq[!is.na(dep_lifetime)])
+nrow(d_acc_mhq[!is.na(anx_lifetime)])
+
+nrow(d_acc_mhq[is.na(age) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(sex) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(ethnicg) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(bmig) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(edu) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(working) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(deprivation) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(smoking) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(alcohol) & !is.na(p29197)])
+
+# include in main analysis - 
+nrow(d_acc_mhq[!is.na(p29197) & 
+                        !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))]) #51359
+
+nrow(d_acc_mhq[!is.na(p29197) & 
+                        (is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
+
+nrow(d_acc_mhq[(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
+
+nrow(d_acc_mhq[is.na(phq_2016) & !is.na(p20400)])
+nrow(d_acc_mhq[is.na(gad_2016) & !is.na(p20400)])
+
+nrow(d_acc_mhq[is.na(phq_2023) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(gad_2023) & !is.na(p29197)])
+nrow(d_acc_mhq[is.na(insomnia_2023) & !is.na(p29197)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023))])
+
+nrow(d_acc_mhq[!is.na(p29197) & !(is.na(phq_2023) | is.na(gad_2023)) & 
+                        !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
+nrow(d_acc_mhq[!is.na(phq_2023) & 
+                        !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
+nrow(d_acc_mhq[!is.na(gad_2023) & 
+                        !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
+
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(age)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(sex)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(ethnicg)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(bmig)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(edu)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(working)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(deprivation)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(smoking)])
+nrow(d_acc_mhq[!is.na(p29197) & (is.na(insomnia_2023) | is.na(phq_2023) | is.na(gad_2023)) & is.na(alcohol)])
+
+
+# include in 1st sensitivity analysis
+nrow(d_acc_mhq_dep_anx[time_diff_dep_anx_acc >= -1 & !is.na(p29197) &
+                         !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))]) # 6924
+
+# complete 2023 but not 2016
+nrow(d_acc_mhq[!is.na(p29197) & is.na(p20400) &
+                        !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
+
+# include in 2nd sensitivity analysis
+
+nrow(d_acc_mhq[!is.na(p29197) & !is.na(p20400) &
+                        !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
+
+
+
+table(cut(d_acc_mhq$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.75, 1)))) #
+
+nrow(clr_acc_mhq$data)
 egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
-           "edu", "working", "deprivation",
+           "edu", "working", "deprivation", "deprivationg",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
            "sleep", "mvpa", "lpa", "sb",
            "phq_2016", "gad_2016",
            "insomnia_2016",
            "phq_2023", "gad_2023",
+           "phq_2023_cutoff", "gad_2023_cutoff",
            "insomnia_2023"
-           ), strict = FALSE, data = clr_acc_mhq$data)
+), strict = FALSE, data = clr_acc_mhq$data)
 
+nrow(clr_acc_mhq_sleep_q1$data)
 egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
-           "edu", "working", "deprivation",
+           "edu", "working", "deprivation", "deprivationg",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
            "sleep", "mvpa", "lpa", "sb",
            "phq_2016", "gad_2016",
            "insomnia_2016",
            "phq_2023", "gad_2023",
+           "phq_2023_cutoff", "gad_2023_cutoff",
            "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q1$data)
 
+nrow(clr_acc_mhq_sleep_q2$data)
 egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
-           "edu", "working", "deprivation",
+           "edu", "working", "deprivation", "deprivationg",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
            "sleep", "mvpa", "lpa", "sb",
            "phq_2016", "gad_2016",
            "insomnia_2016",
            "phq_2023", "gad_2023",
+           "phq_2023_cutoff", "gad_2023_cutoff",
            "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q2$data)
 
+nrow(clr_acc_mhq_sleep_q3$data)
 egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
-           "edu", "working", "deprivation",
+           "edu", "working", "deprivation", "deprivationg",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
            "sleep", "mvpa", "lpa", "sb",
            "phq_2016", "gad_2016",
            "insomnia_2016",
            "phq_2023", "gad_2023",
+           "phq_2023_cutoff", "gad_2023_cutoff",
            "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q3$data)
 
-nrow(clr_acc_mhq$data[!is.na(age)])
-nrow(clr_acc_mhq$data[!is.na(sex)])
-nrow(clr_acc_mhq$data[!is.na(ethnicg)])
-nrow(clr_acc_mhq$data[!is.na(bmig)])
-nrow(clr_acc_mhq$data[!is.na(edu)])
-nrow(clr_acc_mhq$data[!is.na(working)])
-nrow(clr_acc_mhq$data[!is.na(deprivation)])
-nrow(clr_acc_mhq$data[!is.na(smoking)])
-nrow(clr_acc_mhq$data[!is.na(alcohol)])
+# IQR
+psych::describe(clr_acc_mhq$data$phq_2023, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q1$data$phq_2023, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q2$data$phq_2023, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q3$data$phq_2023, IQR = TRUE)
 
-nrow(clr_acc_mhq$data[!is.na(sleep)])
-nrow(clr_acc_mhq$data[!is.na(mvpa)])
-nrow(clr_acc_mhq$data[!is.na(lpa)])
-nrow(clr_acc_mhq$data[!is.na(sb)])
-
-nrow(clr_acc_mhq$data[!is.na(phq_2016)])
-nrow(clr_acc_mhq$data[!is.na(gad_2016)])
-
-nrow(clr_acc_mhq$data[!is.na(dep_lifetime)])
-nrow(clr_acc_mhq$data[!is.na(anx_lifetime)])
-
-table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.75, 1)))) #
+psych::describe(clr_acc_mhq$data$gad_2023, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q1$data$gad_2023, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q2$data$phq_2023, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q3$data$phq_2023, IQR = TRUE)
 
 # distribution -----------
 clr_acc_mhq <- readRDS(paste0(inputdir, "clr_acc_mhq", ".RDS"))
@@ -127,34 +224,34 @@ histd[sleep_group == "long", peak_density_sb := approxfun(density(histd$sb)$x, d
 histd[, quantile_intercept :=  approxfun(density(histd$sleep)$x, density(histd$sleep)$y)(quantile(sleep, c (0, 0.25, 0.75, 1))[[2]])]
 histd[, quantile_intercept :=  approxfun(density(histd$sleep)$x, density(histd$sleep)$y)(quantile(sleep, c (0, 0.25, 0.75, 1))[[3]])]
 
-
 col_hist <- c(
-  `short` = "#978787", #D2ABA3
-  `med` = "#8AAFCA",
-  `long` = "#456691" 
+  `short` = "#8AAFCA", #D2ABA3
+  `med` = "#456691",
+  `long` = "#333333" 
 )
 colf_hist <- c(
   `short` = "#FAF7F3", #D2ABA3
   `med` = "#D2E0EA",
   `long` = "#ADC7DA" 
 )
+
 (phq_2023_hist <- 
-  ggplot(histd, aes(x = phq_2023)) +
-  geom_bar(color = "#456691", fill = "#ADC7DA") +
-  geom_vline(
-    aes(xintercept = mean(phq_2023, na.rm = TRUE)),
-    color = "#999999",
-    linetype = "dashed",
-    linewidth = 0.75
-  ) +
+    ggplot(histd, aes(x = phq_2023)) +
+    geom_bar(color = "#456691", fill = "#ADC7DA") +
+    geom_vline(
+      aes(xintercept = mean(phq_2023, na.rm = TRUE)),
+      color = "#999999",
+      linetype = "dashed",
+      linewidth = 0.75
+    ) +
     ggbreak::scale_y_break(breaks = c(1000, 5000, 20000), scales = c(3, 0.5)) +
     # scale_y_break(c(10000, 35000), breaks = c(10000, 20000, 30000)) +
     
     # ggforce::facet_zoom(xlim = 10:27, ylim = 0:1000, horizontal = FALSE, zoom.size = 0.5) +
     # ggforce::facet_zoom(x = phq_2023 >= 10) +
-  # scale_y_sqrt(breaks = c(0, 100, 1000, 5000, 10000, 20000)) +
-  labs(x = "PHQ9") +
-  theme_minimal() +
+    # scale_y_sqrt(breaks = c(0, 100, 1000, 5000, 10000, 20000)) +
+    labs(x = "PHQ9") +
+    theme_minimal() +
     theme(
       panel.background  = element_blank(),
       panel.border      = element_blank(),
@@ -165,24 +262,24 @@ colf_hist <- c(
 saveRDS(phq_2023_hist, paste0(outputdir, "phq_2023_hist", ".RDS"))
 
 (gad_2023_hist <- 
-  ggplot(histd, aes(x = gad_2023)) +
-  geom_bar(color = "#456691", fill = "#ADC7DA") +
-  geom_vline(
-    aes(xintercept = mean(gad_2023, na.rm = TRUE)),
-    color = "#999999",
-    linetype = "dashed",
-    linewidth = 0.75
-  ) +
+    ggplot(histd, aes(x = gad_2023)) +
+    geom_bar(color = "#456691", fill = "#ADC7DA") +
+    geom_vline(
+      aes(xintercept = mean(gad_2023, na.rm = TRUE)),
+      color = "#999999",
+      linetype = "dashed",
+      linewidth = 0.75
+    ) +
     ggbreak::scale_y_break(breaks = c(5000, 10000, 30000), scales = c(3, 0.5)) +
     # ggforce::facet_zoom(xlim = 10:27, ylim = 0:1000, horizontal = FALSE, zoom.size = 0.5) +
-  labs(x = "GAD7") +
-  theme_minimal() +
-  theme(
-    panel.background  = element_blank(),
-    panel.border      = element_blank(),
-    panel.grid.major  = element_blank(),
-    panel.grid.minor  = element_blank()
-  )
+    labs(x = "GAD7") +
+    theme_minimal() +
+    theme(
+      panel.background  = element_blank(),
+      panel.border      = element_blank(),
+      panel.grid.major  = element_blank(),
+      panel.grid.minor  = element_blank()
+    )
 )
 saveRDS(gad_2023_hist, paste0(outputdir, "gad_2023_hist", ".RDS"))
 
@@ -225,7 +322,7 @@ saveRDS(gad_2023_hist, paste0(outputdir, "gad_2023_hist", ".RDS"))
 
 (sleep_hist <- 
     ggplot(histd, aes(x = sleep)) +
-    geom_density(color = "grey30", fill = "#FAF7F3",  linewidth = 0.25, alpha = 0.8, linetype = "dashed") +
+    geom_density(color = NA, fill = "#F9F5F0",  linewidth = 0.25, alpha = 0.8, linetype = "dashed") +
     # geom_vline(
     #   aes(xintercept = avg_sleep, group = sleep_group, colour = sleep_group),
     #   linetype = "dashed",
@@ -236,9 +333,13 @@ saveRDS(gad_2023_hist, paste0(outputdir, "gad_2023_hist", ".RDS"))
       # linetype = "dashed",
       linewidth = 0.75
     ) +
+    scale_x_continuous(limits = c(300, 800),
+                       breaks = c(400, 550, 700),
+                       labels = c("400min", "500min", "700min")
+    ) +
     scale_colour_manual(values = col_hist) +
     labs(x = "Sleep") +
-    theme_minimal() +
+    hrbrthemes::theme_ipsum(grid="Y") +
     theme(
       panel.background  = element_blank(),
       panel.border      = element_blank(),
@@ -246,8 +347,10 @@ saveRDS(gad_2023_hist, paste0(outputdir, "gad_2023_hist", ".RDS"))
       panel.grid.minor  = element_blank(),
       axis.title.y      = element_blank(),
       axis.text.y       = element_blank(),
+      axis.title.x      = element_text(size = 12, hjust = 0.5),
+      axis.text.x       = element_text(size = 12),
       legend.position   = "none",
-      aspect.ratio      = 1
+      plot.margin       = unit(c(0,0,0,2), "lines")
     )
 )
 
@@ -255,7 +358,7 @@ saveRDS(sleep_hist, paste0(outputdir, "sleep_hist", ".RDS"))
 
 (mvpa_hist <- 
     ggplot(histd, aes(x = mvpa)) +
-    geom_density(color = "grey30", fill = "#FAF7F3",  linewidth = 0.25, alpha = 0.8, linetype = "dashed") +
+    geom_density(color = NA, fill = "#F9F5F0",  linewidth = 0.25, alpha = 0.8, linetype = "dashed") +
     # geom_vline(
     #   aes(xintercept = avg_mvpa, group = sleep_group, colour = sleep_group),
     #   linetype = "dashed",
@@ -266,9 +369,13 @@ saveRDS(sleep_hist, paste0(outputdir, "sleep_hist", ".RDS"))
       # linetype = "dashed",
       linewidth = 0.75
     ) +
+    scale_x_continuous(limits = c(0, 200),
+                       breaks = c(0, 50, 100),
+                       labels = c("0min", "50min", "100min")
+    ) +
     scale_colour_manual(values = col_hist) +
     labs(x = "MVPA") +
-    theme_minimal() +
+    hrbrthemes::theme_ipsum(grid="Y") +
     theme(
       panel.background  = element_blank(),
       panel.border      = element_blank(),
@@ -276,8 +383,10 @@ saveRDS(sleep_hist, paste0(outputdir, "sleep_hist", ".RDS"))
       panel.grid.minor  = element_blank(),
       axis.title.y      = element_blank(),
       axis.text.y       = element_blank(),
+      axis.title.x      = element_text(size = 12, hjust = 0.5),
+      axis.text.x       = element_text(size = 12),
       legend.position   = "none",
-      aspect.ratio      = 1
+      plot.margin       = unit(c(0,0,0,2), "lines")
     )
 )
 
@@ -285,7 +394,7 @@ saveRDS(mvpa_hist, paste0(outputdir, "mvpa_hist", ".RDS"))
 
 (lpa_hist <- 
     ggplot(histd, aes(x = lpa)) +
-    geom_density(color = "grey30", fill = "#FAF7F3",  linewidth = 0.25, alpha = 0.8, linetype = "dashed") +
+    geom_density(color = NA, fill = "#F9F5F0",  linewidth = 0.25, alpha = 0.8, linetype = "dashed") +
     # geom_vline(
     #   aes(xintercept = avg_lpa, group = sleep_group, colour = sleep_group),
     #   linetype = "dashed",
@@ -293,12 +402,16 @@ saveRDS(mvpa_hist, paste0(outputdir, "mvpa_hist", ".RDS"))
     # ) +
     geom_segment(
       aes(avg_lpa, 0, xend = avg_lpa, yend = peak_density_lpa, group = sleep_group, colour = sleep_group),
-        # linetype = "dashed",
+      # linetype = "dashed",
       linewidth = 0.75
+    ) +
+    scale_x_continuous(limits = c(0, 650),
+                       breaks = c(100, 300, 600),
+                       labels = c("100min", "300min", "600min")
     ) +
     scale_colour_manual(values = col_hist) +
     labs(x = "LPA") +
-    theme_minimal() +
+    hrbrthemes::theme_ipsum(grid="Y") +
     theme(
       panel.background  = element_blank(),
       panel.border      = element_blank(),
@@ -306,15 +419,17 @@ saveRDS(mvpa_hist, paste0(outputdir, "mvpa_hist", ".RDS"))
       panel.grid.minor  = element_blank(),
       axis.title.y      = element_blank(),
       axis.text.y       = element_blank(),
+      axis.title.x      = element_text(size = 12, hjust = 0.5),
+      axis.text.x       = element_text(size = 12),
       legend.position   = "none",
-      aspect.ratio      = 1
+      plot.margin       = unit(c(0,0,0,2), "lines")
     )
 )
 saveRDS(lpa_hist, paste0(outputdir, "lpa_hist", ".RDS"))
 
 (sb_hist <- 
     ggplot(histd, aes(x = sb)) +
-    geom_density(color = "grey30", fill = "#FAF7F3",  linewidth = 0.25, alpha = 0.8, linetype = "dashed") +
+    geom_density(color = NA, fill = "#F9F5F0",  linewidth = 0.25, alpha = 0.8, linetype = "dashed") +
     # geom_vline(
     #   aes(xintercept = avg_sb, group = sleep_group, colour = sleep_group),
     #   linetype = "dashed",
@@ -325,9 +440,13 @@ saveRDS(lpa_hist, paste0(outputdir, "lpa_hist", ".RDS"))
       # linetype = "dashed",
       linewidth = 0.75
     ) +
+    scale_x_continuous(limits = c(200, 900),
+                       breaks = c(400, 550, 700),
+                       labels = c("400min", "550min", "700min")
+    ) +
     scale_colour_manual(values = col_hist) +
     labs(x = "SB") +
-    theme_minimal() +
+    hrbrthemes::theme_ipsum(grid="Y") +
     theme(
       panel.background  = element_blank(),
       panel.border      = element_blank(),
@@ -335,10 +454,11 @@ saveRDS(lpa_hist, paste0(outputdir, "lpa_hist", ".RDS"))
       panel.grid.minor  = element_blank(),
       axis.title.y      = element_blank(),
       axis.text.y       = element_blank(),
+      axis.title.x      = element_text(size = 12, hjust = 0.5),
+      axis.text.x       = element_text(size = 12),
       legend.position   = "none",
       plot.margin       = unit(c(0,0,0,2), "lines")
     )
 )
 saveRDS(sb_hist, paste0(outputdir, "sb_hist", ".RDS"))
-
 
