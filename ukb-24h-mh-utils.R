@@ -1,6 +1,6 @@
 
-redir <- "/Users/florale/Library/CloudStorage/OneDrive-MonashUniversity/GitHub/projects/ukbiobank/"
-outputdir <- "/Users/florale/Library/CloudStorage/OneDrive-MonashUniversity/PhD/projects/ukbiobank/ukb-24h-mh/output/"
+redir <- "/Users/florale/Library/CloudStorage/OneDrive-Personal/github/projects/ukbiobank/"
+outputdir <- "/Users/florale/Library/CloudStorage/OneDrive-Personal/monash/projects/ukbiobank/ukb-24h-mh/output/"
 
 pal_type <- c("#4E2F26",
               "#944C4C", "#d65b5a", "#efcbcb", "#dfa398", "#9c6755", "#ea967c", "#f5c98e", 
