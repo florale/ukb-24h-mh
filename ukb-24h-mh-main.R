@@ -70,7 +70,7 @@ m_phq_2023_gam_sub_sleep_q3_99ci <- substitution(
 saveRDS(m_phq_2023_gam_sub_sleep_q3_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_99ci", ".RDS"))
 
 ## all stratified by insomnia ------------
-m_phq_2023_gam_goodsleep <- brmcoda(clr_acc_mhq_goodsleep_bl,
+m_phq_2023_gam_goodsleep_bl <- brmcoda(clr_acc_mhq_goodsleep_bl,
                                     phq_2023 ~ 
                                       s(ilr1) + s(ilr2) + s(ilr3) +
                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -79,9 +79,9 @@ m_phq_2023_gam_goodsleep <- brmcoda(clr_acc_mhq_goodsleep_bl,
                                     chains = 4, cores = 4,
                                     backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_goodsleep, paste0(outputdir, "m_phq_2023_gam_goodsleep", ".RDS"))
+saveRDS(m_phq_2023_gam_goodsleep_bl, paste0(outputdir, "m_phq_2023_gam_goodsleep_bl", ".RDS"))
 
-m_phq_2023_gam_insomnia_mild <- brmcoda(clr_acc_mhq_insomnia_mild_bl,
+m_phq_2023_gam_insomnia_mild_bl <- brmcoda(clr_acc_mhq_insomnia_mild_bl,
                                         phq_2023 ~ 
                                           s(ilr1) + s(ilr2) + s(ilr3) +
                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -90,9 +90,9 @@ m_phq_2023_gam_insomnia_mild <- brmcoda(clr_acc_mhq_insomnia_mild_bl,
                                         chains = 4, cores = 4,
                                         backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_insomnia_mild, paste0(outputdir, "m_phq_2023_gam_insomnia_mild", ".RDS"))
+saveRDS(m_phq_2023_gam_insomnia_mild_bl, paste0(outputdir, "m_phq_2023_gam_insomnia_mild_bl", ".RDS"))
 
-m_phq_2023_gam_insomnia_persistent <- brmcoda(clr_acc_mhq_insomnia_persistent_bl,
+m_phq_2023_gam_insomnia_persistent_bl <- brmcoda(clr_acc_mhq_insomnia_persistent_bl,
                                               phq_2023 ~ 
                                                 s(ilr1) + s(ilr2) + s(ilr3) +
                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -101,44 +101,44 @@ m_phq_2023_gam_insomnia_persistent <- brmcoda(clr_acc_mhq_insomnia_persistent_bl
                                               chains = 4, cores = 4,
                                               backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_insomnia_persistent, paste0(outputdir, "m_phq_2023_gam_insomnia_persistent", ".RDS"))
+saveRDS(m_phq_2023_gam_insomnia_persistent_bl, paste0(outputdir, "m_phq_2023_gam_insomnia_persistent_bl", ".RDS"))
 
-m_phq_2023_gam_goodsleep <- readRDS(paste0(outputdir, "m_phq_2023_gam_goodsleep", ".RDS"))
-m_phq_2023_gam_insomnia_mild <- readRDS(paste0(outputdir, "m_phq_2023_gam_insomnia_mild", ".RDS"))
-m_phq_2023_gam_insomnia_persistent <- readRDS(paste0(outputdir, "m_phq_2023_gam_insomnia_persistent", ".RDS"))
+m_phq_2023_gam_goodsleep_bl <- readRDS(paste0(outputdir, "m_phq_2023_gam_goodsleep_bl", ".RDS"))
+m_phq_2023_gam_insomnia_mild_bl <- readRDS(paste0(outputdir, "m_phq_2023_gam_insomnia_mild_bl", ".RDS"))
+m_phq_2023_gam_insomnia_persistent_bl <- readRDS(paste0(outputdir, "m_phq_2023_gam_insomnia_persistent_bl", ".RDS"))
 
-m_phq_2023_gam_sub_goodsleep_99ci <- substitution(
-  m_phq_2023_gam_goodsleep,
+m_phq_2023_gam_sub_goodsleep_bl_99ci <- substitution(
+  m_phq_2023_gam_goodsleep_bl,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_goodsleep_99ci, paste0(outputdir, "m_phq_2023_gam_sub_goodsleep_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_goodsleep_bl_99ci, paste0(outputdir, "m_phq_2023_gam_sub_goodsleep_bl_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_insomnia_mild_99ci <- substitution(
-  m_phq_2023_gam_insomnia_mild,
+m_phq_2023_gam_sub_insomnia_mild_bl_99ci <- substitution(
+  m_phq_2023_gam_insomnia_mild_bl,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_insomnia_mild_99ci, paste0(outputdir, "m_phq_2023_gam_sub_insomnia_mild_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_insomnia_mild_bl_99ci, paste0(outputdir, "m_phq_2023_gam_sub_insomnia_mild_bl_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_insomnia_persistent_99ci <- substitution(
-  m_phq_2023_gam_insomnia_persistent,
+m_phq_2023_gam_sub_insomnia_persistent_bl_99ci <- substitution(
+  m_phq_2023_gam_insomnia_persistent_bl,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_insomnia_persistent_99ci, paste0(outputdir, "m_phq_2023_gam_sub_insomnia_persistent_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_insomnia_persistent_bl_99ci, paste0(outputdir, "m_phq_2023_gam_sub_insomnia_persistent_bl_99ci", ".RDS"))
 
 ## quantiles - good sleep 2023 -----------------------
-m_phq_2023_gam_sleep_q1_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_goodsleep,
+m_phq_2023_gam_sleep_q1_goodsleep_2023 <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep_2023,
                                              phq_2023 ~ 
                                                s(ilr1) + s(ilr2) + s(ilr3) +
                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -147,9 +147,9 @@ m_phq_2023_gam_sleep_q1_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_goodsleep
                                              chains = 4, cores = 4,
                                              backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q1_goodsleep, paste0(outputdir, "m_phq_2023_gam_sleep_q1_goodsleep", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q1_goodsleep_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q1_goodsleep_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q2_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_goodsleep,
+m_phq_2023_gam_sleep_q2_goodsleep_2023 <- brmcoda(clr_acc_mhq_sleep_q2_goodsleep_2023,
                                              phq_2023 ~ 
                                                s(ilr1) + s(ilr2) + s(ilr3) +
                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -158,9 +158,9 @@ m_phq_2023_gam_sleep_q2_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_goodsleep
                                              chains = 4, cores = 4,
                                              backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q2_goodsleep, paste0(outputdir, "m_phq_2023_gam_sleep_q2_goodsleep", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q2_goodsleep_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q2_goodsleep_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q3_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_goodsleep,
+m_phq_2023_gam_sleep_q3_goodsleep_2023 <- brmcoda(clr_acc_mhq_sleep_q3_goodsleep_2023,
                                              phq_2023 ~ 
                                                s(ilr1) + s(ilr2) + s(ilr3) +
                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -169,44 +169,44 @@ m_phq_2023_gam_sleep_q3_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_goodsleep
                                              chains = 4, cores = 4,
                                              backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q3_goodsleep, paste0(outputdir, "m_phq_2023_gam_sleep_q3_goodsleep", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q3_goodsleep_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q3_goodsleep_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q1_goodsleep <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q1_goodsleep", ".RDS"))
-m_phq_2023_gam_sleep_q2_goodsleep <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q2_goodsleep", ".RDS"))
-m_phq_2023_gam_sleep_q3_goodsleep <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q3_goodsleep", ".RDS"))
+m_phq_2023_gam_sleep_q1_goodsleep_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q1_goodsleep_2023", ".RDS"))
+m_phq_2023_gam_sleep_q2_goodsleep_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q2_goodsleep_2023", ".RDS"))
+m_phq_2023_gam_sleep_q3_goodsleep_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q3_goodsleep_2023", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_goodsleep_99ci <- substitution(
-  m_phq_2023_gam_sleep_q1_goodsleep,
+m_phq_2023_gam_sub_sleep_q1_goodsleep_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q1_goodsleep_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q1_goodsleep_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_goodsleep_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q1_goodsleep_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_goodsleep_2023_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q2_goodsleep_99ci <- substitution(
-  m_phq_2023_gam_sleep_q2_goodsleep,
+m_phq_2023_gam_sub_sleep_q2_goodsleep_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q2_goodsleep_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q2_goodsleep_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_goodsleep_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q2_goodsleep_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_goodsleep_2023_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci <- substitution(
-  m_phq_2023_gam_sleep_q3_goodsleep,
+m_phq_2023_gam_sub_sleep_q3_goodsleep_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q3_goodsleep_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q3_goodsleep_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_goodsleep_2023_99ci", ".RDS"))
 
 ## quantiles - mild insomnia 2023 -----------------------
-m_phq_2023_gam_sleep_q1_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_insomnia_mild,
+m_phq_2023_gam_sleep_q1_insomnia_mild_2023 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_mild_2023,
                                                  phq_2023 ~ 
                                                    s(ilr1) + s(ilr2) + s(ilr3) +
                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -215,9 +215,9 @@ m_phq_2023_gam_sleep_q1_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_insom
                                                  chains = 4, cores = 4,
                                                  backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q1_insomnia_mild, paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_mild", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q1_insomnia_mild_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_mild_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q2_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_insomnia_mild,
+m_phq_2023_gam_sleep_q2_insomnia_mild_2023 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_mild_2023,
                                                  phq_2023 ~ 
                                                    s(ilr1) + s(ilr2) + s(ilr3) +
                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -226,9 +226,9 @@ m_phq_2023_gam_sleep_q2_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_insom
                                                  chains = 4, cores = 4,
                                                  backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q2_insomnia_mild, paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_mild", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q2_insomnia_mild_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_mild_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q3_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_insomnia_mild,
+m_phq_2023_gam_sleep_q3_insomnia_mild_2023 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_mild_2023,
                                                  phq_2023 ~ 
                                                    s(ilr1) + s(ilr2) + s(ilr3) +
                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -237,44 +237,44 @@ m_phq_2023_gam_sleep_q3_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_insom
                                                  chains = 4, cores = 4,
                                                  backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q3_insomnia_mild, paste0(outputdir, "m_phq_2023_gam_sleep_q3_insomnia_mild", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q3_insomnia_mild_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q3_insomnia_mild_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q1_insomnia_mild <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_mild", ".RDS"))
-m_phq_2023_gam_sleep_q2_insomnia_mild <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_mild", ".RDS"))
-m_phq_2023_gam_sleep_q3_insomnia_mild <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q3_insomnia_mild", ".RDS"))
+m_phq_2023_gam_sleep_q1_insomnia_mild_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_mild_2023", ".RDS"))
+m_phq_2023_gam_sleep_q2_insomnia_mild_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_mild_2023", ".RDS"))
+m_phq_2023_gam_sleep_q3_insomnia_mild_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q3_insomnia_mild_2023", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci <- substitution(
-  m_phq_2023_gam_sleep_q1_insomnia_mild,
+m_phq_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q1_insomnia_mild_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci <- substitution(
-  m_phq_2023_gam_sleep_q2_insomnia_mild,
+m_phq_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q2_insomnia_mild_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci <- substitution(
-  m_phq_2023_gam_sleep_q3_insomnia_mild,
+m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q3_insomnia_mild_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci", ".RDS"))
 
 ## quantiles - persistent insomnia 2023 -----------------------
-m_phq_2023_gam_sleep_q1_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1_insomnia_persistent,
+m_phq_2023_gam_sleep_q1_insomnia_persistent_2023 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_persistent_2023,
                                                        phq_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -283,9 +283,9 @@ m_phq_2023_gam_sleep_q1_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q1_insomnia_persistent, paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_persistent", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q1_insomnia_persistent_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_persistent_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q2_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2_insomnia_persistent,
+m_phq_2023_gam_sleep_q2_insomnia_persistent_2023 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_persistent_2023,
                                                        phq_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -294,9 +294,9 @@ m_phq_2023_gam_sleep_q2_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q2_insomnia_persistent, paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_persistent", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q2_insomnia_persistent_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_persistent_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q3_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3_insomnia_persistent,
+m_phq_2023_gam_sleep_q3_insomnia_persistent_2023 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_persistent_2023,
                                                        phq_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -305,34 +305,34 @@ m_phq_2023_gam_sleep_q3_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
 )
-saveRDS(m_phq_2023_gam_sleep_q3_insomnia_persistent, paste0(outputdir, "m_phq_2023_gam_sleep_q3_insomnia_persistent", ".RDS"))
+saveRDS(m_phq_2023_gam_sleep_q3_insomnia_persistent_2023, paste0(outputdir, "m_phq_2023_gam_sleep_q3_insomnia_persistent_2023", ".RDS"))
 
-m_phq_2023_gam_sleep_q1_insomnia_persistent <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_persistent", ".RDS"))
-m_phq_2023_gam_sleep_q2_insomnia_persistent <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_persistent", ".RDS"))
-m_phq_2023_gam_sleep_q3_insomnia_persistent <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q3_insomnia_persistent", ".RDS"))
+m_phq_2023_gam_sleep_q1_insomnia_persistent_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_persistent_2023", ".RDS"))
+m_phq_2023_gam_sleep_q2_insomnia_persistent_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_persistent_2023", ".RDS"))
+m_phq_2023_gam_sleep_q3_insomnia_persistent_2023 <- readRDS(paste0(outputdir, "m_phq_2023_gam_sleep_q3_insomnia_persistent_2023", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci <- substitution(
-  m_phq_2023_gam_sleep_q1_insomnia_persistent,
+m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q1_insomnia_persistent_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci <- substitution(
-  m_phq_2023_gam_sleep_q2_insomnia_persistent,
+m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q2_insomnia_persistent_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- substitution(
-  m_phq_2023_gam_sleep_q3_insomnia_persistent,
+m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci <- substitution(
+  m_phq_2023_gam_sleep_q3_insomnia_persistent_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
@@ -340,11 +340,11 @@ m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- substitution(
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci", ".RDS"))
+saveRDS(m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci", ".RDS"))
 
 
 ## quantiles - good sleep 2016 -----------------------
-m_phq_2023_gam_sleep_q1_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep,
+m_phq_2023_gam_sleep_q1_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep_2016,
                                                   phq_2023 ~ 
                                                     s(ilr1) + s(ilr2) + s(ilr3) +
                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -355,7 +355,7 @@ m_phq_2023_gam_sleep_q1_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep
 )
 saveRDS(m_phq_2023_gam_sleep_q1_goodsleep_2016, paste0(outputdir, "m_phq_2023_gam_sleep_q1_goodsleep_2016", ".RDS"))
 
-m_phq_2023_gam_sleep_q2_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q2_goodsleep,
+m_phq_2023_gam_sleep_q2_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q2_goodsleep_2016,
                                                   phq_2023 ~ 
                                                     s(ilr1) + s(ilr2) + s(ilr3) +
                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -366,7 +366,7 @@ m_phq_2023_gam_sleep_q2_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q2_goodsleep
 )
 saveRDS(m_phq_2023_gam_sleep_q2_goodsleep_2016, paste0(outputdir, "m_phq_2023_gam_sleep_q2_goodsleep_2016", ".RDS"))
 
-m_phq_2023_gam_sleep_q3_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q3_goodsleep,
+m_phq_2023_gam_sleep_q3_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q3_goodsleep_2016,
                                                   phq_2023 ~ 
                                                     s(ilr1) + s(ilr2) + s(ilr3) +
                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -412,7 +412,7 @@ m_phq_2023_gam_sub_sleep_q3_goodsleep_2016_99ci <- substitution(
 saveRDS(m_phq_2023_gam_sub_sleep_q3_goodsleep_2016_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_goodsleep_2016_99ci", ".RDS"))
 
 ## quantiles - mild insomnia 2016 -----------------------
-m_phq_2023_gam_sleep_q1_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_mild,
+m_phq_2023_gam_sleep_q1_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_mild_2016,
                                                       phq_2023 ~ 
                                                         s(ilr1) + s(ilr2) + s(ilr3) +
                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -423,7 +423,7 @@ m_phq_2023_gam_sleep_q1_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insom
 )
 saveRDS(m_phq_2023_gam_sleep_q1_insomnia_mild_2016, paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_mild_2016", ".RDS"))
 
-m_phq_2023_gam_sleep_q2_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_mild,
+m_phq_2023_gam_sleep_q2_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_mild_2016,
                                                       phq_2023 ~ 
                                                         s(ilr1) + s(ilr2) + s(ilr3) +
                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -434,7 +434,7 @@ m_phq_2023_gam_sleep_q2_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insom
 )
 saveRDS(m_phq_2023_gam_sleep_q2_insomnia_mild_2016, paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_mild_2016", ".RDS"))
 
-m_phq_2023_gam_sleep_q3_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_mild,
+m_phq_2023_gam_sleep_q3_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_mild_2016,
                                                       phq_2023 ~ 
                                                         s(ilr1) + s(ilr2) + s(ilr3) +
                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -480,7 +480,7 @@ m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2016_99ci <- substitution(
 saveRDS(m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2016_99ci, paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2016_99ci", ".RDS"))
 
 ## quantiles - persistent insomnia 2016 -----------------------
-m_phq_2023_gam_sleep_q1_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_persistent,
+m_phq_2023_gam_sleep_q1_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_persistent_2016,
                                                             phq_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -491,7 +491,7 @@ m_phq_2023_gam_sleep_q1_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q1
 )
 saveRDS(m_phq_2023_gam_sleep_q1_insomnia_persistent_2016, paste0(outputdir, "m_phq_2023_gam_sleep_q1_insomnia_persistent_2016", ".RDS"))
 
-m_phq_2023_gam_sleep_q2_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_persistent,
+m_phq_2023_gam_sleep_q2_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_persistent_2016,
                                                             phq_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -502,7 +502,7 @@ m_phq_2023_gam_sleep_q2_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q2
 )
 saveRDS(m_phq_2023_gam_sleep_q2_insomnia_persistent_2016, paste0(outputdir, "m_phq_2023_gam_sleep_q2_insomnia_persistent_2016", ".RDS"))
 
-m_phq_2023_gam_sleep_q3_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_persistent,
+m_phq_2023_gam_sleep_q3_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_persistent_2016,
                                                             phq_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -758,21 +758,21 @@ m_phq_2023_gam_sub_sleep_q1_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_su
 m_phq_2023_gam_sub_sleep_q2_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_99ci", ".RDS"))
 m_phq_2023_gam_sub_sleep_q3_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_goodsleep_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_goodsleep_99ci", ".RDS"))
-m_phq_2023_gam_sub_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_insomnia_mild_99ci", ".RDS"))
-m_phq_2023_gam_sub_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_insomnia_persistent_99ci", ".RDS"))
+m_phq_2023_gam_sub_goodsleep_bl_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_goodsleep_bl_99ci", ".RDS"))
+m_phq_2023_gam_sub_insomnia_mild_bl_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_insomnia_mild_bl_99ci", ".RDS"))
+m_phq_2023_gam_sub_insomnia_persistent_bl_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_insomnia_persistent_bl_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_goodsleep_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_goodsleep_99ci", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2_goodsleep_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_goodsleep_99ci", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q1_goodsleep_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_goodsleep_2023_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q2_goodsleep_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_goodsleep_2023_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q3_goodsleep_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_goodsleep_2023_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci", ".RDS"))
 
-m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci", ".RDS"))
-m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci", ".RDS"))
-m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci", ".RDS"))
+m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci", ".RDS"))
 
 m_phq_2023_gam_sub_sleep_q1_goodsleep_2016_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q1_goodsleep_2016_99ci", ".RDS"))
 m_phq_2023_gam_sub_sleep_q2_goodsleep_2016_99ci <- readRDS(paste0(outputdir, "m_phq_2023_gam_sub_sleep_q2_goodsleep_2016_99ci", ".RDS"))
@@ -802,21 +802,22 @@ summary(m_phq_2023_gam_sub_sleep_q1_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q2_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q3_99ci, delta = 20)
 
-summary(m_phq_2023_gam_sub_goodsleep_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_insomnia_mild_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_insomnia_persistent_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_goodsleep_bl_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_insomnia_mild_bl_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_insomnia_persistent_bl_99ci, delta = 20)
 
-summary(m_phq_2023_gam_sub_sleep_q1_goodsleep_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q2_goodsleep_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q3_goodsleep_99ci, delta = 20)
+# 2023 insomnia
+summary(m_phq_2023_gam_sub_sleep_q1_goodsleep_2023_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q2_goodsleep_2023_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q3_goodsleep_2023_99ci, delta = 20)
 
-summary(m_phq_2023_gam_sub_sleep_q1_insomnia_mild_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q2_insomnia_mild_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q3_insomnia_mild_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci, delta = 20)
 
-summary(m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_99ci, delta = 20)
-summary(m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci, delta = 20)
+summary(m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci, delta = 20)
 
 # 2016 insomnia
 summary(m_phq_2023_gam_sub_sleep_q1_goodsleep_2016_99ci, delta = 20)
@@ -843,6 +844,7 @@ summary(m_phq_2023_gam_sub_sleep_q3_insomnia_mild_bl_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q1_insomnia_persistent_bl_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q2_insomnia_persistent_bl_99ci, delta = 20)
 summary(m_phq_2023_gam_sub_sleep_q3_insomnia_persistent_bl_99ci, delta = 20)
+
 # GAD7 -------------------
 ## all stratified by sleep quantiles ------------
 m_gad_2023_gam_sleep_q1 <- brmcoda(clr_acc_mhq_sleep_q1,
@@ -913,7 +915,7 @@ m_gad_2023_gam_sub_sleep_q3_99ci <- substitution(
 saveRDS(m_gad_2023_gam_sub_sleep_q3_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_99ci", ".RDS"))
 
 ## all stratified by insomnia ------------
-m_gad_2023_gam_goodsleep <- brmcoda(clr_acc_mhq_goodsleep_bl,
+m_gad_2023_gam_goodsleep_bl <- brmcoda(clr_acc_mhq_goodsleep_bl,
                                     gad_2023 ~ 
                                       s(ilr1) + s(ilr2) + s(ilr3) +
                                       s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -922,9 +924,9 @@ m_gad_2023_gam_goodsleep <- brmcoda(clr_acc_mhq_goodsleep_bl,
                                     chains = 4, cores = 4,
                                     backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_goodsleep, paste0(outputdir, "m_gad_2023_gam_goodsleep", ".RDS"))
+saveRDS(m_gad_2023_gam_goodsleep_bl, paste0(outputdir, "m_gad_2023_gam_goodsleep_bl", ".RDS"))
 
-m_gad_2023_gam_insomnia_mild <- brmcoda(clr_acc_mhq_insomnia_mild_bl,
+m_gad_2023_gam_insomnia_mild_bl <- brmcoda(clr_acc_mhq_insomnia_mild_bl,
                                         gad_2023 ~ 
                                           s(ilr1) + s(ilr2) + s(ilr3) +
                                           s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -933,9 +935,9 @@ m_gad_2023_gam_insomnia_mild <- brmcoda(clr_acc_mhq_insomnia_mild_bl,
                                         chains = 4, cores = 4,
                                         backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_insomnia_mild, paste0(outputdir, "m_gad_2023_gam_insomnia_mild", ".RDS"))
+saveRDS(m_gad_2023_gam_insomnia_mild_bl, paste0(outputdir, "m_gad_2023_gam_insomnia_mild_bl", ".RDS"))
 
-m_gad_2023_gam_insomnia_persistent <- brmcoda(clr_acc_mhq_insomnia_persistent_bl,
+m_gad_2023_gam_insomnia_persistent_bl <- brmcoda(clr_acc_mhq_insomnia_persistent_bl,
                                               gad_2023 ~ 
                                                 s(ilr1) + s(ilr2) + s(ilr3) +
                                                 s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -944,44 +946,44 @@ m_gad_2023_gam_insomnia_persistent <- brmcoda(clr_acc_mhq_insomnia_persistent_bl
                                               chains = 4, cores = 4,
                                               backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_insomnia_persistent, paste0(outputdir, "m_gad_2023_gam_insomnia_persistent", ".RDS"))
+saveRDS(m_gad_2023_gam_insomnia_persistent_bl, paste0(outputdir, "m_gad_2023_gam_insomnia_persistent_bl", ".RDS"))
 
-m_gad_2023_gam_goodsleep <- readRDS(paste0(outputdir, "m_gad_2023_gam_goodsleep", ".RDS"))
-m_gad_2023_gam_insomnia_mild <- readRDS(paste0(outputdir, "m_gad_2023_gam_insomnia_mild", ".RDS"))
-m_gad_2023_gam_insomnia_persistent <- readRDS(paste0(outputdir, "m_gad_2023_gam_insomnia_persistent", ".RDS"))
+m_gad_2023_gam_goodsleep_bl <- readRDS(paste0(outputdir, "m_gad_2023_gam_goodsleep_bl", ".RDS"))
+m_gad_2023_gam_insomnia_mild_bl <- readRDS(paste0(outputdir, "m_gad_2023_gam_insomnia_mild_bl", ".RDS"))
+m_gad_2023_gam_insomnia_persistent_bl <- readRDS(paste0(outputdir, "m_gad_2023_gam_insomnia_persistent_bl", ".RDS"))
 
-m_gad_2023_gam_sub_goodsleep_99ci <- substitution(
-  m_gad_2023_gam_goodsleep,
+m_gad_2023_gam_sub_goodsleep_bl_99ci <- substitution(
+  m_gad_2023_gam_goodsleep_bl,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_goodsleep_99ci, paste0(outputdir, "m_gad_2023_gam_sub_goodsleep_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_goodsleep_bl_99ci, paste0(outputdir, "m_gad_2023_gam_sub_goodsleep_bl_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_insomnia_mild_99ci <- substitution(
-  m_gad_2023_gam_insomnia_mild,
+m_gad_2023_gam_sub_insomnia_mild_bl_99ci <- substitution(
+  m_gad_2023_gam_insomnia_mild_bl,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_insomnia_mild_99ci, paste0(outputdir, "m_gad_2023_gam_sub_insomnia_mild_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_insomnia_mild_bl_99ci, paste0(outputdir, "m_gad_2023_gam_sub_insomnia_mild_bl_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_insomnia_persistent_99ci <- substitution(
-  m_gad_2023_gam_insomnia_persistent,
+m_gad_2023_gam_sub_insomnia_persistent_bl_99ci <- substitution(
+  m_gad_2023_gam_insomnia_persistent_bl,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_insomnia_persistent_99ci, paste0(outputdir, "m_gad_2023_gam_sub_insomnia_persistent_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_insomnia_persistent_bl_99ci, paste0(outputdir, "m_gad_2023_gam_sub_insomnia_persistent_bl_99ci", ".RDS"))
 
 ## quantiles - good sleep 2023 -----------------------
-m_gad_2023_gam_sleep_q1_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_goodsleep,
+m_gad_2023_gam_sleep_q1_goodsleep_2023 <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep_2023,
                                              gad_2023 ~ 
                                                s(ilr1) + s(ilr2) + s(ilr3) +
                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -990,9 +992,9 @@ m_gad_2023_gam_sleep_q1_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q1_goodsleep
                                              chains = 4, cores = 4,
                                              backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q1_goodsleep, paste0(outputdir, "m_gad_2023_gam_sleep_q1_goodsleep", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q1_goodsleep_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q1_goodsleep_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q2_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_goodsleep,
+m_gad_2023_gam_sleep_q2_goodsleep_2023  <- brmcoda(clr_acc_mhq_sleep_q2_goodsleep_2023,
                                              gad_2023 ~ 
                                                s(ilr1) + s(ilr2) + s(ilr3) +
                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1001,9 +1003,9 @@ m_gad_2023_gam_sleep_q2_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q2_goodsleep
                                              chains = 4, cores = 4,
                                              backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q2_goodsleep, paste0(outputdir, "m_gad_2023_gam_sleep_q2_goodsleep", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q2_goodsleep_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q2_goodsleep_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q3_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_goodsleep,
+m_gad_2023_gam_sleep_q3_goodsleep_2023 <- brmcoda(clr_acc_mhq_sleep_q3_goodsleep_2023 ,
                                              gad_2023 ~ 
                                                s(ilr1) + s(ilr2) + s(ilr3) +
                                                s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1012,44 +1014,44 @@ m_gad_2023_gam_sleep_q3_goodsleep <- brmcoda(clr_acc_mhq_2023_sleep_q3_goodsleep
                                              chains = 4, cores = 4,
                                              backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q3_goodsleep, paste0(outputdir, "m_gad_2023_gam_sleep_q3_goodsleep", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q3_goodsleep_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q3_goodsleep_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q1_goodsleep <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q1_goodsleep", ".RDS"))
-m_gad_2023_gam_sleep_q2_goodsleep <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q2_goodsleep", ".RDS"))
-m_gad_2023_gam_sleep_q3_goodsleep <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q3_goodsleep", ".RDS"))
+m_gad_2023_gam_sleep_q1_goodsleep_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q1_goodsleep_2023", ".RDS"))
+m_gad_2023_gam_sleep_q2_goodsleep_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q2_goodsleep_2023", ".RDS"))
+m_gad_2023_gam_sleep_q3_goodsleep_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q3_goodsleep_2023", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_goodsleep_99ci <- substitution(
-  m_gad_2023_gam_sleep_q1_goodsleep,
+m_gad_2023_gam_sub_sleep_q1_goodsleep_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q1_goodsleep_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q1_goodsleep_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_goodsleep_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_sleep_q1_goodsleep_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_goodsleep_2023_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q2_goodsleep_99ci <- substitution(
-  m_gad_2023_gam_sleep_q2_goodsleep,
+m_gad_2023_gam_sub_sleep_q2_goodsleep_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q2_goodsleep_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q2_goodsleep_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_goodsleep_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_sleep_q2_goodsleep_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_goodsleep_2023_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q3_goodsleep_99ci <- substitution(
-  m_gad_2023_gam_sleep_q3_goodsleep,
+m_gad_2023_gam_sub_sleep_q3_goodsleep_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q3_goodsleep_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q3_goodsleep_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_goodsleep_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_sleep_q3_goodsleep_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_goodsleep_2023_99ci", ".RDS"))
 
 ## quantiles - mild insomnia 2023 -----------------------
-m_gad_2023_gam_sleep_q1_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_insomnia_mild,
+m_gad_2023_gam_sleep_q1_insomnia_mild_2023 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_mild_2023,
                                                  gad_2023 ~ 
                                                    s(ilr1) + s(ilr2) + s(ilr3) +
                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1058,9 +1060,9 @@ m_gad_2023_gam_sleep_q1_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q1_insom
                                                  chains = 4, cores = 4,
                                                  backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q1_insomnia_mild, paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_mild", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q1_insomnia_mild_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_mild_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q2_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_insomnia_mild,
+m_gad_2023_gam_sleep_q2_insomnia_mild_2023 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_mild_2023,
                                                  gad_2023 ~ 
                                                    s(ilr1) + s(ilr2) + s(ilr3) +
                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1069,9 +1071,9 @@ m_gad_2023_gam_sleep_q2_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q2_insom
                                                  chains = 4, cores = 4,
                                                  backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q2_insomnia_mild, paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_mild", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q2_insomnia_mild_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_mild_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q3_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_insomnia_mild,
+m_gad_2023_gam_sleep_q3_insomnia_mild_2023 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_mild_2023,
                                                  gad_2023 ~ 
                                                    s(ilr1) + s(ilr2) + s(ilr3) +
                                                    s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1080,44 +1082,44 @@ m_gad_2023_gam_sleep_q3_insomnia_mild <- brmcoda(clr_acc_mhq_2023_sleep_q3_insom
                                                  chains = 4, cores = 4,
                                                  backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q3_insomnia_mild, paste0(outputdir, "m_gad_2023_gam_sleep_q3_insomnia_mild", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q3_insomnia_mild_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q3_insomnia_mild_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q1_insomnia_mild <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_mild", ".RDS"))
-m_gad_2023_gam_sleep_q2_insomnia_mild <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_mild", ".RDS"))
-m_gad_2023_gam_sleep_q3_insomnia_mild <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q3_insomnia_mild", ".RDS"))
+m_gad_2023_gam_sleep_q1_insomnia_mild_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_mild_2023", ".RDS"))
+m_gad_2023_gam_sleep_q2_insomnia_mild_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_mild_2023", ".RDS"))
+m_gad_2023_gam_sleep_q3_insomnia_mild_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q3_insomnia_mild_2023", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_insomnia_mild_99ci <- substitution(
-  m_gad_2023_gam_sleep_q1_insomnia_mild,
+m_gad_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q1_insomnia_mild_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q1_insomnia_mild_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_mild_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q2_insomnia_mild_99ci <- substitution(
-  m_gad_2023_gam_sleep_q2_insomnia_mild,
+m_gad_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q2_insomnia_mild_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q2_insomnia_mild_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_mild_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci <- substitution(
-  m_gad_2023_gam_sleep_q3_insomnia_mild,
+m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q3_insomnia_mild_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci", ".RDS"))
 
 ## quantiles - persistent insomnia 2023-----------------------
-m_gad_2023_gam_sleep_q1_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1_insomnia_persistent,
+m_gad_2023_gam_sleep_q1_insomnia_persistent_2023 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_persistent_2023,
                                                        gad_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1126,9 +1128,9 @@ m_gad_2023_gam_sleep_q1_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q1
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q1_insomnia_persistent, paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_persistent", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q1_insomnia_persistent_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_persistent_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q2_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2_insomnia_persistent,
+m_gad_2023_gam_sleep_q2_insomnia_persistent_2023 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_persistent_2023,
                                                        gad_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1137,9 +1139,9 @@ m_gad_2023_gam_sleep_q2_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q2
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q2_insomnia_persistent, paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_persistent", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q2_insomnia_persistent_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_persistent_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q3_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3_insomnia_persistent,
+m_gad_2023_gam_sleep_q3_insomnia_persistent_2023 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_persistent_2023,
                                                        gad_2023 ~ 
                                                          s(ilr1) + s(ilr2) + s(ilr3) +
                                                          s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1148,34 +1150,34 @@ m_gad_2023_gam_sleep_q3_insomnia_persistent <- brmcoda(clr_acc_mhq_2023_sleep_q3
                                                        chains = 4, cores = 4,
                                                        backend = "cmdstanr"
 )
-saveRDS(m_gad_2023_gam_sleep_q3_insomnia_persistent, paste0(outputdir, "m_gad_2023_gam_sleep_q3_insomnia_persistent", ".RDS"))
+saveRDS(m_gad_2023_gam_sleep_q3_insomnia_persistent_2023, paste0(outputdir, "m_gad_2023_gam_sleep_q3_insomnia_persistent_2023", ".RDS"))
 
-m_gad_2023_gam_sleep_q1_insomnia_persistent <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_persistent", ".RDS"))
-m_gad_2023_gam_sleep_q2_insomnia_persistent <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_persistent", ".RDS"))
-m_gad_2023_gam_sleep_q3_insomnia_persistent <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q3_insomnia_persistent", ".RDS"))
+m_gad_2023_gam_sleep_q1_insomnia_persistent_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_persistent_2023", ".RDS"))
+m_gad_2023_gam_sleep_q2_insomnia_persistent_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_persistent_2023", ".RDS"))
+m_gad_2023_gam_sleep_q3_insomnia_persistent_2023 <- readRDS(paste0(outputdir, "m_gad_2023_gam_sleep_q3_insomnia_persistent_2023", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci <- substitution(
-  m_gad_2023_gam_sleep_q1_insomnia_persistent,
+m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q1_insomnia_persistent_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci <- substitution(
-  m_gad_2023_gam_sleep_q2_insomnia_persistent,
+m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q2_insomnia_persistent_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci", ".RDS"))
+saveRDS(m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- substitution(
-  m_gad_2023_gam_sleep_q3_insomnia_persistent,
+m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci <- substitution(
+  m_gad_2023_gam_sleep_q3_insomnia_persistent_2023,
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
@@ -1183,11 +1185,10 @@ m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- substitution(
   cores = 4,
   ci = 0.999
 )
-saveRDS(m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci", ".RDS"))
-
+saveRDS(m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci", ".RDS"))
 
 ## quantiles - good sleep 2016 -----------------------
-m_gad_2023_gam_sleep_q1_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep,
+m_gad_2023_gam_sleep_q1_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep_2016,
                                                   gad_2023 ~ 
                                                     s(ilr1) + s(ilr2) + s(ilr3) +
                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1198,7 +1199,7 @@ m_gad_2023_gam_sleep_q1_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep
 )
 saveRDS(m_gad_2023_gam_sleep_q1_goodsleep_2016, paste0(outputdir, "m_gad_2023_gam_sleep_q1_goodsleep_2016", ".RDS"))
 
-m_gad_2023_gam_sleep_q2_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q2_goodsleep,
+m_gad_2023_gam_sleep_q2_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q2_goodsleep_2016,
                                                   gad_2023 ~ 
                                                     s(ilr1) + s(ilr2) + s(ilr3) +
                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1209,7 +1210,7 @@ m_gad_2023_gam_sleep_q2_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q2_goodsleep
 )
 saveRDS(m_gad_2023_gam_sleep_q2_goodsleep_2016, paste0(outputdir, "m_gad_2023_gam_sleep_q2_goodsleep_2016", ".RDS"))
 
-m_gad_2023_gam_sleep_q3_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q3_goodsleep,
+m_gad_2023_gam_sleep_q3_goodsleep_2016 <- brmcoda(clr_acc_mhq_sleep_q3_goodsleep_2016,
                                                   gad_2023 ~ 
                                                     s(ilr1) + s(ilr2) + s(ilr3) +
                                                     s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1255,7 +1256,7 @@ m_gad_2023_gam_sub_sleep_q3_goodsleep_2016_99ci <- substitution(
 saveRDS(m_gad_2023_gam_sub_sleep_q3_goodsleep_2016_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_goodsleep_2016_99ci", ".RDS"))
 
 ## quantiles - mild insomnia 2016 -----------------------
-m_gad_2023_gam_sleep_q1_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_mild,
+m_gad_2023_gam_sleep_q1_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_mild_2016,
                                                       gad_2023 ~ 
                                                         s(ilr1) + s(ilr2) + s(ilr3) +
                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1266,7 +1267,7 @@ m_gad_2023_gam_sleep_q1_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insom
 )
 saveRDS(m_gad_2023_gam_sleep_q1_insomnia_mild_2016, paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_mild_2016", ".RDS"))
 
-m_gad_2023_gam_sleep_q2_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_mild,
+m_gad_2023_gam_sleep_q2_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_mild_2016,
                                                       gad_2023 ~ 
                                                         s(ilr1) + s(ilr2) + s(ilr3) +
                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1277,7 +1278,7 @@ m_gad_2023_gam_sleep_q2_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insom
 )
 saveRDS(m_gad_2023_gam_sleep_q2_insomnia_mild_2016, paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_mild_2016", ".RDS"))
 
-m_gad_2023_gam_sleep_q3_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_mild,
+m_gad_2023_gam_sleep_q3_insomnia_mild_2016 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_mild_2016,
                                                       gad_2023 ~ 
                                                         s(ilr1) + s(ilr2) + s(ilr3) +
                                                         s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1323,7 +1324,7 @@ m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2016_99ci <- substitution(
 saveRDS(m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2016_99ci, paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2016_99ci", ".RDS"))
 
 ## quantiles - persistent insomnia 2016 -----------------------
-m_gad_2023_gam_sleep_q1_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_persistent,
+m_gad_2023_gam_sleep_q1_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q1_insomnia_persistent_2016,
                                                             gad_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1334,7 +1335,7 @@ m_gad_2023_gam_sleep_q1_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q1
 )
 saveRDS(m_gad_2023_gam_sleep_q1_insomnia_persistent_2016, paste0(outputdir, "m_gad_2023_gam_sleep_q1_insomnia_persistent_2016", ".RDS"))
 
-m_gad_2023_gam_sleep_q2_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_persistent,
+m_gad_2023_gam_sleep_q2_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q2_insomnia_persistent_2016,
                                                             gad_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1345,7 +1346,7 @@ m_gad_2023_gam_sleep_q2_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q2
 )
 saveRDS(m_gad_2023_gam_sleep_q2_insomnia_persistent_2016, paste0(outputdir, "m_gad_2023_gam_sleep_q2_insomnia_persistent_2016", ".RDS"))
 
-m_gad_2023_gam_sleep_q3_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_persistent,
+m_gad_2023_gam_sleep_q3_insomnia_persistent_2016 <- brmcoda(clr_acc_mhq_sleep_q3_insomnia_persistent_2016,
                                                             gad_2023 ~ 
                                                               s(ilr1) + s(ilr2) + s(ilr3) +
                                                               s(age_at_acc) + sex + white + working + edu + never_smoked + current_drinker + s(deprivation) +
@@ -1602,21 +1603,21 @@ m_gad_2023_gam_sub_sleep_q1_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_su
 m_gad_2023_gam_sub_sleep_q2_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_99ci", ".RDS"))
 m_gad_2023_gam_sub_sleep_q3_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_goodsleep_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_goodsleep_99ci", ".RDS"))
-m_gad_2023_gam_sub_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_insomnia_mild_99ci", ".RDS"))
-m_gad_2023_gam_sub_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_insomnia_persistent_99ci", ".RDS"))
+m_gad_2023_gam_sub_goodsleep_bl_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_goodsleep_bl_99ci", ".RDS"))
+m_gad_2023_gam_sub_insomnia_mild_bl_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_insomnia_mild_bl_99ci", ".RDS"))
+m_gad_2023_gam_sub_insomnia_persistent_bl_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_insomnia_persistent_bl_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_goodsleep_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_goodsleep_99ci", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2_goodsleep_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_goodsleep_99ci", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3_goodsleep_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_goodsleep_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q1_goodsleep_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_goodsleep_2023_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q2_goodsleep_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_goodsleep_2023_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q3_goodsleep_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_goodsleep_2023_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_mild_99ci", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_mild_99ci", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci", ".RDS"))
 
-m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci", ".RDS"))
-m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci", ".RDS"))
-m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci", ".RDS"))
+m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci", ".RDS"))
 
 m_gad_2023_gam_sub_sleep_q1_goodsleep_2016_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q1_goodsleep_2016_99ci", ".RDS"))
 m_gad_2023_gam_sub_sleep_q2_goodsleep_2016_99ci <- readRDS(paste0(outputdir, "m_gad_2023_gam_sub_sleep_q2_goodsleep_2016_99ci", ".RDS"))
@@ -1646,21 +1647,22 @@ summary(m_gad_2023_gam_sub_sleep_q1_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q2_99ci, delta = 20)
 summary(m_gad_2023_gam_sub_sleep_q3_99ci, delta = 20)
 
-summary(m_gad_2023_gam_sub_goodsleep_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_insomnia_mild_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_insomnia_persistent_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_goodsleep_bl_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_insomnia_mild_bl_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_insomnia_persistent_bl_99ci, delta = 20)
 
-summary(m_gad_2023_gam_sub_sleep_q1_goodsleep_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q2_goodsleep_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q3_goodsleep_99ci, delta = 20)
+# 2023 insomnia
+summary(m_gad_2023_gam_sub_sleep_q1_goodsleep_2023_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q2_goodsleep_2023_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q3_goodsleep_2023_99ci, delta = 20)
 
-summary(m_gad_2023_gam_sub_sleep_q1_insomnia_mild_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q2_insomnia_mild_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q3_insomnia_mild_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q1_insomnia_mild_2023_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q2_insomnia_mild_2023_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q3_insomnia_mild_2023_99ci, delta = 20)
 
-summary(m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_99ci, delta = 20)
-summary(m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q1_insomnia_persistent_2023_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q2_insomnia_persistent_2023_99ci, delta = 20)
+summary(m_gad_2023_gam_sub_sleep_q3_insomnia_persistent_2023_99ci, delta = 20)
 
 # 2016 insomnia
 summary(m_gad_2023_gam_sub_sleep_q1_goodsleep_2016_99ci, delta = 20)

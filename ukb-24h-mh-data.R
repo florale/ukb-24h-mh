@@ -226,102 +226,87 @@ clr_acc_mhq_insomnia_persistent_2023 <- complr(data = d_acc_mhq_clean[insomnia_2
 # saveRDS(clr_acc_mhq_sleep_q2, paste0(inputdir, "clr_acc_mhq_sleep_q2", ".RDS"))
 # saveRDS(clr_acc_mhq_sleep_q3, paste0(inputdir, "clr_acc_mhq_sleep_q3", ".RDS"))
 
-# 2016 insomnia ----------------------
-clr_acc_mhq_2016_sleep_q1 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]]],
-                                    transform = "ilr",
-                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                    sbp = sbp,
-                                    total = 1440)
-clr_acc_mhq_2016_sleep_q2 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)]],
-                                    transform = "ilr",
-                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                    sbp = sbp,
-                                    total = 1440)
-clr_acc_mhq_2016_sleep_q3 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]]],
-                                    transform = "ilr",
-                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
-                                    sbp = sbp,
-                                    total = 1440)
+## 2016 insomnia ----------------------
 ## quantile - good sleep 2016 -----------------------
-clr_acc_mhq_sleep_q1_goodsleep <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 == "good sleep"],
+clr_acc_mhq_sleep_q1_goodsleep_2016 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 == "good sleep"],
                                          transform = "ilr",
                                          parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                          sbp = sbp,
                                          total = 1440)
-clr_acc_mhq_sleep_q2_goodsleep <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 == "good sleep"],
+clr_acc_mhq_sleep_q2_goodsleep_2016 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 == "good sleep"],
                                          transform = "ilr",
                                          parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                          sbp = sbp,
                                          total = 1440)
-clr_acc_mhq_sleep_q3_goodsleep <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 == "good sleep"],
+clr_acc_mhq_sleep_q3_goodsleep_2016 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 == "good sleep"],
                                          transform = "ilr",
                                          parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                          sbp = sbp,
                                          total = 1440)
 
 ## quantile - mild insomnia_2016 -----------------------
-clr_acc_mhq_sleep_q1_insomnia_mild <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 == "mild"],
+clr_acc_mhq_sleep_q1_insomnia_mild_2016 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 == "mild"],
                                              transform = "ilr",
                                              parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                              sbp = sbp,
                                              total = 1440)
-clr_acc_mhq_sleep_q2_insomnia_mild <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 == "mild"],
+clr_acc_mhq_sleep_q2_insomnia_mild_2016 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 == "mild"],
                                              transform = "ilr",
                                              parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                              sbp = sbp,
                                              total = 1440)
-clr_acc_mhq_sleep_q3_insomnia_mild <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 == "mild"],
+clr_acc_mhq_sleep_q3_insomnia_mild_2016 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 == "mild"],
                                              transform = "ilr",
                                              parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                              sbp = sbp,
                                              total = 1440)
 
 ## quantile - moderate insomnia_2016 -----------------------
-clr_acc_mhq_sleep_q1_insomnia_moderate <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 == "moderate"],
+clr_acc_mhq_sleep_q1_insomnia_moderate_2016 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 == "moderate"],
                                                  transform = "ilr",
                                                  parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                  sbp = sbp,
                                                  total = 1440)
-clr_acc_mhq_sleep_q2_insomnia_moderate <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 == "moderate"],
+clr_acc_mhq_sleep_q2_insomnia_moderate_2016 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 == "moderate"],
                                                  transform = "ilr",
                                                  parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                  sbp = sbp,
                                                  total = 1440)
-clr_acc_mhq_sleep_q3_insomnia_moderate <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 == "moderate"],
+clr_acc_mhq_sleep_q3_insomnia_moderate_2016 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 == "moderate"],
                                                  transform = "ilr",
                                                  parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                  sbp = sbp,
                                                  total = 1440)
 
 ## quantile - severe insomnia_2016 -----------------------
-clr_acc_mhq_sleep_q1_insomnia_severe <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 == "severe"],
+clr_acc_mhq_sleep_q1_insomnia_severe_2016 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 == "severe"],
                                                transform = "ilr",
                                                parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                sbp = sbp,
                                                total = 1440)
-clr_acc_mhq_sleep_q2_insomnia_severe <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 == "severe"],
+clr_acc_mhq_sleep_q2_insomnia_severe_2016 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 == "severe"],
                                                transform = "ilr",
                                                parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                sbp = sbp,
                                                total = 1440)
-clr_acc_mhq_sleep_q3_insomnia_severe <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 == "severe"],
+clr_acc_mhq_sleep_q3_insomnia_severe_2016 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 == "severe"],
                                                transform = "ilr",
                                                parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                sbp = sbp,
                                                total = 1440)
 
 ## quantile - moderate + severe = persistent insomnia_2016 -----------------------
-clr_acc_mhq_sleep_q1_insomnia_persistent <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 %in% c("moderate", "severe")],
+clr_acc_mhq_sleep_q1_insomnia_persistent_2016 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2016 %in% c("moderate", "severe")],
                                                    transform = "ilr",
                                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                    sbp = sbp,
                                                    total = 1440)
-clr_acc_mhq_sleep_q2_insomnia_persistent <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 %in% c("moderate", "severe")],
+clr_acc_mhq_sleep_q2_insomnia_persistent_2016 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2016 %in% c("moderate", "severe")],
                                                    transform = "ilr",
                                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                    sbp = sbp,
                                                    total = 1440)
-clr_acc_mhq_sleep_q3_insomnia_persistent <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 %in% c("moderate", "severe")],
+clr_acc_mhq_sleep_q3_insomnia_persistent_2016 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2016 %in% c("moderate", "severe")],
                                                    transform = "ilr",
                                                    parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                    sbp = sbp,
@@ -329,85 +314,85 @@ clr_acc_mhq_sleep_q3_insomnia_persistent <- complr(data = d_acc_mhq_clean[sleep 
 
 ## 2023 insomnia------
 ### quantile - good sleep 2023 -----------------------
-clr_acc_mhq_2023_sleep_q1_goodsleep <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 == "good sleep"],
+clr_acc_mhq_sleep_q1_goodsleep_2023 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 == "good sleep"],
                                               transform = "ilr",
                                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                               sbp = sbp,
                                               total = 1440)
-clr_acc_mhq_2023_sleep_q2_goodsleep <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "good sleep"],
+clr_acc_mhq_sleep_q2_goodsleep_2023 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "good sleep"],
                                               transform = "ilr",
                                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                               sbp = sbp,
                                               total = 1440)
-clr_acc_mhq_2023_sleep_q3_goodsleep <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 == "good sleep"],
+clr_acc_mhq_sleep_q3_goodsleep_2023 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 == "good sleep"],
                                               transform = "ilr",
                                               parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                               sbp = sbp,
                                               total = 1440)
 
 ### quantile - mild insomnia_2023 -----------------------
-clr_acc_mhq_2023_sleep_q1_insomnia_mild <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 == "mild"],
+clr_acc_mhq_sleep_q1_insomnia_mild_2023 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 == "mild"],
                                                   transform = "ilr",
                                                   parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                   sbp = sbp,
                                                   total = 1440)
-clr_acc_mhq_2023_sleep_q2_insomnia_mild <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "mild"],
+clr_acc_mhq_sleep_q2_insomnia_mild_2023 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "mild"],
                                                   transform = "ilr",
                                                   parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                   sbp = sbp,
                                                   total = 1440)
-clr_acc_mhq_2023_sleep_q3_insomnia_mild <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 == "mild"],
+clr_acc_mhq_sleep_q3_insomnia_mild_2023 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 == "mild"],
                                                   transform = "ilr",
                                                   parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                   sbp = sbp,
                                                   total = 1440)
 
 ### quantile - moderate insomnia_2023 -----------------------
-clr_acc_mhq_2023_sleep_q1_insomnia_moderate <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 == "moderate"],
+clr_acc_mhq_sleep_q1_insomnia_moderate_2023 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 == "moderate"],
                                                       transform = "ilr",
                                                       parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                       sbp = sbp,
                                                       total = 1440)
-clr_acc_mhq_2023_sleep_q2_insomnia_moderate <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "moderate"],
+clr_acc_mhq_sleep_q2_insomnia_moderate_2023 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "moderate"],
                                                       transform = "ilr",
                                                       parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                       sbp = sbp,
                                                       total = 1440)
-clr_acc_mhq_2023_sleep_q3_insomnia_moderate <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 == "moderate"],
+clr_acc_mhq_sleep_q3_insomnia_moderate_2023 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 == "moderate"],
                                                       transform = "ilr",
                                                       parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                       sbp = sbp,
                                                       total = 1440)
 
 ### quantile - severe insomnia_2023 -----------------------
-clr_acc_mhq_2023_sleep_q1_insomnia_severe <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 == "severe"],
+clr_acc_mhq_sleep_q1_insomnia_severe_2023 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 == "severe"],
                                                     transform = "ilr",
                                                     parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                     sbp = sbp,
                                                     total = 1440)
-clr_acc_mhq_2023_sleep_q2_insomnia_severe <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "severe"],
+clr_acc_mhq_sleep_q2_insomnia_severe_2023 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 == "severe"],
                                                     transform = "ilr",
                                                     parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                     sbp = sbp,
                                                     total = 1440)
-clr_acc_mhq_2023_sleep_q3_insomnia_severe <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 == "severe"],
+clr_acc_mhq_sleep_q3_insomnia_severe_2023 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 == "severe"],
                                                     transform = "ilr",
                                                     parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                     sbp = sbp,
                                                     total = 1440)
 
 ### quantile - moderate + severe = persistent insomnia_2023 -----------------------
-clr_acc_mhq_2023_sleep_q1_insomnia_persistent <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 %in% c("moderate", "severe")],
+clr_acc_mhq_sleep_q1_insomnia_persistent_2023 <- complr(data = d_acc_mhq_clean[sleep <= quantile_sleep[[2]] & insomnia_2023 %in% c("moderate", "severe")],
                                                         transform = "ilr",
                                                         parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                         sbp = sbp,
                                                         total = 1440)
-clr_acc_mhq_2023_sleep_q2_insomnia_persistent <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 %in% c("moderate", "severe")],
+clr_acc_mhq_sleep_q2_insomnia_persistent_2023 <- complr(data = d_acc_mhq_clean[sleep %gl% quantile_sleep[c(2:3)] & insomnia_2023 %in% c("moderate", "severe")],
                                                         transform = "ilr",
                                                         parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                         sbp = sbp,
                                                         total = 1440)
-clr_acc_mhq_2023_sleep_q3_insomnia_persistent <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 %in% c("moderate", "severe")],
+clr_acc_mhq_sleep_q3_insomnia_persistent_2023 <- complr(data = d_acc_mhq_clean[sleep >= quantile_sleep[[3]] & insomnia_2023 %in% c("moderate", "severe")],
                                                         transform = "ilr",
                                                         parts = c("sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp"),
                                                         sbp = sbp,
