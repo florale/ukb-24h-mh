@@ -15,9 +15,13 @@ nrow(d_acc_dep_anx[time_diff_dep_anx_acc > 0]) # 11009
 # n < 1y follow up
 nrow(d_acc_dep_anx[time_diff_dep_anx_acc %gele% c(-1, 0)]) #368
 
+# exluding dep anx diag up to 1y followup
 nrow(d_acc_dep_anx[time_diff_dep_anx_acc >= -1]) # 11377
 
 nrow(d_acc_mhq_dep_anx[time_diff_dep_anx_acc >= -1 & !is.na(p29197)]) # 7585
+
+# n missing covariates
+nrow(d_acc_mhq[(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
 
 # followup time
 d_acc_mhq[, age_diff_mh_2016_acc := (acc_startdate - p20400)/365.25]
@@ -73,14 +77,14 @@ nrow(d_acc_mhq[is.na(alcohol) & !is.na(p29197)])
 
 # include in main analysis - 
 nrow(d_acc_mhq[!is.na(p29197) & 
-                        !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))]) #51359
+                 !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol) | is.na(icd_any_at_acc))]) #51359
 
 nrow(d_acc_mhq[!is.na(p29197) & 
                         (is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
 
-nrow(d_acc_mhq[(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
-
+nrow(d_acc_mhq[is.na(icd_any_at_acc)])
 nrow(d_acc_mhq[is.na(phq_2016) & !is.na(p20400)])
+
 nrow(d_acc_mhq[is.na(gad_2016) & !is.na(p20400)])
 
 nrow(d_acc_mhq[is.na(phq_2023) & !is.na(p29197)])
@@ -128,12 +132,14 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation", "deprivationg",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
+           "insomnia",
+           "icd_any_at_acc",
            "sleep", "mvpa", "lpa", "sb",
-           "phq_2016", "gad_2016",
-           "insomnia_2016",
+           # "phq_2016", "gad_2016",
+           # "insomnia_2016",
            "phq_2023", "gad_2023",
-           "phq_2023_cutoff", "gad_2023_cutoff",
-           "insomnia_2023"
+           "phq_2023_cutoff", "gad_2023_cutoff"
+           # , "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq$data)
 
 nrow(clr_acc_mhq_sleep_q1$data)
@@ -141,12 +147,14 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation", "deprivationg",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
+           "insomnia",
+           "icd_any_at_acc",
            "sleep", "mvpa", "lpa", "sb",
-           "phq_2016", "gad_2016",
-           "insomnia_2016",
+           # "phq_2016", "gad_2016",
+           # "insomnia_2016",
            "phq_2023", "gad_2023",
-           "phq_2023_cutoff", "gad_2023_cutoff",
-           "insomnia_2023"
+           "phq_2023_cutoff", "gad_2023_cutoff"
+           # , "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q1$data)
 
 nrow(clr_acc_mhq_sleep_q2$data)
@@ -154,12 +162,14 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation", "deprivationg",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
+           "insomnia",
+           "icd_any_at_acc",
            "sleep", "mvpa", "lpa", "sb",
-           "phq_2016", "gad_2016",
-           "insomnia_2016",
+           # "phq_2016", "gad_2016",
+           # "insomnia_2016",
            "phq_2023", "gad_2023",
-           "phq_2023_cutoff", "gad_2023_cutoff",
-           "insomnia_2023"
+           "phq_2023_cutoff", "gad_2023_cutoff"
+           # , "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q2$data)
 
 nrow(clr_acc_mhq_sleep_q3$data)
@@ -167,12 +177,14 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "edu", "working", "deprivation", "deprivationg",
            "smoking", "never_smoked",
            "alcohol","current_drinker",
+           "insomnia",
+           "icd_any_at_acc",
            "sleep", "mvpa", "lpa", "sb",
-           "phq_2016", "gad_2016",
-           "insomnia_2016",
+           # "phq_2016", "gad_2016",
+           # "insomnia_2016",
            "phq_2023", "gad_2023",
-           "phq_2023_cutoff", "gad_2023_cutoff",
-           "insomnia_2023"
+           "phq_2023_cutoff", "gad_2023_cutoff"
+           # , "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q3$data)
 
 # IQR
@@ -461,4 +473,100 @@ saveRDS(lpa_hist, paste0(outputdir, "lpa_hist", ".RDS"))
     )
 )
 saveRDS(sb_hist, paste0(outputdir, "sb_hist", ".RDS"))
+
+# dag -------------------
+coords <- tibble::tribble(
+  ~name,           ~x,      ~y,
+  "behaviours",     1,       0,
+  "mental_health",  1.75,       0,
+  "demographics",   1,       1,
+  "lifestyle",      1.25,    1,
+  "bmi",            1.75,     0.5,
+  "icd_prior",      1.5,     1,
+  "icd_after",      1.75,       1
+)
+
+dag <-  ggdag::dagify(mental_health ~ behaviours,
+                      mental_health ~ demographics + lifestyle + bmi + icd_prior + icd_after,
+                      behaviours    ~  demographics + lifestyle + bmi + icd_prior,
+                      # lifestyle ~ demographics,
+                      bmi ~  demographics + lifestyle + icd_prior + behaviours,
+                      icd_after ~  demographics + lifestyle + icd_prior + behaviours,
+                      icd_prior ~ demographics + lifestyle,
+                      exposure = "behaviours",
+                      outcome = "mental_health",
+                      latent = c("bmi", "icd_after"),
+                      
+                      labels = c("mental_health" = "Mental health\n(depressive and anxiety symptoms)",
+                                 "behaviours" = "24h behaviours",
+                                 "demographics" = "Demographic factors\n(age, sex, deprivation,\neducation, employment)",
+                                 "lifestyle" = "Lifestyle factors\n(smoking, alcohol)",
+                                 "icd_prior" = "Chronic conditions\nprior to accelerometry",
+                                 "icd_after" = "Chronic conditions\nat follow-up",
+                                 # "employment" = "Employment",
+                                 "bmi" = "BMI"),
+                      
+                      # labels = c("cancer" = "Exposure",
+                      #            "behaviours" = "Outcome",
+                      #            "demographics" = "Confounders",
+                      #            "lifestyle" = "Confounders",
+                      #            # "education" = "Education",
+                      #            # "employment" = "Employment",
+                      #            "bmi" = "Mechanism"),
+                      coords = coords
+)
+
+plot_dag <- ggdag::ggdag_parents(dag, "behaviours",
+                                 text = FALSE
+)
+plot_dag[["data"]]$parent <- NA
+plot_dag[["data"]]$parent <- ifelse(plot_dag[["data"]]$name == "mental_health", "Outcome", plot_dag[["data"]]$parent)
+plot_dag[["data"]]$parent <- ifelse(plot_dag[["data"]]$name == "behaviours", "Exposure", plot_dag[["data"]]$parent)
+plot_dag[["data"]]$parent <- ifelse(plot_dag[["data"]]$name == "bmi", "Mechanism (Unadjusted)", plot_dag[["data"]]$parent)
+plot_dag[["data"]]$parent <- ifelse(plot_dag[["data"]]$name == "icd_after", "Mechanism (Unadjusted)", plot_dag[["data"]]$parent)
+plot_dag[["data"]]$parent <- ifelse(plot_dag[["data"]]$name == "demographics", "Confounder (Adjusted)", plot_dag[["data"]]$parent)
+plot_dag[["data"]]$parent <- ifelse(plot_dag[["data"]]$name == "lifestyle", "Confounder (Adjusted)", plot_dag[["data"]]$parent)
+plot_dag[["data"]]$parent <- ifelse(plot_dag[["data"]]$name == "icd_prior", "Confounder (Adjusted)", plot_dag[["data"]]$parent)
+plot_dag[["data"]]$parent <- factor(plot_dag[["data"]]$parent, ordered = TRUE,
+                                    levels = c(
+                                      "Exposure",
+                                      "Outcome",
+                                      "Confounder (Adjusted)",
+                                      "Mechanism (Unadjusted)"
+                                    ))
+
+(plot_dag <- plot_dag +
+    geom_dag_edges(
+      arrow_directed = grid::arrow(length = grid::unit(2, "pt"), type = "closed"),
+      arrow_bidirected = grid::arrow(length = grid::unit(2, "pt"), ends = "both", type = "closed")) +
+    geom_dag_point(aes(color = parent)) +  # Adjust node colors
+    scale_color_manual(values = c(
+      "Exposure" = "#456691", # DCD5CE
+      "Outcome" = "#944C4C",
+      "Confounder (Adjusted)" = "#DCD5CE", #
+      "Mechanism (Unadjusted)" = "#ADC7DA"
+    ), drop = TRUE, name = NULL)+
+    geom_label(aes(label = label),
+               color = "black",
+               vjust = 0,
+               nudge_x = 0, nudge_y = 0.075,
+               family = "Arial Narrow", size = 4,
+               show.legend = NA) +
+    
+    theme_void() +
+    theme(
+      legend.position     = "bottom"
+      # plot.margin         = unit(c(0,1.5,0,0), "lines")
+    ))
+
+saveRDS(plot_dag, paste0(outputdir, "ukb_24h_mh_dag", ".RDS"))
+
+grDevices::png(
+  file = paste0(outputdir, "ukb_24h_mh_dag", ".png"),
+  width = 9000,
+  height = 6500,
+  res = 700
+)
+plot_dag
+dev.off()
 

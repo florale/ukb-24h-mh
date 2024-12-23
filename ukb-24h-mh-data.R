@@ -75,13 +75,13 @@ d_acc_icd[, icd_v_dep_anx := ifelse(icd_v_anxiety == 1 | icd_v_depressive == 1, 
 d_acc_icd[, icd_dep_anx_fo := do.call(pmin, c(.SD, list(na.rm = TRUE))), .SDcols = icd_dep_anx_fo_vars]
 d_acc_icd[, time_diff_dep_anx_acc := (acc_startdate - icd_dep_anx_fo)/365.25]
 
-
 d_acc_icd[, time_diff_any_conds_acc := (acc_startdate - icd_sub_fo)/365.25]
 table(round(d_acc_icd$time_diff_any_conds_acc), useNA = "always")
 
 # make variable of any other major health conditions at time (1 year after) of acc
 d_acc_icd[, icd_any_at_acc := NA]
-d_acc_icd[, icd_any_at_acc := ifelse(time_diff_any_conds_acc >= - 1 & icd_any == 1, 1, icd_any_at_acc)]
+d_acc_icd[, icd_any_at_acc := ifelse(time_diff_any_conds_acc > 0 & icd_any == 1, 1, icd_any_at_acc)]
+d_acc_icd[, icd_any_at_acc := ifelse(time_diff_any_conds_acc %gele% c(-1, 0) & icd_any == 1, NA, icd_any_at_acc)]
 d_acc_icd[, icd_any_at_acc := ifelse((time_diff_any_conds_acc < -1 & icd_any == 1) | (icd_any == 0) | (icd_any == 1 & time_diff_any_conds_acc < -1 & is.na(time_diff_any_conds_acc)), 0, icd_any_at_acc)]
 table(d_acc_icd$icd_any_at_acc, useNA = "always")
 
@@ -116,7 +116,7 @@ d_acc_mhq[, gad_2023_cutoff := cut(gad_2023,
 
 # complete data
 d_acc_mhq_clean <- d_acc_mhq[!is.na(p29197) & 
-                               !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))]
+                               !(is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol) | is.na(icd_any_at_acc))]
 
 quantile_sleep <- quantile(d_acc_mhq_clean$sleep, c (0, 0.25, 0.75, 1))
 
