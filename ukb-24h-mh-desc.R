@@ -135,6 +135,7 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            "insomnia",
            "icd_any_at_acc",
            "sleep", "mvpa", "lpa", "sb",
+           "sleep_comp", "mvpa_comp", "lpa_comp", "sb_comp",
            # "phq_2016", "gad_2016",
            # "insomnia_2016",
            "phq_2023", "gad_2023",
@@ -188,6 +189,7 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
 ), strict = FALSE, data = clr_acc_mhq_sleep_q3$data)
 
 # IQR
+# 2023
 psych::describe(clr_acc_mhq$data$phq_2023, IQR = TRUE)
 psych::describe(clr_acc_mhq_sleep_q1$data$phq_2023, IQR = TRUE)
 psych::describe(clr_acc_mhq_sleep_q2$data$phq_2023, IQR = TRUE)
@@ -197,6 +199,37 @@ psych::describe(clr_acc_mhq$data$gad_2023, IQR = TRUE)
 psych::describe(clr_acc_mhq_sleep_q1$data$gad_2023, IQR = TRUE)
 psych::describe(clr_acc_mhq_sleep_q2$data$phq_2023, IQR = TRUE)
 psych::describe(clr_acc_mhq_sleep_q3$data$phq_2023, IQR = TRUE)
+
+# 2016
+egltable(c(
+  "phq_2016_cutoff", "gad_2016_cutoff"
+), strict = FALSE, data = clr_acc_mhq$data)
+nrow(clr_acc_mhq$data[!is.na(phq_2016) | !is.na(gad_2016)])
+
+egltable(c(
+  "phq_2016_cutoff", "gad_2016_cutoff"
+), strict = FALSE, data = clr_acc_mhq_sleep_q1$data)
+nrow(clr_acc_mhq_sleep_q1$data[!is.na(phq_2016) | !is.na(gad_2016)])
+
+egltable(c(
+  "phq_2016_cutoff", "gad_2016_cutoff"
+), strict = FALSE, data = clr_acc_mhq_sleep_q2$data)
+nrow(clr_acc_mhq_sleep_q2$data[!is.na(phq_2016) | !is.na(gad_2016)])
+
+egltable(c(
+  "phq_2016_cutoff", "gad_2016_cutoff"
+), strict = FALSE, data = clr_acc_mhq_sleep_q3$data)
+nrow(clr_acc_mhq_sleep_q3$data[!is.na(phq_2016) | !is.na(gad_2016)])
+
+psych::describe(clr_acc_mhq$data$phq_2016, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q1$data$phq_2016, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q2$data$phq_2016, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q3$data$phq_2016, IQR = TRUE)
+
+psych::describe(clr_acc_mhq$data$gad_2016, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q1$data$gad_2016, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q2$data$phq_2016, IQR = TRUE)
+psych::describe(clr_acc_mhq_sleep_q3$data$phq_2016, IQR = TRUE)
 
 # distribution -----------
 clr_acc_mhq <- readRDS(paste0(inputdir, "clr_acc_mhq", ".RDS"))
@@ -251,21 +284,22 @@ colf_hist <- c(
     ggplot(histd, aes(x = phq_2023)) +
     geom_bar(color = "#456691", fill = "#ADC7DA") +
     geom_vline(
-      aes(xintercept = mean(phq_2023, na.rm = TRUE)),
+      aes(xintercept = median(phq_2023, na.rm = TRUE)),
       color = "#999999",
       linetype = "dashed",
       linewidth = 0.75
     ) +
-    ggbreak::scale_y_break(breaks = c(1000, 5000, 20000), scales = c(3, 0.5)) +
+    # ggbreak::scale_y_break(breaks = c(1000, 5000, 20000), scales = c(2, 0.5)) +
     # scale_y_break(c(10000, 35000), breaks = c(10000, 20000, 30000)) +
     
-    # ggforce::facet_zoom(xlim = 10:27, ylim = 0:1000, horizontal = FALSE, zoom.size = 0.5) +
+    ggforce::facet_zoom(xlim = 10:27, ylim = 0:1000, horizontal = FALSE, zoom.size = 1) +
     # ggforce::facet_zoom(x = phq_2023 >= 10) +
     # scale_y_sqrt(breaks = c(0, 100, 1000, 5000, 10000, 20000)) +
-    labs(x = "PHQ9") +
+    labs(x = "Depressive symptoms by PHQ9") +
     theme_minimal() +
     theme(
       panel.background  = element_blank(),
+      plot.background     = element_rect(fill = "transparent", colour = "black"),
       panel.border      = element_blank(),
       panel.grid.major  = element_blank(),
       panel.grid.minor  = element_blank()
@@ -275,19 +309,20 @@ saveRDS(phq_2023_hist, paste0(outputdir, "phq_2023_hist", ".RDS"))
 
 (gad_2023_hist <- 
     ggplot(histd, aes(x = gad_2023)) +
-    geom_bar(color = "#456691", fill = "#ADC7DA") +
+    geom_bar(color = "#ADC7DA", fill = "#456691") +
     geom_vline(
-      aes(xintercept = mean(gad_2023, na.rm = TRUE)),
+      aes(xintercept = median(gad_2023, na.rm = TRUE)),
       color = "#999999",
       linetype = "dashed",
       linewidth = 0.75
     ) +
-    ggbreak::scale_y_break(breaks = c(5000, 10000, 30000), scales = c(3, 0.5)) +
-    # ggforce::facet_zoom(xlim = 10:27, ylim = 0:1000, horizontal = FALSE, zoom.size = 0.5) +
-    labs(x = "GAD7") +
+    # ggbreak::scale_y_break(breaks = c(5000, 10000, 30000), scales = c(3, 0.5)) +
+    ggforce::facet_zoom(xlim = 10:21, ylim = 0:1000, horizontal = FALSE, zoom.size = 1) +
+    labs(x = "Anxiety symptoms by GAD7") +
     theme_minimal() +
     theme(
       panel.background  = element_blank(),
+      plot.background   = element_rect(fill = "transparent", colour = "black"),
       panel.border      = element_blank(),
       panel.grid.major  = element_blank(),
       panel.grid.minor  = element_blank()
@@ -295,6 +330,19 @@ saveRDS(phq_2023_hist, paste0(outputdir, "phq_2023_hist", ".RDS"))
 )
 saveRDS(gad_2023_hist, paste0(outputdir, "gad_2023_hist", ".RDS"))
 
+grDevices::png(
+  file = paste0(outputdir, "plot_mh_2023_hist", ".png"),
+  width = 6000,
+  height = 9000,
+  res = 900
+)
+
+ggarrange(phq_2023_hist, gad_2023_hist,
+          nrow = 2,
+          common.legend = TRUE,
+          legend   = "bottom"
+)
+dev.off()
 # (sleep_hist <- 
 #     ggplot(histd, aes(x = sleep)) +
 #     geom_density(color = "#999999", fill = NA, linetype = "dashed", linewidth = 0.5, alpha = 0.8) +

@@ -1,0 +1,528 @@
+---
+title: "UKB ICD-10 Chapter IX coding"
+author: "Flora Le (flora.le@monash.edu)"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: spacelab
+    highlight: kate
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    smooth_scroll: no
+    toc_depth: 4
+    fig_width: 8
+    fig_height: 5
+    fig_caption: yes
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+inputdir <- "/Users/florale/Library/CloudStorage/OneDrive-Personal/monash/projects/ukbiobank/data/"
+```
+
+
+## Load packages, functions, data
+
+The dataset below is the UKB accelerometry subset that includes participant ID (`eid`) and variables corresponding to the **dates** and **sources** of ICD-10 IX codes found in https://biobank.ndph.ox.ac.uk/ukb/label.cgi?id=2409.
+
+```{r, message=FALSE}
+library(data.table)
+library(stringr)
+library(ggplot2)
+library(lubridate)
+
+# a helper function
+f1 <- function(var, comp) {var == comp & !is.na(var)}
+
+# data
+d_icd_ix <- fread(paste0(inputdir, "data_acc_full_icd_ix_participant.csv"), header = TRUE, na.strings = c("", "NA"))
+str(d_icd_ix)
+```
+
+Let's first rename to match icd-10 codes (and make it easier to code later)
+
+```{r}
+## ICD - 10 
+# https://icd.who.int/browse10/2019/en
+
+# Date I00 first reported (rheumatic fever without mention of heart involvement)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131270
+setnames(d_icd_ix, "p131270", "icd_ix_I00_fo")
+setnames(d_icd_ix, "p131271", "icd_ix_I00_source")
+
+# Date I01 first reported (rheumatic fever with heart involvement)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131272
+setnames(d_icd_ix, "p131272", "icd_ix_I01_fo")
+setnames(d_icd_ix, "p131273", "icd_ix_I01_source")
+
+# Date I02 first reported (rheumatic chorea)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131274
+setnames(d_icd_ix, "p131274", "icd_ix_I02_fo")
+setnames(d_icd_ix, "p131275", "icd_ix_I02_source")
+
+# Date I05 first reported (rheumatic mitral valve diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131276
+setnames(d_icd_ix, "p131276", "icd_ix_I05_fo")
+setnames(d_icd_ix, "p131277", "icd_ix_I05_source")
+
+# Date I06 first reported (rheumatic aortic valve diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131278
+setnames(d_icd_ix, "p131278", "icd_ix_I06_fo")
+setnames(d_icd_ix, "p131279", "icd_ix_I06_source")
+
+# Date I07 first reported (rheumatic tricuspid valve diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131280
+setnames(d_icd_ix, "p131280", "icd_ix_I07_fo")
+setnames(d_icd_ix, "p131281", "icd_ix_I07_source")
+
+# Date I08 first reported (multiple valve diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131282
+setnames(d_icd_ix, "p131282", "icd_ix_I08_fo")
+setnames(d_icd_ix, "p131283", "icd_ix_I08_source")
+
+# Date I09 first reported (other rheumatic heart diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131284
+setnames(d_icd_ix, "p131284", "icd_ix_I09_fo")
+setnames(d_icd_ix, "p131285", "icd_ix_I09_source")
+
+# Date I10 first reported (essential (primary) hypertension)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131286
+setnames(d_icd_ix, "p131286", "icd_ix_I10_fo")
+setnames(d_icd_ix, "p131287", "icd_ix_I10_source")
+
+# Date I11 first reported (hypertensive heart disease)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131288
+setnames(d_icd_ix, "p131288", "icd_ix_I11_fo")
+setnames(d_icd_ix, "p131289", "icd_ix_I11_source")
+
+# Date I12 first reported (hypertensive renal disease)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131290
+setnames(d_icd_ix, "p131290", "icd_ix_I12_fo")
+setnames(d_icd_ix, "p131291", "icd_ix_I12_source")
+
+# Date I13 first reported (hypertensive heart and renal disease)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131292
+setnames(d_icd_ix, "p131292", "icd_ix_I13_fo")
+setnames(d_icd_ix, "p131293", "icd_ix_I13_source")
+
+# Date I15 first reported (secondary hypertension)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131294
+setnames(d_icd_ix, "p131294", "icd_ix_I15_fo")
+setnames(d_icd_ix, "p131295", "icd_ix_I15_source")
+
+# Date I20 first reported (angina pectoris)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131296
+setnames(d_icd_ix, "p131296", "icd_ix_I20_fo")
+setnames(d_icd_ix, "p131297", "icd_ix_I20_source")
+
+# Date I21 first reported (acute myocardial infarction)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131298
+setnames(d_icd_ix, "p131298", "icd_ix_I21_fo")
+setnames(d_icd_ix, "p131299", "icd_ix_I21_source")
+
+# Date I22 first reported (subsequent myocardial infarction)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131300
+setnames(d_icd_ix, "p131300", "icd_ix_I22_fo")
+setnames(d_icd_ix, "p131301", "icd_ix_I22_source")
+
+# Date I23 first reported (certain current complications following acute myocardial infarction)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131302
+setnames(d_icd_ix, "p131302", "icd_ix_I23_fo")
+setnames(d_icd_ix, "p131303", "icd_ix_I23_source")
+
+# Date I24 first reported (other acute ischaemic heart diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131304
+setnames(d_icd_ix, "p131304", "icd_ix_I24_fo")
+setnames(d_icd_ix, "p131305", "icd_ix_I24_source")
+
+# Date I25 first reported (chronic ischaemic heart disease)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131306
+setnames(d_icd_ix, "p131306", "icd_ix_I25_fo")
+setnames(d_icd_ix, "p131307", "icd_ix_I25_source")
+
+# Date I26 first reported (pulmonary embolism)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131308
+setnames(d_icd_ix, "p131308", "icd_ix_I26_fo")
+setnames(d_icd_ix, "p131309", "icd_ix_I26_source")
+
+# Date I27 first reported (other pulmonary heart diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131310
+setnames(d_icd_ix, "p131310", "icd_ix_I27_fo")
+setnames(d_icd_ix, "p131311", "icd_ix_I27_source")
+
+# Date I28 first reported (other diseases of pulmonary vessels)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131312
+setnames(d_icd_ix, "p131312", "icd_ix_I28_fo")
+setnames(d_icd_ix, "p131313", "icd_ix_I28_source")
+
+# Date I30 first reported (acute pericarditis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131314
+setnames(d_icd_ix, "p131314", "icd_ix_I30_fo")
+setnames(d_icd_ix, "p131315", "icd_ix_I30_source")
+
+# Date I31 first reported (other diseases of pericardium)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131316
+setnames(d_icd_ix, "p131316", "icd_ix_I31_fo")
+setnames(d_icd_ix, "p131317", "icd_ix_I31_source")
+
+# Date I32 first reported (pericarditis in diseases classified elsewhere)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131318
+setnames(d_icd_ix, "p131318", "icd_ix_I32_fo")
+setnames(d_icd_ix, "p131319", "icd_ix_I32_source")
+
+# Date I33 first reported (acute and subacute endocarditis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131320
+setnames(d_icd_ix, "p131320", "icd_ix_I33_fo")
+setnames(d_icd_ix, "p131321", "icd_ix_I33_source")
+
+# Date I34 first reported (nonrheumatic mitral valve disorders)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131322
+setnames(d_icd_ix, "p131322", "icd_ix_I34_fo")
+setnames(d_icd_ix, "p131323", "icd_ix_I34_source")
+
+# Date I35 first reported (nonrheumatic aortic valve disorders)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131324
+setnames(d_icd_ix, "p131324", "icd_ix_I35_fo")
+setnames(d_icd_ix, "p131325", "icd_ix_I35_source")
+
+# Date I36 first reported (nonrheumatic tricuspid valve disorders)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131326
+setnames(d_icd_ix, "p131326", "icd_ix_I36_fo")
+setnames(d_icd_ix, "p131327", "icd_ix_I36_source")
+
+# Date I37 first reported (pulmonary valve disorders)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131328
+setnames(d_icd_ix, "p131328", "icd_ix_I37_fo")
+setnames(d_icd_ix, "p131329", "icd_ix_I37_source")
+
+# Date I38 first reported (endocarditis, valve unspecified)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131330
+setnames(d_icd_ix, "p131330", "icd_ix_I38_fo")
+setnames(d_icd_ix, "p131331", "icd_ix_I38_source")
+
+# Date I39 first reported (endocarditis and heart valve disorders in diseases classified elsewhere)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131332
+setnames(d_icd_ix, "p131332", "icd_ix_I39_fo")
+setnames(d_icd_ix, "p131333", "icd_ix_I39_source")
+
+# Date I40 first reported (acute myocarditis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131334
+setnames(d_icd_ix, "p131334", "icd_ix_I40_fo")
+setnames(d_icd_ix, "p131335", "icd_ix_I40_source")
+
+# Date I41 first reported (myocarditis in diseases classified elsewhere)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131336
+setnames(d_icd_ix, "p131336", "icd_ix_I41_fo")
+setnames(d_icd_ix, "p131337", "icd_ix_I41_source")
+
+# Date I42 first reported (cardiomyopathy)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131338
+setnames(d_icd_ix, "p131338", "icd_ix_I42_fo")
+setnames(d_icd_ix, "p131339", "icd_ix_I42_source")
+
+# Date I43 first reported (cardiomyopathy in diseases classified elsewhere)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131340
+setnames(d_icd_ix, "p131340", "icd_ix_I43_fo")
+setnames(d_icd_ix, "p131341", "icd_ix_I43_source")
+
+# Date I44 first reported (atrioventricular and left bundle-branch block)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131342
+setnames(d_icd_ix, "p131342", "icd_ix_I44_fo")
+setnames(d_icd_ix, "p131343", "icd_ix_I44_source")
+
+# Date I45 first reported (other conduction disorders)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131344
+setnames(d_icd_ix, "p131344", "icd_ix_I45_fo")
+setnames(d_icd_ix, "p131345", "icd_ix_I45_source")
+
+# Date I46 first reported (cardiac arrest)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131346
+setnames(d_icd_ix, "p131346", "icd_ix_I46_fo")
+setnames(d_icd_ix, "p131347", "icd_ix_I46_source")
+
+# Date I47 first reported (paroxysmal tachycardia)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131348
+setnames(d_icd_ix, "p131348", "icd_ix_I47_fo")
+setnames(d_icd_ix, "p131349", "icd_ix_I47_source")
+
+# Date I48 first reported (atrial fibrillation and flutter)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131350
+setnames(d_icd_ix, "p131350", "icd_ix_I48_fo")
+setnames(d_icd_ix, "p131351", "icd_ix_I48_source")
+
+# Date I49 first reported (other cardiac arrhythmias)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131352
+setnames(d_icd_ix, "p131352", "icd_ix_I49_fo")
+setnames(d_icd_ix, "p131353", "icd_ix_I49_source")
+
+# Date I50 first reported (heart failure)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131354
+setnames(d_icd_ix, "p131354", "icd_ix_I50_fo")
+setnames(d_icd_ix, "p131355", "icd_ix_I50_source")
+
+# Date I51 first reported (complications and ill-defined descriptions of heart disease)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131356
+setnames(d_icd_ix, "p131356", "icd_ix_I51_fo")
+setnames(d_icd_ix, "p131357", "icd_ix_I51_source")
+
+# Date I52 first reported (other heart disorders in diseases classified elsewhere)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131358
+setnames(d_icd_ix, "p131358", "icd_ix_I52_fo")
+setnames(d_icd_ix, "p131359", "icd_ix_I52_source")
+
+# Date I60 first reported (subarachnoid haemorrhage)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131360
+setnames(d_icd_ix, "p131360", "icd_ix_I60_fo")
+setnames(d_icd_ix, "p131361", "icd_ix_I60_source")
+
+# Date I61 first reported (intracerebral haemorrhage)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131362
+setnames(d_icd_ix, "p131362", "icd_ix_I61_fo")
+setnames(d_icd_ix, "p131363", "icd_ix_I61_source")
+
+# Date I62 first reported (other nontraumatic intracranial haemorrhage)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131364
+setnames(d_icd_ix, "p131364", "icd_ix_I62_fo")
+setnames(d_icd_ix, "p131365", "icd_ix_I62_source")
+
+# Date I63 first reported (cerebral infarction)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131366
+setnames(d_icd_ix, "p131366", "icd_ix_I63_fo")
+setnames(d_icd_ix, "p131367", "icd_ix_I63_source")
+
+# Date I64 first reported (stroke, not specified as haemorrhage or infarction)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131368
+setnames(d_icd_ix, "p131368", "icd_ix_I64_fo")
+setnames(d_icd_ix, "p131369", "icd_ix_I64_source")
+
+# Date I65 first reported (occlusion and stenosis of precerebral arteries, not resulting in cerebral infarction)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131370
+setnames(d_icd_ix, "p131370", "icd_ix_I65_fo")
+setnames(d_icd_ix, "p131371", "icd_ix_I65_source")
+
+# Date I66 first reported (occlusion and stenosis of cerebral arteries, not resulting in cerebral infarction)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131372
+setnames(d_icd_ix, "p131372", "icd_ix_I66_fo")
+setnames(d_icd_ix, "p131373", "icd_ix_I66_source")
+
+# Date I67 first reported (other cerebrovascular diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131374
+setnames(d_icd_ix, "p131374", "icd_ix_I67_fo")
+setnames(d_icd_ix, "p131375", "icd_ix_I67_source")
+
+# Date I68 first reported (cerebrovascular disorders in diseases classified elsewhere)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131376
+setnames(d_icd_ix, "p131376", "icd_ix_I68_fo")
+setnames(d_icd_ix, "p131377", "icd_ix_I68_source")
+
+# Date I69 first reported (sequelae of cerebrovascular disease)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131378
+setnames(d_icd_ix, "p131378", "icd_ix_I69_fo")
+setnames(d_icd_ix, "p131379", "icd_ix_I69_source")
+
+# Date I70 first reported (atherosclerosis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131380
+setnames(d_icd_ix, "p131380", "icd_ix_I70_fo")
+setnames(d_icd_ix, "p131381", "icd_ix_I70_source")
+
+# Date I71 first reported (aortic aneurysm and dissection)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131382
+setnames(d_icd_ix, "p131382", "icd_ix_I71_fo")
+setnames(d_icd_ix, "p131383", "icd_ix_I71_source")
+
+# Date I72 first reported (other aneurysm)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131384
+setnames(d_icd_ix, "p131384", "icd_ix_I72_fo")
+setnames(d_icd_ix, "p131385", "icd_ix_I72_source")
+
+# Date I73 first reported (other peripheral vascular diseases)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131386
+setnames(d_icd_ix, "p131386", "icd_ix_I73_fo")
+setnames(d_icd_ix, "p131387", "icd_ix_I73_source")
+
+# Date I74 first reported (arterial embolism and thrombosis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131388
+setnames(d_icd_ix, "p131388", "icd_ix_I74_fo")
+setnames(d_icd_ix, "p131389", "icd_ix_I74_source")
+
+# Date I77 first reported (other disorders of arteries and arterioles)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131390
+setnames(d_icd_ix, "p131390", "icd_ix_I77_fo")
+setnames(d_icd_ix, "p131391", "icd_ix_I77_source")
+
+# Date I78 first reported (diseases of capillaries)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131392
+setnames(d_icd_ix, "p131392", "icd_ix_I78_fo")
+setnames(d_icd_ix, "p131393", "icd_ix_I78_source")
+
+# Date I79 first reported (disorders of arteries, arterioles and capillaries in diseases classified elsewhere)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131394
+setnames(d_icd_ix, "p131394", "icd_ix_I79_fo")
+setnames(d_icd_ix, "p131395", "icd_ix_I79_source")
+
+# Date I80 first reported (phlebitis and thrombophlebitis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131396
+setnames(d_icd_ix, "p131396", "icd_ix_I80_fo")
+setnames(d_icd_ix, "p131397", "icd_ix_I80_source")
+
+# Date I81 first reported (portal vein thrombosis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131398
+setnames(d_icd_ix, "p131398", "icd_ix_I81_fo")
+setnames(d_icd_ix, "p131399", "icd_ix_I81_source")
+
+# Date I82 first reported (other venous embolism and thrombosis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131400
+setnames(d_icd_ix, "p131400", "icd_ix_I82_fo")
+setnames(d_icd_ix, "p131401", "icd_ix_I82_source")
+
+# Date I83 first reported (varicose veins of lower extremities)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131402
+setnames(d_icd_ix, "p131402", "icd_ix_I83_fo")
+setnames(d_icd_ix, "p131403", "icd_ix_I83_source")
+
+# Date I84 first reported (haemorrhoids)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131404
+setnames(d_icd_ix, "p131404", "icd_ix_I84_fo")
+setnames(d_icd_ix, "p131405", "icd_ix_I84_source")
+
+# Date I85 first reported (oesophageal varices)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131406
+setnames(d_icd_ix, "p131406", "icd_ix_I85_fo")
+setnames(d_icd_ix, "p131407", "icd_ix_I85_source")
+
+# Date I86 first reported (varicose veins of other sites)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131408
+setnames(d_icd_ix, "p131408", "icd_ix_I86_fo")
+setnames(d_icd_ix, "p131409", "icd_ix_I86_source")
+
+# Date I87 first reported (other disorders of veins)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131410
+setnames(d_icd_ix, "p131410", "icd_ix_I87_fo")
+setnames(d_icd_ix, "p131411", "icd_ix_I87_source")
+
+# Date I88 first reported (nonspecific lymphadenitis)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131412
+setnames(d_icd_ix, "p131412", "icd_ix_I88_fo")
+setnames(d_icd_ix, "p131413", "icd_ix_I88_source")
+
+# Date I89 first reported (other non-infective disorders of lymphatic vessels and lymph nodes)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131414
+setnames(d_icd_ix, "p131414", "icd_ix_I89_fo")
+setnames(d_icd_ix, "p131415", "icd_ix_I89_source")
+
+# Date I95 first reported (hypotension)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131416
+setnames(d_icd_ix, "p131416", "icd_ix_I95_fo")
+setnames(d_icd_ix, "p131417", "icd_ix_I95_source")
+
+# Date I97 first reported (postprocedural disorders of circulatory system, not elsewhere classified)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131418
+setnames(d_icd_ix, "p131418", "icd_ix_I97_fo")
+setnames(d_icd_ix, "p131419", "icd_ix_I97_source")
+
+# Date I98 first reported (other disorders of circulatory system in diseases classified elsewhere)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131420
+setnames(d_icd_ix, "p131420", "icd_ix_I98_fo")
+setnames(d_icd_ix, "p131421", "icd_ix_I98_source")
+
+# Date I99 first reported (other and unspecified disorders of circulatory system)
+# https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=131422
+setnames(d_icd_ix, "p131422", "icd_ix_I99_fo")
+setnames(d_icd_ix, "p131423", "icd_ix_I99_source")
+
+
+```
+
+## Code main variables
+
+Extract all icd-10 codes
+
+```{r}
+# grab all date of diag (_fo) variable names
+(icd_ix_fo_vars <- grep("icd_ix_.*_fo", names(d_icd_ix), value = TRUE))
+
+```
+
+Make diagnosis binary yes/no variables using first occurrence variables
+
+```{r}
+# make names for binary diag variables
+(icd_ix_vars <- str_remove(icd_ix_fo_vars, "_fo"))
+
+# codes 1 if participant has a date (_fo) for each code, otherwise 0
+for (v in icd_ix_vars) {
+  d_icd_ix[, (v) := 0]
+  d_icd_ix[!is.na(get(paste0(v, "_fo"))), (v) := 1]
+}
+
+# grab the icd10 code variable names from the dataset
+atrial_fibrillation <- "I48" ; ventricular_arrhythmias <- "I47|I46|I49" ; atrioventricular <- "I44"
+
+(icd_ix_atrial_fibrillation_vars <- grep(atrial_fibrillation, c(icd_ix_vars), perl = TRUE, value = T))
+(icd_ix_ventricular_arrhythmias_vars <- grep(ventricular_arrhythmias, c(icd_ix_vars), perl = TRUE, value = T))
+(icd_ix_atrioventricular_vars <- grep(atrioventricular, c(icd_ix_vars), perl = TRUE, value = T))
+
+(icd_ix_atrial_fibrillation_fo_vars <- grep(atrial_fibrillation, c(icd_ix_fo_vars), perl = TRUE, value = T))
+(icd_ix_ventricular_arrhythmias_fo_vars <- grep(ventricular_arrhythmias, c(icd_ix_fo_vars), perl = TRUE, value = T))
+(icd_ix_atrioventricular_fo_vars <- grep(atrioventricular, c(icd_ix_fo_vars), perl = TRUE, value = T))
+
+# code main conditions
+d_icd_ix[, icd_ix_atrial_fibrillation := ifelse(Reduce(`|`, lapply(icd_ix_atrial_fibrillation_vars, function(v)
+  f1(get(v), 1))),
+  1, 0)]
+table(d_icd_ix$icd_ix_atrial_fibrillation, useNA = "always")
+
+d_icd_ix[, icd_ix_ventricular_arrhythmias := ifelse(Reduce(`|`, lapply(icd_ix_ventricular_arrhythmias_vars, function(v)
+  f1(get(v), 1))),
+  1, 0)]
+table(d_icd_ix$icd_ix_ventricular_arrhythmias, useNA = "always")
+
+d_icd_ix[, icd_ix_atrioventricular := ifelse(Reduce(`|`, lapply(icd_ix_atrioventricular_vars, function(v)
+  f1(get(v), 1))),
+  1, 0)]
+table(d_icd_ix$icd_ix_atrioventricular, useNA = "always")
+```
+
+First occurrence of conditions (which might be different from FO of a code if participants have multiple codes)
+
+```{r, warning=FALSE, message=FALSE}
+d_icd_ix[, icd_atrial_fibrillation_fo := do.call(pmin, c(.SD, list(na.rm = TRUE))), .SDcols = icd_ix_atrial_fibrillation_fo_vars]
+ggplot(d_icd_ix, aes(ymd(icd_atrial_fibrillation_fo))) + 
+  geom_histogram()
+
+d_icd_ix[, icd_ventricular_arrhythmias_fo := do.call(pmin, c(.SD, list(na.rm = TRUE))), .SDcols = icd_ix_ventricular_arrhythmias_fo_vars]
+ggplot(d_icd_ix, aes(ymd(icd_ventricular_arrhythmias_fo))) + 
+  geom_histogram()
+
+d_icd_ix[, icd_atrioventricular_fo := do.call(pmin, c(.SD, list(na.rm = TRUE))), .SDcols = icd_ix_atrioventricular_fo_vars]
+ggplot(d_icd_ix, aes(ymd(icd_atrioventricular_fo))) + 
+  geom_histogram()
+```
+
+Let's also make variables for any of the above
+
+```{r, warning=FALSE, message=FALSE}
+# any arrhythmia
+arrhythmia_vars <- c(
+  icd_ix_atrial_fibrillation_vars,
+  icd_ix_ventricular_arrhythmias_vars,
+  icd_ix_atrioventricular_vars
+)
+d_icd_ix[, icd_arrhythmia := ifelse((Reduce(`|`, lapply(arrhythmia_vars, function(v) f1(get(v), 1)))),
+                                    1, 0)]
+table(d_icd_ix$icd_arrhythmia, useNA = "always")
+
+arrhythmia_fo_vars <- c(
+  icd_ix_atrial_fibrillation_fo_vars,
+  icd_ix_ventricular_arrhythmias_fo_vars,
+  icd_ix_atrioventricular_fo_vars
+)
+d_icd_ix[, icd_arrhythmia_fo := do.call(pmin, c(.SD, list(na.rm = TRUE))), .SDcols = arrhythmia_fo_vars]
+ggplot(d_icd_ix, aes(ymd(icd_arrhythmia_fo))) + 
+  geom_histogram()
+```
+
+
+
