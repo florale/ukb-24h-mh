@@ -139,7 +139,8 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            # "phq_2016", "gad_2016",
            # "insomnia_2016",
            "phq_2023", "gad_2023",
-           "phq_2023_cutoff", "gad_2023_cutoff"
+           "phq_2023_cutoff", "gad_2023_cutoff",
+           "phq_2023_cutoff4", "gad_2023_cutoff4"
            # , "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq$data)
 
@@ -154,7 +155,8 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            # "phq_2016", "gad_2016",
            # "insomnia_2016",
            "phq_2023", "gad_2023",
-           "phq_2023_cutoff", "gad_2023_cutoff"
+           "phq_2023_cutoff", "gad_2023_cutoff",
+           "phq_2023_cutoff4", "gad_2023_cutoff4"
            # , "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q1$data)
 
@@ -169,7 +171,8 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            # "phq_2016", "gad_2016",
            # "insomnia_2016",
            "phq_2023", "gad_2023",
-           "phq_2023_cutoff", "gad_2023_cutoff"
+           "phq_2023_cutoff", "gad_2023_cutoff",
+           "phq_2023_cutoff4", "gad_2023_cutoff4"
            # , "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q2$data)
 
@@ -184,7 +187,8 @@ egltable(c("age", "age_at_acc", "sex", "ethnicg", "white", "bmi", "bmig",
            # "phq_2016", "gad_2016",
            # "insomnia_2016",
            "phq_2023", "gad_2023",
-           "phq_2023_cutoff", "gad_2023_cutoff"
+           "phq_2023_cutoff", "gad_2023_cutoff",
+           "phq_2023_cutoff4", "gad_2023_cutoff4"
            # , "insomnia_2023"
 ), strict = FALSE, data = clr_acc_mhq_sleep_q3$data)
 
@@ -618,3 +622,5 @@ grDevices::png(
 plot_dag
 dev.off()
 
+mad(d_acc_mhq$phq_2023, na.rm = TRUE)
+mad(d_acc_mhq$gad_2023, na.rm = TRUE)
