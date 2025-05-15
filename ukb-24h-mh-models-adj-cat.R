@@ -45,8 +45,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q1_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q1_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q1_99ci", ".RDS"))
 
@@ -56,8 +55,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q2_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q2_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q2_99ci", ".RDS"))
 
@@ -67,8 +65,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q3_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q3_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q3_99ci", ".RDS"))
 
@@ -116,8 +113,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q1_goodsleep_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q1_goodsleep_bl_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q1_goodsleep_bl_99ci", ".RDS"))
 
@@ -127,8 +123,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q2_goodsleep_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q2_goodsleep_bl_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q2_goodsleep_bl_99ci", ".RDS"))
 
@@ -138,8 +133,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q3_goodsleep_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q3_goodsleep_bl_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q3_goodsleep_bl_99ci", ".RDS"))
 
@@ -187,8 +181,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q1_insomnia_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q1_insomnia_bl_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q1_insomnia_bl_99ci", ".RDS"))
 
@@ -198,8 +191,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q2_insomnia_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q2_insomnia_bl_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q2_insomnia_bl_99ci", ".RDS"))
 
@@ -209,8 +201,7 @@ m_adj_phq_cat_2023_gam_sub_sleep_q3_insomnia_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_phq_cat_2023_gam_sub_sleep_q3_insomnia_bl_99ci, paste0(outputdir, "m_adj_phq_cat_2023_gam_sub_sleep_q3_insomnia_bl_99ci", ".RDS"))
 
@@ -297,8 +288,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q1_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q1_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q1_99ci", ".RDS"))
 
@@ -308,8 +298,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q2_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q2_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q2_99ci", ".RDS"))
 
@@ -319,8 +308,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q3_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q3_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q3_99ci", ".RDS"))
 
@@ -368,8 +356,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q1_goodsleep_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q1_goodsleep_bl_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q1_goodsleep_bl_99ci", ".RDS"))
 
@@ -379,8 +366,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q2_goodsleep_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q2_goodsleep_bl_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q2_goodsleep_bl_99ci", ".RDS"))
 
@@ -390,8 +376,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q3_goodsleep_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q3_goodsleep_bl_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q3_goodsleep_bl_99ci", ".RDS"))
 
@@ -439,8 +424,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q1_insomnia_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q1_insomnia_bl_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q1_insomnia_bl_99ci", ".RDS"))
 
@@ -450,8 +434,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q2_insomnia_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q2_insomnia_bl_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q2_insomnia_bl_99ci", ".RDS"))
 
@@ -461,8 +444,7 @@ m_adj_gad_cat_2023_gam_sub_sleep_q3_insomnia_bl_99ci <- substitution(
   ref = "grandmean",
   level = "aggregate",
   cores = 4,
-  ci = 0.999,
-  summary = FALSE
+  ci = 0.999
 )
 saveRDS(m_adj_gad_cat_2023_gam_sub_sleep_q3_insomnia_bl_99ci, paste0(outputdir, "m_adj_gad_cat_2023_gam_sub_sleep_q3_insomnia_bl_99ci", ".RDS"))
 
