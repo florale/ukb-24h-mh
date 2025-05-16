@@ -436,30 +436,69 @@ m_adj_phq_2016_gam_sub_sleep_q1_insomnia_bl_99ci <- readRDS(paste0(outputdir, "m
 m_adj_phq_2016_gam_sub_sleep_q2_insomnia_bl_99ci <- readRDS(paste0(outputdir, "m_adj_phq_2016_gam_sub_sleep_q2_insomnia_bl_99ci", ".RDS"))
 m_adj_phq_2016_gam_sub_sleep_q3_insomnia_bl_99ci <- readRDS(paste0(outputdir, "m_adj_phq_2016_gam_sub_sleep_q3_insomnia_bl_99ci", ".RDS"))
 
-summary(m_adj_phq_2016_gam_sub_sleep_q1_99ci, delta = 20)[Delta == 20]
-summary(m_adj_phq_2016_gam_sub_sleep_q2_99ci, delta = 20)[Delta == 20]
-summary(m_adj_phq_2016_gam_sub_sleep_q3_99ci, delta = 20)[Delta == 20]
+summary(m_adj_phq_2016_gam_sub_sleep_q1_99ci, delta = 20)
+summary(m_adj_phq_2016_gam_sub_sleep_q2_99ci, delta = 20)
+summary(m_adj_phq_2016_gam_sub_sleep_q3_99ci, delta = 20)
 
 # summary(m_adj_phq_2016_gam_sub_goodsleep_bl_99ci, delta = 20)
 # summary(m_adj_phq_2016_gam_sub_insomnia_mild_bl_99ci, delta = 20)
 # summary(m_adj_phq_2016_gam_sub_insomnia_persistent_bl_99ci, delta = 20)
 
 # baseline insomnia
-summary(m_adj_phq_2016_gam_sub_sleep_q1_goodsleep_bl_99ci, delta = 20)[Delta == 20]
-summary(m_adj_phq_2016_gam_sub_sleep_q2_goodsleep_bl_99ci, delta = 20)[Delta == 20]
-summary(m_adj_phq_2016_gam_sub_sleep_q3_goodsleep_bl_99ci, delta = 20)[Delta == 20]
+summary(m_adj_phq_2016_gam_sub_sleep_q1_goodsleep_bl_99ci, delta = 20)
+summary(m_adj_phq_2016_gam_sub_sleep_q2_goodsleep_bl_99ci, delta = 20)
+summary(m_adj_phq_2016_gam_sub_sleep_q3_goodsleep_bl_99ci, delta = 20)
 
-# summary(m_adj_phq_2016_gam_sub_sleep_q1_insomnia_mild_bl_99ci, delta = 20)[Delta == 20]
-# summary(m_adj_phq_2016_gam_sub_sleep_q2_insomnia_mild_bl_99ci, delta = 20)[Delta == 20]
-# summary(m_adj_phq_2016_gam_sub_sleep_q3_insomnia_mild_bl_99ci, delta = 20)[Delta == 20]
+# summary(m_adj_phq_2016_gam_sub_sleep_q1_insomnia_mild_bl_99ci, delta = 20)
+# summary(m_adj_phq_2016_gam_sub_sleep_q2_insomnia_mild_bl_99ci, delta = 20)
+# summary(m_adj_phq_2016_gam_sub_sleep_q3_insomnia_mild_bl_99ci, delta = 20)
 # 
-# summary(m_adj_phq_2016_gam_sub_sleep_q1_insomnia_persistent_bl_99ci, delta = 20)[Delta == 20]
-# summary(m_adj_phq_2016_gam_sub_sleep_q2_insomnia_persistent_bl_99ci, delta = 20)[Delta == 20]
-# summary(m_adj_phq_2016_gam_sub_sleep_q3_insomnia_persistent_bl_99ci, delta = 20)[Delta == 20]
+# summary(m_adj_phq_2016_gam_sub_sleep_q1_insomnia_persistent_bl_99ci, delta = 20)
+# summary(m_adj_phq_2016_gam_sub_sleep_q2_insomnia_persistent_bl_99ci, delta = 20)
+# summary(m_adj_phq_2016_gam_sub_sleep_q3_insomnia_persistent_bl_99ci, delta = 20)
 
-summary(m_adj_phq_2016_gam_sub_sleep_q1_insomnia_bl_99ci, delta = 20)[Delta == 20]
-summary(m_adj_phq_2016_gam_sub_sleep_q2_insomnia_bl_99ci, delta = 20)[Delta == 20]
-summary(m_adj_phq_2016_gam_sub_sleep_q3_insomnia_bl_99ci, delta = 20)[Delta == 20]
+summary(m_adj_phq_2016_gam_sub_sleep_q1_insomnia_bl_99ci, delta = 20)
+summary(m_adj_phq_2016_gam_sub_sleep_q2_insomnia_bl_99ci, delta = 20)
+summary(m_adj_phq_2016_gam_sub_sleep_q3_insomnia_bl_99ci, delta = 20)
+
+# standardised estimates
+## by quantiles
+d_adj_phq_2016_gam_sub_sleep_q1_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q1_99ci, delta = 20, digits = "asis"))
+d_adj_phq_2016_gam_sub_sleep_q2_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q2_99ci, delta = 20, digits = "asis"))
+d_adj_phq_2016_gam_sub_sleep_q3_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q3_99ci, delta = 20, digits = "asis"))
+
+d_adj_phq_2016_gam_sub_sleep_q1_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q1$data$phq_2016, na.rm = T), 2)]
+d_adj_phq_2016_gam_sub_sleep_q2_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q2$data$phq_2016, na.rm = T), 2)]
+d_adj_phq_2016_gam_sub_sleep_q3_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q3$data$phq_2016, na.rm = T), 2)]
+
+## by quantiles + insomnia
+d_adj_phq_2016_gam_sub_sleep_q1_goodsleep_bl_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q1_goodsleep_bl_99ci, delta = 20, digits = "asis"))
+d_adj_phq_2016_gam_sub_sleep_q2_goodsleep_bl_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q2_goodsleep_bl_99ci, delta = 20, digits = "asis"))
+d_adj_phq_2016_gam_sub_sleep_q3_goodsleep_bl_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q3_goodsleep_bl_99ci, delta = 20, digits = "asis"))
+
+d_adj_phq_2016_gam_sub_sleep_q1_insomnia_bl_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q1_insomnia_bl_99ci, delta = 20, digits = "asis"))
+d_adj_phq_2016_gam_sub_sleep_q2_insomnia_bl_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q2_insomnia_bl_99ci, delta = 20, digits = "asis"))
+d_adj_phq_2016_gam_sub_sleep_q3_insomnia_bl_99ci <- as.data.table(summary(m_adj_phq_2016_gam_sub_sleep_q3_insomnia_bl_99ci, delta = 20, digits = "asis"))
+
+d_adj_phq_2016_gam_sub_sleep_q1_goodsleep_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q1_goodsleep_bl$data$phq_2016, na.rm = T), 2)]
+d_adj_phq_2016_gam_sub_sleep_q2_goodsleep_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q2_goodsleep_bl$data$phq_2016, na.rm = T), 2)]
+d_adj_phq_2016_gam_sub_sleep_q3_goodsleep_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q3_goodsleep_bl$data$phq_2016, na.rm = T), 2)]
+
+d_adj_phq_2016_gam_sub_sleep_q1_insomnia_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q1_insomnia_bl$data$phq_2016, na.rm = T), 2)]
+d_adj_phq_2016_gam_sub_sleep_q2_insomnia_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q2_insomnia_bl$data$phq_2016, na.rm = T), 2)]
+d_adj_phq_2016_gam_sub_sleep_q3_insomnia_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q3_insomnia_bl$data$phq_2016, na.rm = T), 2)]
+
+d_adj_phq_2016_gam_sub_sleep_q1_99ci
+d_adj_phq_2016_gam_sub_sleep_q2_99ci
+d_adj_phq_2016_gam_sub_sleep_q3_99ci
+
+d_adj_phq_2016_gam_sub_sleep_q1_insomnia_bl_99ci
+d_adj_phq_2016_gam_sub_sleep_q2_insomnia_bl_99ci
+d_adj_phq_2016_gam_sub_sleep_q3_insomnia_bl_99ci
+
+d_adj_phq_2016_gam_sub_sleep_q1_goodsleep_bl_99ci
+d_adj_phq_2016_gam_sub_sleep_q2_goodsleep_bl_99ci
+d_adj_phq_2016_gam_sub_sleep_q3_goodsleep_bl_99ci
 
 # GAD7 -------------------
 ## all stratified by sleep quantiles ------------
@@ -897,27 +936,67 @@ m_adj_gad_2016_gam_sub_sleep_q1_insomnia_bl_99ci <- readRDS(paste0(outputdir, "m
 m_adj_gad_2016_gam_sub_sleep_q2_insomnia_bl_99ci <- readRDS(paste0(outputdir, "m_adj_gad_2016_gam_sub_sleep_q2_insomnia_bl_99ci", ".RDS"))
 m_adj_gad_2016_gam_sub_sleep_q3_insomnia_bl_99ci <- readRDS(paste0(outputdir, "m_adj_gad_2016_gam_sub_sleep_q3_insomnia_bl_99ci", ".RDS"))
 
-summary(m_adj_gad_2016_gam_sub_sleep_q1_99ci, delta = 20)[Delta == 20]
-summary(m_adj_gad_2016_gam_sub_sleep_q2_99ci, delta = 20)[Delta == 20]
-summary(m_adj_gad_2016_gam_sub_sleep_q3_99ci, delta = 20)[Delta == 20]
+summary(m_adj_gad_2016_gam_sub_sleep_q1_99ci, delta = 20)
+summary(m_adj_gad_2016_gam_sub_sleep_q2_99ci, delta = 20)
+summary(m_adj_gad_2016_gam_sub_sleep_q3_99ci, delta = 20)
 
 # summary(m_adj_gad_2016_gam_sub_goodsleep_bl_99ci, delta = 20)
 # summary(m_adj_gad_2016_gam_sub_insomnia_mild_bl_99ci, delta = 20)
 # summary(m_adj_gad_2016_gam_sub_insomnia_persistent_bl_99ci, delta = 20)
 
 # baseline insomnia
-summary(m_adj_gad_2016_gam_sub_sleep_q1_goodsleep_bl_99ci, delta = 20)[Delta == 20]
-summary(m_adj_gad_2016_gam_sub_sleep_q2_goodsleep_bl_99ci, delta = 20)[Delta == 20]
-summary(m_adj_gad_2016_gam_sub_sleep_q3_goodsleep_bl_99ci, delta = 20)[Delta == 20]
+summary(m_adj_gad_2016_gam_sub_sleep_q1_goodsleep_bl_99ci, delta = 20)
+summary(m_adj_gad_2016_gam_sub_sleep_q2_goodsleep_bl_99ci, delta = 20)
+summary(m_adj_gad_2016_gam_sub_sleep_q3_goodsleep_bl_99ci, delta = 20)
 
-# summary(m_adj_gad_2016_gam_sub_sleep_q1_insomnia_mild_bl_99ci, delta = 20)[Delta == 20]
-# summary(m_adj_gad_2016_gam_sub_sleep_q2_insomnia_mild_bl_99ci, delta = 20)[Delta == 20]
-# summary(m_adj_gad_2016_gam_sub_sleep_q3_insomnia_mild_bl_99ci, delta = 20)[Delta == 20]
+# summary(m_adj_gad_2016_gam_sub_sleep_q1_insomnia_mild_bl_99ci, delta = 20)
+# summary(m_adj_gad_2016_gam_sub_sleep_q2_insomnia_mild_bl_99ci, delta = 20)
+# summary(m_adj_gad_2016_gam_sub_sleep_q3_insomnia_mild_bl_99ci, delta = 20)
 # 
-# summary(m_adj_gad_2016_gam_sub_sleep_q1_insomnia_persistent_bl_99ci, delta = 20)[Delta == 20]
-# summary(m_adj_gad_2016_gam_sub_sleep_q2_insomnia_persistent_bl_99ci, delta = 20)[Delta == 20]
-# summary(m_adj_gad_2016_gam_sub_sleep_q3_insomnia_persistent_bl_99ci, delta = 20)[Delta == 20]
+# summary(m_adj_gad_2016_gam_sub_sleep_q1_insomnia_persistent_bl_99ci, delta = 20)
+# summary(m_adj_gad_2016_gam_sub_sleep_q2_insomnia_persistent_bl_99ci, delta = 20)
+# summary(m_adj_gad_2016_gam_sub_sleep_q3_insomnia_persistent_bl_99ci, delta = 20)
 
-summary(m_adj_gad_2016_gam_sub_sleep_q1_insomnia_bl_99ci, delta = 20)[Delta == 20]
-summary(m_adj_gad_2016_gam_sub_sleep_q2_insomnia_bl_99ci, delta = 20)[Delta == 20]
-summary(m_adj_gad_2016_gam_sub_sleep_q3_insomnia_bl_99ci, delta = 20)[Delta == 20]
+summary(m_adj_gad_2016_gam_sub_sleep_q1_insomnia_bl_99ci, delta = 20)
+summary(m_adj_gad_2016_gam_sub_sleep_q2_insomnia_bl_99ci, delta = 20)
+summary(m_adj_gad_2016_gam_sub_sleep_q3_insomnia_bl_99ci, delta = 20)
+
+# standardised estimates
+## by quantiles
+d_adj_gad_2016_gam_sub_sleep_q1_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q1_99ci, delta = 20, digits = "asis"))
+d_adj_gad_2016_gam_sub_sleep_q2_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q2_99ci, delta = 20, digits = "asis"))
+d_adj_gad_2016_gam_sub_sleep_q3_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q3_99ci, delta = 20, digits = "asis"))
+
+d_adj_gad_2016_gam_sub_sleep_q1_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q1$data$gad_2016, na.rm = T), 2)]
+d_adj_gad_2016_gam_sub_sleep_q2_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q2$data$gad_2016, na.rm = T), 2)]
+d_adj_gad_2016_gam_sub_sleep_q3_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q3$data$gad_2016, na.rm = T), 2)]
+
+## by quantiles + insomnia
+d_adj_gad_2016_gam_sub_sleep_q1_goodsleep_bl_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q1_goodsleep_bl_99ci, delta = 20, digits = "asis"))
+d_adj_gad_2016_gam_sub_sleep_q2_goodsleep_bl_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q2_goodsleep_bl_99ci, delta = 20, digits = "asis"))
+d_adj_gad_2016_gam_sub_sleep_q3_goodsleep_bl_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q3_goodsleep_bl_99ci, delta = 20, digits = "asis"))
+
+d_adj_gad_2016_gam_sub_sleep_q1_insomnia_bl_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q1_insomnia_bl_99ci, delta = 20, digits = "asis"))
+d_adj_gad_2016_gam_sub_sleep_q2_insomnia_bl_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q2_insomnia_bl_99ci, delta = 20, digits = "asis"))
+d_adj_gad_2016_gam_sub_sleep_q3_insomnia_bl_99ci <- as.data.table(summary(m_adj_gad_2016_gam_sub_sleep_q3_insomnia_bl_99ci, delta = 20, digits = "asis"))
+
+d_adj_gad_2016_gam_sub_sleep_q1_goodsleep_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q1_goodsleep_bl$data$gad_2016, na.rm = T), 2)]
+d_adj_gad_2016_gam_sub_sleep_q2_goodsleep_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q2_goodsleep_bl$data$gad_2016, na.rm = T), 2)]
+d_adj_gad_2016_gam_sub_sleep_q3_goodsleep_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q3_goodsleep_bl$data$gad_2016, na.rm = T), 2)]
+
+d_adj_gad_2016_gam_sub_sleep_q1_insomnia_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q1_insomnia_bl$data$gad_2016, na.rm = T), 2)]
+d_adj_gad_2016_gam_sub_sleep_q2_insomnia_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q2_insomnia_bl$data$gad_2016, na.rm = T), 2)]
+d_adj_gad_2016_gam_sub_sleep_q3_insomnia_bl_99ci[, SMean := round(Mean / sd(clr_acc_mhq_sleep_q3_insomnia_bl$data$gad_2016, na.rm = T), 2)]
+
+d_adj_gad_2016_gam_sub_sleep_q1_99ci
+d_adj_gad_2016_gam_sub_sleep_q2_99ci
+d_adj_gad_2016_gam_sub_sleep_q3_99ci
+
+d_adj_gad_2016_gam_sub_sleep_q1_insomnia_bl_99ci
+d_adj_gad_2016_gam_sub_sleep_q2_insomnia_bl_99ci
+d_adj_gad_2016_gam_sub_sleep_q3_insomnia_bl_99ci
+
+d_adj_gad_2016_gam_sub_sleep_q1_goodsleep_bl_99ci
+d_adj_gad_2016_gam_sub_sleep_q2_goodsleep_bl_99ci
+d_adj_gad_2016_gam_sub_sleep_q3_goodsleep_bl_99ci
+
