@@ -235,6 +235,16 @@ psych::describe(clr_acc_mhq_sleep_q1$data$gad_2016, IQR = TRUE)
 psych::describe(clr_acc_mhq_sleep_q2$data$phq_2016, IQR = TRUE)
 psych::describe(clr_acc_mhq_sleep_q3$data$phq_2016, IQR = TRUE)
 
+# internal consistency
+phq_2023_v <- c("p29002", "p29003", "p29004", "p29005", "p29006", "p29007", "p29008", "p29009", "p29010")
+gad_2023_v <- c("p29058", "p29059", "p29060", "p29061", "p29062", "p29063", "p29064")
+
+psych::alpha(as.data.frame(d_acc_mhq_all[eid %in% clr_acc_mhq$data$eid, phq_2023_v, with = FALSE]), check.keys = TRUE)
+psych::alpha(as.data.frame(d_acc_mhq_all[eid %in% clr_acc_mhq$data$eid, gad_2023_v, with = FALSE]), check.keys = TRUE)
+
+psych::omega(as.data.frame(d_acc_mhq_all[eid %in% clr_acc_mhq$data$eid, phq_2023_v, with = FALSE]), check.keys = TRUE)
+psych::omega(as.data.frame(d_acc_mhq_all[eid %in% clr_acc_mhq$data$eid, gad_2023_v, with = FALSE]), check.keys = TRUE)
+
 # distribution -----------
 clr_acc_mhq <- readRDS(paste0(inputdir, "clr_acc_mhq", ".RDS"))
 
