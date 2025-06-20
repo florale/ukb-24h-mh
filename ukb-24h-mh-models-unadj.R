@@ -38,6 +38,7 @@ m_unadj_phq_2023_gam_sub_sleep_q1_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -48,6 +49,7 @@ m_unadj_phq_2023_gam_sub_sleep_q2_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -58,72 +60,11 @@ m_unadj_phq_2023_gam_sub_sleep_q3_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
 saveRDS(m_unadj_phq_2023_gam_sub_sleep_q3_99ci, paste0(outputdir, "m_unadj_phq_2023_gam_sub_sleep_q3_99ci", ".RDS"))
-
-## all stratified by insomnia ------------
-m_unadj_phq_2023_gam_goodsleep_bl <- brmcoda(clr_acc_mhq_goodsleep_bl,
-                                             phq_2023 ~ 
-                                               s(ilr1) + s(ilr2) + s(ilr3),
-                                             family = zero_inflated_negbinomial(),
-                                             chains = 4, cores = 4,
-                                             backend = "cmdstanr"
-)
-saveRDS(m_unadj_phq_2023_gam_goodsleep_bl, paste0(outputdir, "m_unadj_phq_2023_gam_goodsleep_bl", ".RDS"))
-
-m_unadj_phq_2023_gam_insomnia_mild_bl <- brmcoda(clr_acc_mhq_insomnia_mild_bl,
-                                                 phq_2023 ~ 
-                                                   s(ilr1) + s(ilr2) + s(ilr3),
-                                                 family = zero_inflated_negbinomial(),
-                                                 chains = 4, cores = 4,
-                                                 backend = "cmdstanr"
-)
-saveRDS(m_unadj_phq_2023_gam_insomnia_mild_bl, paste0(outputdir, "m_unadj_phq_2023_gam_insomnia_mild_bl", ".RDS"))
-
-m_unadj_phq_2023_gam_insomnia_persistent_bl <- brmcoda(clr_acc_mhq_insomnia_persistent_bl,
-                                                       phq_2023 ~ 
-                                                         s(ilr1) + s(ilr2) + s(ilr3),
-                                                       family = zero_inflated_negbinomial(),
-                                                       chains = 4, cores = 4,
-                                                       backend = "cmdstanr"
-)
-saveRDS(m_unadj_phq_2023_gam_insomnia_persistent_bl, paste0(outputdir, "m_unadj_phq_2023_gam_insomnia_persistent_bl", ".RDS"))
-
-m_unadj_phq_2023_gam_goodsleep_bl <- readRDS(paste0(outputdir, "m_unadj_phq_2023_gam_goodsleep_bl", ".RDS"))
-m_unadj_phq_2023_gam_insomnia_mild_bl <- readRDS(paste0(outputdir, "m_unadj_phq_2023_gam_insomnia_mild_bl", ".RDS"))
-m_unadj_phq_2023_gam_insomnia_persistent_bl <- readRDS(paste0(outputdir, "m_unadj_phq_2023_gam_insomnia_persistent_bl", ".RDS"))
-
-m_unadj_phq_2023_gam_sub_goodsleep_bl_99ci <- substitution(
-  m_unadj_phq_2023_gam_goodsleep_bl,
-  delta = 1:20,
-  ref = "grandmean",
-  level = "aggregate",
-  cores = 4,
-  ci = 0.999
-)
-saveRDS(m_unadj_phq_2023_gam_sub_goodsleep_bl_99ci, paste0(outputdir, "m_unadj_phq_2023_gam_sub_goodsleep_bl_99ci", ".RDS"))
-
-m_unadj_phq_2023_gam_sub_insomnia_mild_bl_99ci <- substitution(
-  m_unadj_phq_2023_gam_insomnia_mild_bl,
-  delta = 1:20,
-  ref = "grandmean",
-  level = "aggregate",
-  cores = 4,
-  ci = 0.999
-)
-saveRDS(m_unadj_phq_2023_gam_sub_insomnia_mild_bl_99ci, paste0(outputdir, "m_unadj_phq_2023_gam_sub_insomnia_mild_bl_99ci", ".RDS"))
-
-m_unadj_phq_2023_gam_sub_insomnia_persistent_bl_99ci <- substitution(
-  m_unadj_phq_2023_gam_insomnia_persistent_bl,
-  delta = 1:20,
-  ref = "grandmean",
-  level = "aggregate",
-  cores = 4,
-  ci = 0.999
-)
-saveRDS(m_unadj_phq_2023_gam_sub_insomnia_persistent_bl_99ci, paste0(outputdir, "m_unadj_phq_2023_gam_sub_insomnia_persistent_bl_99ci", ".RDS"))
 
 ## quantiles - good sleep baseline -----------------------
 m_unadj_phq_2023_gam_sleep_q1_goodsleep_bl <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep_bl,
@@ -162,6 +103,7 @@ m_unadj_phq_2023_gam_sub_sleep_q1_goodsleep_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -172,6 +114,7 @@ m_unadj_phq_2023_gam_sub_sleep_q2_goodsleep_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -182,6 +125,7 @@ m_unadj_phq_2023_gam_sub_sleep_q3_goodsleep_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -224,6 +168,7 @@ m_unadj_phq_2023_gam_sub_sleep_q1_insomnia_mild_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -234,6 +179,7 @@ m_unadj_phq_2023_gam_sub_sleep_q2_insomnia_mild_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -244,6 +190,7 @@ m_unadj_phq_2023_gam_sub_sleep_q3_insomnia_mild_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -286,6 +233,7 @@ m_unadj_phq_2023_gam_sub_sleep_q1_insomnia_persistent_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -296,6 +244,7 @@ m_unadj_phq_2023_gam_sub_sleep_q2_insomnia_persistent_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -349,6 +298,7 @@ m_unadj_phq_2023_gam_sub_sleep_q1_insomnia_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -359,6 +309,7 @@ m_unadj_phq_2023_gam_sub_sleep_q2_insomnia_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -371,7 +322,7 @@ m_unadj_phq_2023_gam_sub_sleep_q3_insomnia_bl_99ci <- substitution(
   level = "aggregate",
   scale = "response",
   cores = 4,
-  ci = 0.995
+  ci = 0.999
 )
 saveRDS(m_unadj_phq_2023_gam_sub_sleep_q3_insomnia_bl_99ci, paste0(outputdir, "m_unadj_phq_2023_gam_sub_sleep_q3_insomnia_bl_99ci", ".RDS"))
 
@@ -503,6 +454,7 @@ m_unadj_gad_2023_gam_sub_sleep_q1_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -513,6 +465,7 @@ m_unadj_gad_2023_gam_sub_sleep_q2_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -523,72 +476,11 @@ m_unadj_gad_2023_gam_sub_sleep_q3_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
 saveRDS(m_unadj_gad_2023_gam_sub_sleep_q3_99ci, paste0(outputdir, "m_unadj_gad_2023_gam_sub_sleep_q3_99ci", ".RDS"))
-
-## all stratified by insomnia ------------
-m_unadj_gad_2023_gam_goodsleep_bl <- brmcoda(clr_acc_mhq_goodsleep_bl,
-                                             gad_2023 ~ 
-                                               s(ilr1) + s(ilr2) + s(ilr3),
-                                             family = zero_inflated_negbinomial(),
-                                             chains = 4, cores = 4,
-                                             backend = "cmdstanr"
-)
-saveRDS(m_unadj_gad_2023_gam_goodsleep_bl, paste0(outputdir, "m_unadj_gad_2023_gam_goodsleep_bl", ".RDS"))
-
-m_unadj_gad_2023_gam_insomnia_mild_bl <- brmcoda(clr_acc_mhq_insomnia_mild_bl,
-                                                 gad_2023 ~ 
-                                                   s(ilr1) + s(ilr2) + s(ilr3),
-                                                 family = zero_inflated_negbinomial(),
-                                                 chains = 4, cores = 4,
-                                                 backend = "cmdstanr"
-)
-saveRDS(m_unadj_gad_2023_gam_insomnia_mild_bl, paste0(outputdir, "m_unadj_gad_2023_gam_insomnia_mild_bl", ".RDS"))
-
-m_unadj_gad_2023_gam_insomnia_persistent_bl <- brmcoda(clr_acc_mhq_insomnia_persistent_bl,
-                                                       gad_2023 ~ 
-                                                         s(ilr1) + s(ilr2) + s(ilr3),
-                                                       family = zero_inflated_negbinomial(),
-                                                       chains = 4, cores = 4,
-                                                       backend = "cmdstanr"
-)
-saveRDS(m_unadj_gad_2023_gam_insomnia_persistent_bl, paste0(outputdir, "m_unadj_gad_2023_gam_insomnia_persistent_bl", ".RDS"))
-
-m_unadj_gad_2023_gam_goodsleep_bl <- readRDS(paste0(outputdir, "m_unadj_gad_2023_gam_goodsleep_bl", ".RDS"))
-m_unadj_gad_2023_gam_insomnia_mild_bl <- readRDS(paste0(outputdir, "m_unadj_gad_2023_gam_insomnia_mild_bl", ".RDS"))
-m_unadj_gad_2023_gam_insomnia_persistent_bl <- readRDS(paste0(outputdir, "m_unadj_gad_2023_gam_insomnia_persistent_bl", ".RDS"))
-
-m_unadj_gad_2023_gam_sub_goodsleep_bl_99ci <- substitution(
-  m_unadj_gad_2023_gam_goodsleep_bl,
-  delta = 1:20,
-  ref = "grandmean",
-  level = "aggregate",
-  cores = 4,
-  ci = 0.999
-)
-saveRDS(m_unadj_gad_2023_gam_sub_goodsleep_bl_99ci, paste0(outputdir, "m_unadj_gad_2023_gam_sub_goodsleep_bl_99ci", ".RDS"))
-
-m_unadj_gad_2023_gam_sub_insomnia_mild_bl_99ci <- substitution(
-  m_unadj_gad_2023_gam_insomnia_mild_bl,
-  delta = 1:20,
-  ref = "grandmean",
-  level = "aggregate",
-  cores = 4,
-  ci = 0.999
-)
-saveRDS(m_unadj_gad_2023_gam_sub_insomnia_mild_bl_99ci, paste0(outputdir, "m_unadj_gad_2023_gam_sub_insomnia_mild_bl_99ci", ".RDS"))
-
-m_unadj_gad_2023_gam_sub_insomnia_persistent_bl_99ci <- substitution(
-  m_unadj_gad_2023_gam_insomnia_persistent_bl,
-  delta = 1:20,
-  ref = "grandmean",
-  level = "aggregate",
-  cores = 4,
-  ci = 0.999
-)
-saveRDS(m_unadj_gad_2023_gam_sub_insomnia_persistent_bl_99ci, paste0(outputdir, "m_unadj_gad_2023_gam_sub_insomnia_persistent_bl_99ci", ".RDS"))
 
 ## quantiles - good sleep baseline -----------------------
 m_unadj_gad_2023_gam_sleep_q1_goodsleep_bl <- brmcoda(clr_acc_mhq_sleep_q1_goodsleep_bl,
@@ -627,6 +519,7 @@ m_unadj_gad_2023_gam_sub_sleep_q1_goodsleep_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -637,6 +530,7 @@ m_unadj_gad_2023_gam_sub_sleep_q2_goodsleep_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -647,6 +541,7 @@ m_unadj_gad_2023_gam_sub_sleep_q3_goodsleep_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -689,6 +584,7 @@ m_unadj_gad_2023_gam_sub_sleep_q1_insomnia_mild_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -699,6 +595,7 @@ m_unadj_gad_2023_gam_sub_sleep_q2_insomnia_mild_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -709,6 +606,7 @@ m_unadj_gad_2023_gam_sub_sleep_q3_insomnia_mild_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -751,6 +649,7 @@ m_unadj_gad_2023_gam_sub_sleep_q1_insomnia_persistent_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -761,6 +660,7 @@ m_unadj_gad_2023_gam_sub_sleep_q2_insomnia_persistent_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -773,7 +673,7 @@ m_unadj_gad_2023_gam_sub_sleep_q3_insomnia_persistent_bl_99ci <- substitution(
   level = "aggregate",
   scale = "response",
   cores = 4,
-  ci = 0.995
+  ci = 0.999
 )
 saveRDS(m_unadj_gad_2023_gam_sub_sleep_q3_insomnia_persistent_bl_99ci, paste0(outputdir, "m_unadj_gad_2023_gam_sub_sleep_q3_insomnia_persistent_bl_99ci", ".RDS"))
 
@@ -814,6 +714,7 @@ m_unadj_gad_2023_gam_sub_sleep_q1_insomnia_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -824,6 +725,7 @@ m_unadj_gad_2023_gam_sub_sleep_q2_insomnia_bl_99ci <- substitution(
   delta = 1:20,
   ref = "grandmean",
   level = "aggregate",
+  scale = "response",
   cores = 4,
   ci = 0.999
 )
@@ -836,7 +738,7 @@ m_unadj_gad_2023_gam_sub_sleep_q3_insomnia_bl_99ci <- substitution(
   level = "aggregate",
   scale = "response",
   cores = 4,
-  ci = 0.995
+  ci = 0.999
 )
 saveRDS(m_unadj_gad_2023_gam_sub_sleep_q3_insomnia_bl_99ci, paste0(outputdir, "m_unadj_gad_2023_gam_sub_sleep_q3_insomnia_bl_99ci", ".RDS"))
 
