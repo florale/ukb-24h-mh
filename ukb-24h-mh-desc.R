@@ -5,7 +5,7 @@ table(cut(clr_acc_mhq$data$sleep, quantile(clr_acc_mhq$data$sleep, c(0, 0.25, 0.
 
 # n complete
 nrow(d_acc_mhq[!is.na(p20400)]) # 66972
-nrow(d_acc_mhq_all[!is.na(p29197)]) # 63530
+# nrow(d_acc_mhq_all[!is.na(p29197)]) # 63530
 
 nrow(d_acc_mhq[!is.na(p29197)]) # 55945
 
@@ -62,8 +62,8 @@ nrow(d_acc_mhq[!is.na(gad_2016)])
 nrow(d_acc_mhq[!is.na(phq_2023)])
 nrow(d_acc_mhq[!is.na(gad_2023)])
 
-nrow(d_acc_mhq[!is.na(dep_lifetime)])
-nrow(d_acc_mhq[!is.na(anx_lifetime)])
+# nrow(d_acc_mhq[!is.na(dep_lifetime)])
+# nrow(d_acc_mhq[!is.na(anx_lifetime)])
 
 nrow(d_acc_mhq[is.na(age) & !is.na(p29197)])
 nrow(d_acc_mhq[is.na(sex) & !is.na(p29197)])
@@ -83,9 +83,8 @@ nrow(d_acc_mhq[!is.na(p29197) &
                         (is.na(age) | is.na(sex) | is.na(ethnicg) | is.na(bmig) | is.na(edu) | is.na(working) | is.na(deprivation) | is.na(smoking) | is.na(alcohol))])
 
 nrow(d_acc_mhq[is.na(icd_any_at_acc)])
-nrow(d_acc_mhq[is.na(phq_2016) & !is.na(p20400)])
-
-nrow(d_acc_mhq[is.na(gad_2016) & !is.na(p20400)])
+# nrow(d_acc_mhq[is.na(phq_2016) & !is.na(p20400)])
+# nrow(d_acc_mhq[is.na(gad_2016) & !is.na(p20400)])
 
 nrow(d_acc_mhq[is.na(phq_2023) & !is.na(p29197)])
 nrow(d_acc_mhq[is.na(gad_2023) & !is.na(p29197)])
