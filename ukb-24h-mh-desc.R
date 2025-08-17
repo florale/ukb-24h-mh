@@ -604,8 +604,8 @@ plot_dag[["data"]]$parent <- factor(plot_dag[["data"]]$parent, ordered = TRUE,
     scale_color_manual(values = c(
       "Exposure" = "#456691", # DCD5CE
       "Outcome" = "#944C4C",
-      "Confounder (Adjusted)" = "#DCD5CE", #
-      "Mechanism (Unadjusted)" = "#ADC7DA"
+      "Confounder (Adjusted)" = "#ADC7DA", #
+      "Mechanism (Unadjusted)" = "#D9D9D9"
     ), drop = TRUE, name = NULL)+
     geom_label(aes(label = label),
                color = "black",
@@ -630,6 +630,3 @@ grDevices::png(
 )
 plot_dag
 dev.off()
-
-mad(d_acc_mhq$phq_2023, na.rm = TRUE)
-mad(d_acc_mhq$gad_2023, na.rm = TRUE)

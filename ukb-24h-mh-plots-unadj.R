@@ -283,8 +283,10 @@ grDevices::cairo_pdf(
   height = 12,
 )
 
-figure <- ggarrange(plot_unadj_24h_phq_by_sleep_period_insomnia[[1]], plot_unadj_24h_phq_by_sleep_period_insomnia[[2]], 
-                    plot_unadj_24h_phq_by_sleep_period_insomnia[[3]], plot_unadj_24h_phq_by_sleep_period_insomnia[[4]], 
+figure <- ggarrange(plot_unadj_24h_phq_by_sleep_period_insomnia[[2]],
+                    plot_unadj_24h_phq_by_sleep_period_insomnia[[3]],
+                    plot_unadj_24h_phq_by_sleep_period_insomnia[[4]],
+                    plot_unadj_24h_phq_by_sleep_period_insomnia[[1]], 
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -299,8 +301,10 @@ grDevices::png(
   res = 900
 )
 
-figure <- ggarrange(plot_unadj_24h_phq_by_sleep_period_insomnia[[1]], plot_unadj_24h_phq_by_sleep_period_insomnia[[2]], 
-                    plot_unadj_24h_phq_by_sleep_period_insomnia[[3]], plot_unadj_24h_phq_by_sleep_period_insomnia[[4]], 
+figure <- ggarrange(plot_unadj_24h_phq_by_sleep_period_insomnia[[2]],
+                    plot_unadj_24h_phq_by_sleep_period_insomnia[[3]],
+                    plot_unadj_24h_phq_by_sleep_period_insomnia[[4]],
+                    plot_unadj_24h_phq_by_sleep_period_insomnia[[1]],
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -382,8 +386,10 @@ grDevices::cairo_pdf(
   height = 12,
 )
 
-figure <- ggarrange(plot_unadj_24h_gad_by_sleep_period_insomnia[[1]], plot_unadj_24h_gad_by_sleep_period_insomnia[[2]], 
-                    plot_unadj_24h_gad_by_sleep_period_insomnia[[3]], plot_unadj_24h_gad_by_sleep_period_insomnia[[4]], 
+figure <- ggarrange(plot_unadj_24h_gad_by_sleep_period_insomnia[[2]],
+                    plot_unadj_24h_gad_by_sleep_period_insomnia[[3]], 
+                    plot_unadj_24h_gad_by_sleep_period_insomnia[[4]],
+                    plot_unadj_24h_gad_by_sleep_period_insomnia[[1]],
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -398,8 +404,10 @@ grDevices::png(
   res = 900
 )
 
-figure <- ggarrange(plot_unadj_24h_gad_by_sleep_period_insomnia[[1]], plot_unadj_24h_gad_by_sleep_period_insomnia[[2]], 
-                    plot_unadj_24h_gad_by_sleep_period_insomnia[[3]], plot_unadj_24h_gad_by_sleep_period_insomnia[[4]], 
+figure <- ggarrange(plot_unadj_24h_gad_by_sleep_period_insomnia[[2]],
+                    plot_unadj_24h_gad_by_sleep_period_insomnia[[3]], 
+                    plot_unadj_24h_gad_by_sleep_period_insomnia[[4]],
+                    plot_unadj_24h_gad_by_sleep_period_insomnia[[1]], 
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"

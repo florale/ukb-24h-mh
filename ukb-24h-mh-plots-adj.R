@@ -128,12 +128,12 @@ to <- parts
 rg_phq_exp <- as.data.table(expand.grid.df(data.frame(to), rg_phq))
 rg_phq_exp <- as.data.frame(rg_phq_exp[to != parts])
 
-# ## phq 1-30 min reallocations ------------------
+# # ## phq 1-30 min reallocations ------------------
 # plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci <-
 #   foreach(i = seq_len(nrow(rg_phq_exp)),
 #           .packages = "multilevelcoda") %dopar% {
-#             
-#             ggplot(sub_models_insomnia[[rg_phq_exp[i, "sub_models_phq_insomnia"]]][From == eval(rg_phq_exp[i, "parts"]) & To == eval(rg_phq_exp[i, "to"])], 
+# 
+#             ggplot(sub_models_insomnia[[rg_phq_exp[i, "sub_models_phq_insomnia"]]][From == eval(rg_phq_exp[i, "parts"]) & To == eval(rg_phq_exp[i, "to"])],
 #                    aes(x = Delta, y = Mean)) +
 #               geom_hline(yintercept = 0, linewidth = 0.2, linetype = 2) +
 #               geom_vline(xintercept = 0, linewidth = 0.2, linetype = 2) +
@@ -142,8 +142,8 @@ rg_phq_exp <- as.data.frame(rg_phq_exp[to != parts])
 #                           alpha = alpha, show.legend = TRUE) +
 #               geom_line(aes(colour = SleepPeriod), linewidth = 1, show.legend = TRUE) +
 #               geom_text(aes(label = Sig, colour = SleepPeriod),
-#                         size = 6, 
-#                         position = ggpp::position_nudge_center(center_x = 0, x = 3, 
+#                         size = 6,
+#                         position = ggpp::position_nudge_center(center_x = 0, x = 3,
 #                                                                y = 0.005),
 #                         show.legend = FALSE) +
 #               facet_wrap(~ Insomnia_label, strip.position = "top") +
@@ -187,22 +187,24 @@ rg_phq_exp <- as.data.frame(rg_phq_exp[to != parts])
 #                 legend.position   = "bottom",
 #                 plot.margin       = unit(c(0,0,0,0), "lines")
 #               )
-#             
+# 
 #           }
 # 
-# names(plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci) <- foreach(i = seq_len(nrow(rg_phq))) %dopar% {
-#   paste0("Reallocation from ", rg_phq[i, "parts"], " to ",  rg_phq[i, "to"], " and ", rg_phq[i, "phq"])
+# names(plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci) <- foreach(i = seq_len(nrow(rg_phq_exp))) %dopar% {
+#   paste0("Reallocation from ", rg_phq_exp[i, "parts"], " to ",  rg_phq_exp[i, "to"], " and ", rg_phq_exp[i, "phq"])
 # }
 # 
 # grDevices::cairo_pdf(
 #   file = paste0(outputdir, "plot_adj_24h_phq_by_sleep_period_insomnia", ".pdf"),
 #   width = 8,
-#   height = 12,
+#   height = 9,
 # )
 # 
-# figure <- ggarrange(plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci[[1]], plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci[[2]], 
-#                     plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci[[3]], plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci[[4]], 
-#                     nrow = 4,
+# figure <- ggarrange(plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci[["Reallocation from MVPA to LPA  and Depressive Symptoms"]], 
+#                     plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci[["Reallocation from MVPA to  SB  and Depressive Symptoms"]],
+#                     plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci[["Reallocation from MVPA to Sleep and Depressive Symptoms"]], 
+#                     # plot_adj_24h_phq_by_sleep_period_insomnia_2023_99ci[[4]],
+#                     nrow = 3,
 #                     common.legend = TRUE,
 #                     legend   = "bottom"
 # )
@@ -283,8 +285,10 @@ grDevices::cairo_pdf(
   height = 12,
 )
 
-figure <- ggarrange(plot_adj_24h_phq_by_sleep_period_insomnia[[1]], plot_adj_24h_phq_by_sleep_period_insomnia[[2]], 
-                    plot_adj_24h_phq_by_sleep_period_insomnia[[3]], plot_adj_24h_phq_by_sleep_period_insomnia[[4]], 
+figure <- ggarrange(plot_adj_24h_phq_by_sleep_period_insomnia[[2]],
+                    plot_adj_24h_phq_by_sleep_period_insomnia[[3]], 
+                    plot_adj_24h_phq_by_sleep_period_insomnia[[4]],
+                    plot_adj_24h_phq_by_sleep_period_insomnia[[1]], 
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -299,8 +303,10 @@ grDevices::png(
   res = 900
 )
 
-figure <- ggarrange(plot_adj_24h_phq_by_sleep_period_insomnia[[1]], plot_adj_24h_phq_by_sleep_period_insomnia[[2]], 
-                    plot_adj_24h_phq_by_sleep_period_insomnia[[3]], plot_adj_24h_phq_by_sleep_period_insomnia[[4]], 
+figure <- ggarrange(plot_adj_24h_phq_by_sleep_period_insomnia[[2]],
+                    plot_adj_24h_phq_by_sleep_period_insomnia[[3]], 
+                    plot_adj_24h_phq_by_sleep_period_insomnia[[4]],
+                    plot_adj_24h_phq_by_sleep_period_insomnia[[1]],
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -382,8 +388,10 @@ grDevices::cairo_pdf(
   height = 12,
 )
 
-figure <- ggarrange(plot_adj_24h_gad_by_sleep_period_insomnia[[1]], plot_adj_24h_gad_by_sleep_period_insomnia[[2]], 
-                    plot_adj_24h_gad_by_sleep_period_insomnia[[3]], plot_adj_24h_gad_by_sleep_period_insomnia[[4]], 
+figure <- ggarrange(plot_adj_24h_gad_by_sleep_period_insomnia[[2]],
+                    plot_adj_24h_gad_by_sleep_period_insomnia[[3]], 
+                    plot_adj_24h_gad_by_sleep_period_insomnia[[4]],
+                    plot_adj_24h_gad_by_sleep_period_insomnia[[1]],
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"
@@ -398,8 +406,10 @@ grDevices::png(
   res = 900
 )
 
-figure <- ggarrange(plot_adj_24h_gad_by_sleep_period_insomnia[[1]], plot_adj_24h_gad_by_sleep_period_insomnia[[2]], 
-                    plot_adj_24h_gad_by_sleep_period_insomnia[[3]], plot_adj_24h_gad_by_sleep_period_insomnia[[4]], 
+figure <- ggarrange(plot_adj_24h_gad_by_sleep_period_insomnia[[2]],
+                    plot_adj_24h_gad_by_sleep_period_insomnia[[3]], 
+                    plot_adj_24h_gad_by_sleep_period_insomnia[[4]],
+                    plot_adj_24h_gad_by_sleep_period_insomnia[[1]],
                     nrow = 4,
                     common.legend = TRUE,
                     legend   = "bottom"

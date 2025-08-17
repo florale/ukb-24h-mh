@@ -18,7 +18,7 @@ extract_rhat <- function(model, model_name) {
   # Get R-hat values
   rhat_values <- rhat(model$model, 
                       parameters = c("b_Intercept", 
-                                     "b_ilr1", "b_ilr2", "b_ilr3"))
+                                     "ilr1", "ilr2", "ilr3"))
   # Create summary
   rhat_summary <- data.frame(
     Model = model_name,
@@ -40,7 +40,7 @@ extract_rhat <- function(model, model_name) {
 extract_ess <- function(model, model_name) {
   ess_values <- effective_sample(model$model, 
                                  parameters = c("b_Intercept", 
-                                                "b_ilr1", "b_ilr2", "b_ilr3"))
+                                                "ilr1", "ilr2", "ilr3"))
   ess_bulk_summary <- data.frame(
     Model = model_name,
     Min = min(ess_values$ESS, na.rm = TRUE),
